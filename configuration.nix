@@ -37,7 +37,7 @@
   nixpkgs.config.allowUnfree = true;
   
   environment.systemPackages = with pkgs; [
-    wget vim firefox git nvtop fish discord gnupg yubikey-personalization
+    wget gnupg1compat vim firefox git nvtop fish discord gnupg micro arc-theme gnome-breeze gnome3.gnome-tweaks yubikey-personalization
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
