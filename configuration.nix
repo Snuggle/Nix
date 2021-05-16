@@ -77,7 +77,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    wget vim gnupg1compat firefox fish discord gnupg git micro yubikey-personalization bat exa yaru-theme gnome-breeze gnome3.gnome-tweaks
+    wget vim gnupg1compat firefox fish discord gnupg git micro yubikey-personalization bat exa yaru-theme gnome-breeze gnome3.gnome-tweaks tdesktop spotify papirus-icon-theme xclip ffmpeg nv-codec-headers obs-studio
   ];
 
   environment.shellInit = ''
