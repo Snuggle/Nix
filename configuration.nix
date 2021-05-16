@@ -14,6 +14,15 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  boot.extraModulePackages = [
+    config.boot.kernelPackages.v4l2loopback
+  ];
+
+  # Register a v4l2loopback device at boot
+  boot.kernelModules = [
+    "v4l2loopback"
+  ];
+
   networking.hostName = "plum"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -44,7 +53,7 @@
 
   # Enable the GNOME 3 Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome3.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
   
 
   # Configure keymap in X11
@@ -77,7 +86,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    wget vim gnupg1compat firefox fish discord gnupg git micro yubikey-personalization bat exa yaru-theme gnome-breeze gnome3.gnome-tweaks tdesktop spotify papirus-icon-theme xclip ffmpeg nv-codec-headers obs-studio
+    wget vim gnupg1compat firefox fish glances discord vscode gnupg git micro yubikey-personalization bat exa yaru-theme breeze-gtk gnome3.gnome-tweaks tdesktop spotify papirus-icon-theme xclip ffmpeg nv-codec-headers obs-studio krita neofetch jekyll alacritty starship obsidian
   ];
 
   environment.shellInit = ''
