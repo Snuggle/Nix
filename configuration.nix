@@ -91,45 +91,45 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     # Terminal Tools
-	wget
+    wget
     vim
-	fish
-	micro
-	bat
+    fish
+    micro
+    bat
     exa
-	xclip
-	neofetch
-	alacritty
-	starship
+    xclip
+    neofetch
+    alacritty
+    starship
 
-	# Development or Libraries
-	jekyll
+    # Development or Libraries
+    jekyll
 
-	# Git, GnuPG & Signing
-	gnupg
+    # Git, GnuPG & Signing
+    gnupg
     gnupg1compat
-	git
-	yubikey-personalization
-	
-	# System Utilities
-	glances
-	ffmpeg
-	nv-codec-headers
+    git
+    yubikey-personalization
+    
+    # System Utilities
+    glances
+    ffmpeg
+    nv-codec-headers
 
-	# Applications
+    # Applications
     firefox
     discord
     vscode
     nextcloud-client
-	tdesktop
+    tdesktop
     spotify
-	obs-studio
+    obs-studio
     krita
-	obsidian
+    obsidian
 
     # Theming
     yaru-theme
-    breeze-gtk
+    greeze-gtk
     gnome3.gnome-tweaks
     papirus-icon-theme
   ];
