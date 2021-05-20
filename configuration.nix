@@ -129,7 +129,7 @@
 
     # Theming
     yaru-theme
-    greeze-gtk
+    breeze-gtk
     gnome3.gnome-tweaks
     papirus-icon-theme
   ];
