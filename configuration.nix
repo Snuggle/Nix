@@ -35,7 +35,11 @@
   networking.useDHCP = false;
   networking.interfaces.enp38s0.useDHCP = true;
   networking.interfaces.wlp37s0.useDHCP = true;
-
+	
+  networking.extraHosts =
+  ''
+    10.0.1.10 storage.snugg.ie
+  '';
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -86,7 +90,48 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    wget vim gnupg1compat firefox fish glances discord vscode gnupg git micro yubikey-personalization bat exa yaru-theme breeze-gtk gnome3.gnome-tweaks tdesktop spotify papirus-icon-theme xclip ffmpeg nv-codec-headers obs-studio krita neofetch jekyll alacritty starship obsidian
+    # Terminal Tools
+	wget
+    vim
+	fish
+	micro
+	bat
+    exa
+	xclip
+	neofetch
+	alacritty
+	starship
+
+	# Development or Libraries
+	jekyll
+
+	# Git, GnuPG & Signing
+	gnupg
+    gnupg1compat
+	git
+	yubikey-personalization
+	
+	# System Utilities
+	glances
+	ffmpeg
+	nv-codec-headers
+
+	# Applications
+    firefox
+    discord
+    vscode
+    nextcloud-client
+	tdesktop
+    spotify
+	obs-studio
+    krita
+	obsidian
+
+    # Theming
+    yaru-theme
+    breeze-gtk
+    gnome3.gnome-tweaks
+    papirus-icon-theme
   ];
 
   environment.shellInit = ''
