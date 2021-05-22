@@ -38,11 +38,13 @@
 	
   networking.extraHosts =
   ''
-    10.0.1.10 storage.snugg.ie
+    10.0.1.7 storage.snugg.ie
   '';
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
+  networking.firewall.allowedTCPPorts = [ 7777 ];
 
   # Select internationalisation properties.
   # i18n.defaultLocale = "en_US.UTF-8";
@@ -126,6 +128,7 @@
     obs-studio
     krita
     obsidian
+    _1password-gui
 
     # Theming
     yaru-theme
