@@ -80,7 +80,7 @@
   users.users.snuggle = {
     isNormalUser = true;
     shell = pkgs.fish;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "libvirtd" ]; # Enable ‘sudo’ for the user.
   };
   
   nixpkgs.config.allowUnfree = true;
@@ -88,6 +88,8 @@
   services.xserver.videoDrivers = [ "nvidia" ];
   services.pcscd.enable = true;
   services.udev.packages = [ pkgs.yubikey-personalization ];
+
+  virtualisation.libvirtd.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -103,9 +105,12 @@
     neofetch
     alacritty
     starship
+    virt-manager
+    bind
 
     # Development or Libraries
     jekyll
+    ruby
 
     # Git, GnuPG & Signing
     gnupg
@@ -117,6 +122,8 @@
     glances
     ffmpeg
     nv-codec-headers
+    ntfs3g
+    refind
 
     # Applications
     firefox
@@ -128,6 +135,7 @@
     obs-studio
     krita
     obsidian
+    gparted
     _1password-gui
 
     # Theming
