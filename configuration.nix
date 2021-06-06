@@ -153,6 +153,13 @@
     breeze-gtk
     gnome3.gnome-tweaks
     papirus-icon-theme
+    arc-theme
+
+    # Fonts
+    fontforge
+    source-sans-pro
+    source-code-pro
+    nerdfonts
   ];
 
   environment.sessionVariables.TERMINAL = [ "alacritty" ];
@@ -172,6 +179,7 @@
     fish = {
       enable = true;
       promptInit = "starship init fish | source";
+      shellInit = builtins.readFile ./config/fish/colours.fish;
       shellAbbrs = {
         cat = "bat";
         ls = "exa";
@@ -224,14 +232,26 @@
           settings = {
             # add_newline = false;
       
-            character = {
-              success_symbol = "[➜](bold green)";
-              error_symbol = "[➜](bold red)";
-            };
-      
             # package.disabled = true;
           };
       };
+
+      bat = {
+        enable = true;
+        config.theme = "fairyfloss";
+        themes = {
+          fairyfloss = builtins.readFile (
+            pkgs.fetchFromGitHub
+                {
+                owner = "sailorhg";
+                repo = "fairyfloss";
+                rev = "982e64a9e36160350125c0a82a7981dca6200150";
+                sha256 = "1gpbkmy8axj8il0s85ifn2adm987nla0dbk2slwc5zyp6m9ak3qq";
+                } + "/fairyfloss.tmTheme"
+          );
+        };
+      };
+
       alacritty = {
         enable = true;
         settings = {
@@ -240,34 +260,37 @@
             blinking = "on";
           };
           colors = {
+            # Theme based upon: Fairyfloss (FairyShell for Terminal)
+            # https://gist.github.com/crazy4pi314/c0874aef9a34e35f6ad07cc163662e51
+
             # Default colors
             primary = {
-              background = "0x1d1f21";
-              foreground = "0xc5c8c6";
+              background = "0x5a5475";
+              foreground = "0xf8f8f0";
             };
 
             # Normal colors
             normal = {
-              black = "0x282a2e";
-              red = "0xa54242";
-              green = "0x8c9440";
-              yellow = "0xde935f";
-              blue = "0x5f819d";
-              magenta = "0x85678f";
-              cyan = "0x5e8d87";
-              white = "0x707880";
+              black = "0x464258";
+              red = "0xff857f";
+              green = "0xad5877";
+              yellow = "0xe6c000";
+              blue = "0x6c71c4";
+              magenta = "0xb267e6";
+              cyan = "0xafecad";
+              white = "0xcccccc";
             };
 
             # Bright colors
             bright = {
-              black = "0x373b41";
-              red = "0xcc6666";
-              green = "0xb5bd68";
-              yellow = "0xf0c674";
-              blue = "0x81a2be";
-              magenta = "0xb294bb";
-              cyan = "0x8abeb7";
-              white = "0xc5c8c6";
+              black = "0xc19fd8";
+              red = "0xf44747";
+              green = "0xffb8d1";
+              yellow = "0xffea00";
+              blue = "0x6796e6";
+              magenta = "0xc5a3ff";
+              cyan = "0xb2ffdd";
+              white = "0xf8f8f0";
             };
           };
         };
