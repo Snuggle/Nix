@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      (import "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos")
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -26,6 +27,8 @@
   networking.hostName = "plum"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
+  system.autoUpgrade.enable = true;
+  
   # Set your time zone.
   time.timeZone = "Europe/London";
 
@@ -60,6 +63,8 @@
   # Enable the GNOME 3 Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
+
+  services.dbus.packages = with pkgs; [ gnome3.dconf ];
   
 
   # Configure keymap in X11
@@ -72,6 +77,8 @@
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
+  hardware.sane.enable = true;
+  hardware.sane.extraBackends = [ pkgs.hplipWithPlugin ];
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -80,8 +87,9 @@
   users.users.snuggle = {
     isNormalUser = true;
     shell = pkgs.fish;
-    extraGroups = [ "wheel" "libvirtd" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "libvirtd" "scanner" "lp" ]; # Enable ‘sudo’ for the user.
   };
+
   
   nixpkgs.config.allowUnfree = true;
 
@@ -107,6 +115,7 @@
     starship
     virt-manager
     bind
+    optipng
 
     # Development or Libraries
     jekyll
@@ -137,6 +146,7 @@
     obsidian
     gparted
     _1password-gui
+    inkscape
 
     # Theming
     yaru-theme
@@ -144,6 +154,9 @@
     gnome3.gnome-tweaks
     papirus-icon-theme
   ];
+
+  environment.sessionVariables.TERMINAL = [ "alacritty" ];
+  environment.sessionVariables.EDITOR = [ "micro" ];
 
   environment.shellInit = ''
     export GPG_TTY="$(tty)"
@@ -156,7 +169,17 @@
   # programs.mtr.enable = true;
   programs = {
     steam.enable = true;
-    fish.enable = true;
+    fish = {
+      enable = true;
+      promptInit = "starship init fish | source";
+      shellAbbrs = {
+        cat = "bat";
+        ls = "exa";
+        nano = "micro";
+        ssh = "mosh";
+      };
+    };
+
     ssh.startAgent = false;
     gnupg.agent = {
       enable = true;
@@ -175,6 +198,83 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+
+  home-manager.users.snuggle = { 
+    xsession.pointerCursor.package = pkgs.breeze-gtk;
+    xsession.pointerCursor.name = "Breeze_Snow";
+
+    gtk = {
+      enable = true;
+      iconTheme.name = "Yaru";
+      iconTheme.package = pkgs.yaru-theme;
+      theme.name = "Yaru-dark";
+      theme.package = pkgs.yaru-theme;
+    };
+
+    programs = {
+      git = {
+        enable = true;
+        userName  = "Snuggle";
+        userEmail = "^-^@snugg.ie";
+      };
+      starship = {
+          enable = true;
+          enableFishIntegration = true;
+          # Configuration written to ~/.config/starship.toml
+          settings = {
+            # add_newline = false;
+      
+            character = {
+              success_symbol = "[➜](bold green)";
+              error_symbol = "[➜](bold red)";
+            };
+      
+            # package.disabled = true;
+          };
+      };
+      alacritty = {
+        enable = true;
+        settings = {
+          cursor.style = {
+            shape = "beam";
+            blinking = "on";
+          };
+          colors = {
+            # Default colors
+            primary = {
+              background = "0x1d1f21";
+              foreground = "0xc5c8c6";
+            };
+
+            # Normal colors
+            normal = {
+              black = "0x282a2e";
+              red = "0xa54242";
+              green = "0x8c9440";
+              yellow = "0xde935f";
+              blue = "0x5f819d";
+              magenta = "0x85678f";
+              cyan = "0x5e8d87";
+              white = "0x707880";
+            };
+
+            # Bright colors
+            bright = {
+              black = "0x373b41";
+              red = "0xcc6666";
+              green = "0xb5bd68";
+              yellow = "0xf0c674";
+              blue = "0x81a2be";
+              magenta = "0xb294bb";
+              cyan = "0x8abeb7";
+              white = "0xc5c8c6";
+            };
+          };
+        };
+      };
+    };
+  };
+
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
