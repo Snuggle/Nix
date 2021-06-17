@@ -116,10 +116,12 @@
     virt-manager
     bind
     optipng
+    mosh
 
     # Development or Libraries
     jekyll
     ruby
+    docker
 
     # Git, GnuPG & Signing
     gnupg
@@ -147,6 +149,7 @@
     gparted
     _1password-gui
     inkscape
+    transmission-gtk
 
     # Theming
     yaru-theme
@@ -234,6 +237,10 @@
       
             # package.disabled = true;
           };
+      };
+
+      nextcloud-client = {
+      	startInBackground = true;
       };
 
       bat = {
