@@ -222,6 +222,13 @@
       theme.package = pkgs.yaru-theme;
     };
 
+    services = {
+      nextcloud-client = {
+      	enable = true;
+      	startInBackground = true;
+      };
+    };
+
     programs = {
       git = {
         enable = true;
@@ -238,11 +245,6 @@
             # package.disabled = true;
           };
       };
-
-      nextcloud-client = {
-      	startInBackground = true;
-      };
-
       bat = {
         enable = true;
         config.theme = "fairyfloss";
