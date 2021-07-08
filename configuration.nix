@@ -203,6 +203,10 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  users.users.snuggle.openssh.authorizedKeys.keyFiles = [ "/home/snuggle/.ssh/snuggle.pub" ];
+  services.openssh.passwordAuthentication = false;
+  services.openssh.permitRootLogin = "yes";
+  services.openssh.challengeResponseAuthentication = false;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
