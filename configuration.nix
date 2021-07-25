@@ -135,6 +135,7 @@
     nv-codec-headers
     ntfs3g
     refind
+    vlc
 
     # Applications
     firefox
@@ -150,6 +151,7 @@
     _1password-gui
     inkscape
     transmission-gtk
+    vivaldi
 
     # Theming
     yaru-theme
