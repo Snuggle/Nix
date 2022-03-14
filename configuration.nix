@@ -1,8 +1,9 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
+# pkgs.lib.mkForce
 
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports =
@@ -10,6 +11,12 @@
       ./hardware-configuration.nix
       (import "${builtins.fetchTarball https://github.com/rycee/home-manager/archive/master.tar.gz}/nixos")
     ];
+
+  nixpkgs.config.packageOverrides = pkgs: {
+    nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+      inherit pkgs;
+    };
+  };
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -79,10 +86,22 @@
   services.printing.enable = true;
 
   # Enable sound.
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
-  hardware.sane.enable = true;
-  hardware.sane.extraBackends = [ pkgs.hplipWithPlugin ];
+  hardware.pulseaudio.enable = false;
+  
+  security.rtkit.enable = true;
+  services.pipewire = {
+  enable = true;
+  alsa.enable = true;
+  alsa.support32Bit = true;
+  pulse.enable = true;
+  # If you want to use JACK applications, uncomment this
+  #jack.enable = true;
+
+  # use the example session manager (no others are packaged yet so this is enabled by default,
+  # no need to redefine it in your config for now)
+  #media-session.enable = true;
+  };
+
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -140,6 +159,8 @@
     ntfs3g
     refind
     vlc
+    gnome.dconf-editor
+    dconf2nix
 
     # Applications
     firefox
@@ -169,6 +190,9 @@
     source-sans-pro
     source-code-pro
     nerdfonts
+
+    # GNOME Extensions
+    gnomeExtensions.appindicator
   ];
 
   environment.sessionVariables.TERMINAL = [ "alacritty" ];
@@ -224,10 +248,27 @@
     xsession.pointerCursor.package = pkgs.breeze-gtk;
     xsession.pointerCursor.name = "Breeze_Snow";
 
+    
+/*     dconf.settings = {
+      "org/gnome" = {
+        "desktop" = {
+          "input-sources" = {
+            xkb-options = [ "ctrl:swap_lwin_lctl" "ctrl:swap_rwin_rctl" ];
+          };
+          "interface" = {
+            cursor-theme = "Breeze_Snow";
+          };
+        };
+        "shell" = {
+          favorite-apps = "['firefox.desktop', 'org.gnome.Calendar.desktop', 'org.gnome.Music.desktop', 'org.gnome.Photos.desktop', 'org.gnome.Nautilus.desktop', 'code.desktop', 'discord.desktop', 'steam.desktop', 'obsidian.desktop', 'com.obsproject.Studio.desktop', '1password.desktop']";
+        };
+      };
+    };  */
+
     gtk = {
       enable = true;
-      iconTheme.name = "Yaru";
-      iconTheme.package = pkgs.yaru-theme;
+      iconTheme.name = "Papirus";
+      iconTheme.package = pkgs.papirus-icon-theme;
       theme.name = "Yaru-dark";
       theme.package = pkgs.yaru-theme;
     };
@@ -240,11 +281,40 @@
     };
 
     programs = {
+      firefox = {
+        enable = true;
+
+        profiles.default = {
+          id = 0;
+          name = "Default";
+          isDefault = true;
+          settings = {
+            "browser.startup.homepage" = "https://snugg.ie";
+            "services.sync.username" = "^-^@snugg.ie";
+            "services.sync.engine.passwords" = false;
+          };
+        };
+
+       extensions = 
+        with pkgs.nur.repos.rycee.firefox-addons; [
+          ublock-origin
+          onepassword-password-manager
+          firefox-color
+          netflix-1080p
+          refined-github
+        ]; 
+      };
+
+      exa = {
+        enableAliases = true;
+      };
+
       git = {
         enable = true;
         userName  = "Snuggle";
         userEmail = "^-^@snugg.ie";
       };
+
       starship = {
           enable = true;
           enableFishIntegration = true;
@@ -255,6 +325,7 @@
             # package.disabled = true;
           };
       };
+
       bat = {
         enable = true;
         config.theme = "fairyfloss";
