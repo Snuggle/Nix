@@ -75,7 +75,7 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
-  services.dbus.packages = with pkgs; [ gnome3.dconf ];
+  #services.dbus.packages = with pkgs; [ gnome3.dconf ];
   
 
   # Configure keymap in X11
@@ -118,9 +118,9 @@
 
   services.xserver.videoDrivers = [ "nvidia" ];
   services.pcscd.enable = true;
-  services.udev.packages = [ pkgs.yubikey-personalization ];
+  services.udev.packages = with pkgs; [ pkgs.yubikey-personalization ];
 
-  virtualisation.libvirtd.enable = true;
+  #virtualisation.libvirtd.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -136,7 +136,7 @@
     neofetch
     alacritty
     starship
-    virt-manager
+    #virt-manager
     bind
     optipng
     mosh
@@ -148,7 +148,6 @@
 
     # Git, GnuPG & Signing
     gnupg
-    gnupg1compat
     git
     yubikey-personalization
     
@@ -159,6 +158,7 @@
     ntfs3g
     refind
     vlc
+    dconf
     gnome.dconf-editor
     dconf2nix
 
@@ -201,7 +201,7 @@
   environment.shellInit = ''
     export GPG_TTY="$(tty)"
     gpg-connect-agent /bye
-    export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
+    export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
   '';
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -236,7 +236,7 @@
   users.users.snuggle.openssh.authorizedKeys.keyFiles = [ "/home/snuggle/.ssh/snuggle.pub" ];
   services.openssh.passwordAuthentication = false;
   services.openssh.permitRootLogin = "yes";
-  services.openssh.challengeResponseAuthentication = false;
+  services.openssh.kbdInteractiveAuthentication = false;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -249,21 +249,7 @@
     xsession.pointerCursor.name = "Breeze_Snow";
 
     
-/*     dconf.settings = {
-      "org/gnome" = {
-        "desktop" = {
-          "input-sources" = {
-            xkb-options = [ "ctrl:swap_lwin_lctl" "ctrl:swap_rwin_rctl" ];
-          };
-          "interface" = {
-            cursor-theme = "Breeze_Snow";
-          };
-        };
-        "shell" = {
-          favorite-apps = "['firefox.desktop', 'org.gnome.Calendar.desktop', 'org.gnome.Music.desktop', 'org.gnome.Photos.desktop', 'org.gnome.Nautilus.desktop', 'code.desktop', 'discord.desktop', 'steam.desktop', 'obsidian.desktop', 'com.obsproject.Studio.desktop', '1password.desktop']";
-        };
-      };
-    };  */
+    imports = [ ./dconf.nix ];
 
     gtk = {
       enable = true;
