@@ -204,6 +204,22 @@
     export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
   '';
 
+  # My own public GPG key must be imported otherwise you'll get the below error when trying to sign a git commit:
+  # error: gpg failed to sign the data fatal: failed to write commit object
+  systemd.user.services.gpg-import-keys = {
+    enable = true;
+    description = "Automatically import my public GPG keys";
+    unitConfig = {
+      After = [ "gpg-agent.socket" ];
+    };
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.curl}/bin/curl https://github.com/snuggle.gpg | ${pkgs.gnupg}/bin/gpg --import'";
+    };
+
+    wantedBy = [ "default.target" ];
+  };
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
