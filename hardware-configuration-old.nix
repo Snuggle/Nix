@@ -14,18 +14,22 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/5c3bbd25-bf47-4fc2-9059-631bdba52f1d";
+    { device = "/dev/disk/by-uuid/6be79649-eaf4-4d68-8413-61842c623350";
       fsType = "btrfs";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/E266-52DA";
+    { device = "/dev/disk/by-uuid/D0AD-1D02";
       fsType = "vfat";
     };
 
-  swapDevices = [ ];
+  fileSystems."/home/snuggle/Games" =
+    { device = "/dev/disk/by-uuid/917d6f24-1f40-4019-9efa-c9cd6be4c5f6";
+      fsType = "btrfs";
+    };
 
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  # high-resolution display
-  hardware.video.hidpi.enable = lib.mkDefault true;
+  swapDevices =
+    [ { device = "/dev/disk/by-uuid/74f629bc-38b2-451c-b7ba-730c93bc3a6f"; }
+    ];
+
 }
