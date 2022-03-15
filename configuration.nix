@@ -111,6 +111,11 @@
     isNormalUser = true;
     shell = pkgs.fish;
     extraGroups = [ "wheel" "libvirtd" "scanner" "lp" ]; # Enable ‘sudo’ for the user.
+
+    openssh.authorizedKeys.keyFiles = [ (builtins.fetchurl { 
+      url = "https://github.com/snuggle.keys"; 
+      sha256 = "07fc06a9b436021592933be6c597ef56765f733b755720e72fa9190da35a26b4"; 
+    }) ];
   };
 
   
@@ -206,7 +211,7 @@
 
   # My own public GPG key must be imported otherwise you'll get the below error when trying to sign a git commit:
   # error: gpg failed to sign the data fatal: failed to write commit object
-  systemd.user.services.gpg-import-keys = {
+   systemd.user.services.gpg-import-keys = {
     enable = true;
     description = "Automatically import my public GPG keys";
     unitConfig = {
@@ -214,7 +219,11 @@
     };
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.curl}/bin/curl https://github.com/snuggle.gpg | ${pkgs.gnupg}/bin/gpg --import'";
+      ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.gnupg}/bin/gpg --import ${
+        builtins.fetchurl { 
+          url = "https://github.com/snuggle.gpg"; 
+          sha256 = "06ncqgs3fn5bp6w8qdzd33a22ckym9ndpz7q7hqxf4wg2rjri77r"; 
+        }}'";
     };
 
     wantedBy = [ "default.target" ];
@@ -249,7 +258,6 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-  users.users.snuggle.openssh.authorizedKeys.keyFiles = [ "/home/snuggle/.ssh/snuggle.pub" ];
   services.openssh.passwordAuthentication = false;
   services.openssh.permitRootLogin = "yes";
   services.openssh.kbdInteractiveAuthentication = false;
@@ -326,6 +334,15 @@
       
             # package.disabled = true;
           };
+      };
+
+      gpg = {
+        publicKeys = {
+          snuggle = {
+            source = [ (builtins.fetchurl { url = "https://github.com/snuggle.gpg"; sha256 = "06ncqgs3fn5bp6w8qdzd33a22ckym9ndpz7q7hqxf4wg2rjri77r"; }) ];
+            # Doesn't seem to work, so I am using systemd instead.
+          };
+        };
       };
 
       bat = {
