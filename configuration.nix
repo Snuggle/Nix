@@ -70,6 +70,32 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
+  # Setup symlinks for NAS-based home directory
+  system.userActivationScripts.linktosharedfolder.text = ''
+  for location in \
+    Desktop \
+    Documents \
+    Downloads \
+    Pictures \
+    Public \
+    Templates \
+    Videos \
+    Music 
+  do
+    if [[ -d "$HOME/$location" ]]; then
+      find "$HOME/$location" -type d -empty -exec rm --dir --verbose {} \;
+    fi
+    if [[ -d "$HOME/$location" ]]; then
+      continue
+    fi
+    if [[ ! -L "$HOME/$location" ]]; then
+      ln --symbolic --no-target-directory --verbose "$HOME/Games/Homesweet/$location/" "$HOME/$location"
+    fi
+  done
+  '';
+
+
+
 
   # Enable the GNOME 3 Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
@@ -181,6 +207,7 @@
     _1password-gui
     inkscape
     transmission-gtk
+    transmission-remote-gtk
     vivaldi
 
     # Theming
@@ -269,11 +296,10 @@
   # networking.firewall.enable = false;
 
   home-manager.users.snuggle = { 
+    imports = [ ./config/dconf/dconf.nix ];
+
     xsession.pointerCursor.package = pkgs.breeze-gtk;
     xsession.pointerCursor.name = "Breeze_Snow";
-
-    
-    imports = [ ./dconf.nix ];
 
     gtk = {
       enable = true;
