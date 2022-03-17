@@ -76,25 +76,25 @@
     Desktop \
     Documents \
     Downloads \
+    Games \
     Pictures \
     Public \
     Templates \
+    Temporary \
     Videos \
     Music 
   do
-    if [[ -d "$HOME/$location" ]]; then
-      find "$HOME/$location" -type d -empty -exec rm --dir --verbose {} \;
+    if [[ -d "${config.users.users.snuggle.home}/$location" ]]; then
+      find "${config.users.users.snuggle.home}/$location" -type d -empty -exec rm --dir --verbose {} \;
     fi
-    if [[ -d "$HOME/$location" ]]; then
+    if [[ -d "${config.users.users.snuggle.home}/$location" ]]; then
       continue
     fi
-    if [[ ! -L "$HOME/$location" ]]; then
-      ln --symbolic --no-target-directory --verbose "$HOME/Games/Homesweet/$location/" "$HOME/$location"
+    if [[ ! -L "${config.users.users.snuggle.home}/$location" ]]; then
+      ln --symbolic --no-target-directory --verbose "$(findmnt /dev/disk/by-label/Games --noheadings --first-only --output TARGET)/Homesweet/$location/" "${config.users.users.snuggle.home}/$location"
     fi
   done
   '';
-
-
 
 
   # Enable the GNOME 3 Desktop Environment.
@@ -135,14 +135,24 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.snuggle = {
     isNormalUser = true;
+    description = "Evie Snuggle";
+    createHome = true;
     shell = pkgs.fish;
     extraGroups = [ "wheel" "libvirtd" "scanner" "lp" ]; # Enable ‘sudo’ for the user.
 
     openssh.authorizedKeys.keyFiles = [ (builtins.fetchurl { 
-      url = "https://github.com/snuggle.keys"; 
+      url = "https://github.com/${config.users.users.snuggle.name}.keys"; 
       sha256 = "07fc06a9b436021592933be6c597ef56765f733b755720e72fa9190da35a26b4"; 
     }) ];
   };
+
+
+  system.activationScripts.setavatar.text = ''
+    cp ${(builtins.fetchurl { 
+      url = "https://github.com/Snuggle.png"; 
+      sha256 = "0gyhr691jlyhdm6ha6jq67fal7appbk4mj2jp9bqh6sy5fflcj37"; 
+    })} "${config.users.users.snuggle.home}/.face"
+  '';
 
   
   nixpkgs.config.allowUnfree = true;
@@ -191,7 +201,9 @@
     vlc
     dconf
     gnome.dconf-editor
+    gnome.gnome-software
     dconf2nix
+    tmux
 
     # Applications
     firefox
@@ -248,7 +260,7 @@
       Type = "oneshot";
       ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.gnupg}/bin/gpg --import ${
         builtins.fetchurl { 
-          url = "https://github.com/snuggle.gpg"; 
+          url = "https://github.com/${config.users.users.snuggle.name}.gpg"; 
           sha256 = "06ncqgs3fn5bp6w8qdzd33a22ckym9ndpz7q7hqxf4wg2rjri77r"; 
         }}'";
     };
@@ -365,7 +377,7 @@
       gpg = {
         publicKeys = {
           snuggle = {
-            source = [ (builtins.fetchurl { url = "https://github.com/snuggle.gpg"; sha256 = "06ncqgs3fn5bp6w8qdzd33a22ckym9ndpz7q7hqxf4wg2rjri77r"; }) ];
+            source = [ (builtins.fetchurl { url = "https://github.com/${config.users.users.snuggle.name}.gpg"; sha256 = "06ncqgs3fn5bp6w8qdzd33a22ckym9ndpz7q7hqxf4wg2rjri77r"; }) ];
             # Doesn't seem to work, so I am using systemd instead.
           };
         };

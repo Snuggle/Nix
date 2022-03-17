@@ -21,6 +21,7 @@ with lib.hm.gvariant;
     };
 
     "org/gnome/shell" = {
+      enabled-extensions = [ "appindicatorsupport@rgcjonas.gmail.com" "windowsNavigator@gnome-shell-extensions.gcampax.github.com" "user-theme@gnome-shell-extensions.gcampax.github.com" "launch-new-instance@gnome-shell-extensions.gcampax.github.com" ];
       favorite-apps = [ "firefox.desktop" "org.gnome.Calendar.desktop" "org.gnome.Music.desktop" "org.gnome.Photos.desktop" "org.gnome.Nautilus.desktop" "code.desktop" "discord.desktop" "steam.desktop" "obsidian.desktop" "com.obsproject.Studio.desktop" "1password.desktop" ];
     };
 
@@ -35,6 +36,10 @@ with lib.hm.gvariant;
 
     "org/gnome/mutter" = {
       workspaces-only-on-primary = false;
+    };
+
+    "org/gnome/desktop/sound" = {
+      allow-volume-above-100-percent = true;
     };
 
     "org/gnome/desktop/wm/preferences" = {

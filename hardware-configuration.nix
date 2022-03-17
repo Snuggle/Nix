@@ -13,6 +13,8 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+  hardware.enableAllFirmware = true;
+
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/5c3bbd25-bf47-4fc2-9059-631bdba52f1d";
       fsType = "btrfs";
@@ -23,7 +25,7 @@
       fsType = "vfat";
     };
 
-  fileSystems."/home/snuggle/Games" =
+  fileSystems."/mnt/Games" =
     { device = "/dev/disk/by-uuid/917d6f24-1f40-4019-9efa-c9cd6be4c5f6";
       fsType = "btrfs";
     };
