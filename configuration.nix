@@ -154,6 +154,23 @@
     })} "${config.users.users.snuggle.home}/.face"
   '';
 
+
+  # Set Papirus Folder Colours
+  systemd.services.papirus-folders = {
+    description = "papirus-folders";
+    path = [ pkgs.bash pkgs.stdenv pkgs.coreutils pkgs.gawk pkgs.getent pkgs.gtk3 ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.fetchFromGitHub
+          {
+            owner = "PapirusDevelopmentTeam";
+            repo = "papirus-folders";
+            rev = "86c63fdd21182e5cc8444ba488042559951ca106";
+            sha256 = "sha256-ZZMEZCWO+qW76eqa+TgxWGVz69VkSCPcttLoCrH7ppY=";
+          } + "/papirus-folders"} -t ${pkgs.papirus-icon-theme}/share/icons/Papirus --verbose --color yaru";
+    };
+    wantedBy = [ "default.target" ];
+  };
   
   nixpkgs.config.allowUnfree = true;
 
@@ -165,6 +182,7 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
+
   environment.systemPackages = with pkgs; [
     # Terminal Tools
     wget
