@@ -239,6 +239,9 @@
     transmission-gtk
     transmission-remote-gtk
     vivaldi
+    kdenlive
+    teams
+    libreoffice
 
     # Theming
     yaru-theme
@@ -268,7 +271,7 @@
 
   # My own public GPG key must be imported otherwise you'll get the below error when trying to sign a git commit:
   # error: gpg failed to sign the data fatal: failed to write commit object
-   systemd.user.services.gpg-import-keys = {
+  systemd.user.services.gpg-import-keys = {
     enable = true;
     description = "Automatically import my public GPG keys";
     unitConfig = {
@@ -328,8 +331,7 @@
   home-manager.users.snuggle = { 
     imports = [ ./config/dconf/dconf.nix ];
 
-    xsession.pointerCursor.package = pkgs.breeze-gtk;
-    xsession.pointerCursor.name = "Breeze_Snow";
+    
 
     gtk = {
       enable = true;
@@ -337,12 +339,14 @@
       iconTheme.package = pkgs.papirus-icon-theme;
       theme.name = "Yaru-dark";
       theme.package = pkgs.yaru-theme;
+      cursorTheme.package = pkgs.breeze-gtk;
+      cursorTheme.name = "Breeze_Snow";
     };
 
     services = {
       nextcloud-client = {
-      	enable = true;
-      	startInBackground = true;
+        enable = true;
+        startInBackground = true;
       };
     };
 
@@ -361,7 +365,7 @@
           };
         };
 
-       extensions = 
+      extensions = 
         with pkgs.nur.repos.rycee.firefox-addons; [
           ublock-origin
           onepassword-password-manager
