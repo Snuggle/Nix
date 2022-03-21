@@ -222,6 +222,7 @@
     gnome.gnome-software
     dconf2nix
     tmux
+    pavucontrol
 
     # Applications
     firefox
@@ -239,6 +240,7 @@
     transmission-gtk
     transmission-remote-gtk
     vivaldi
+    vivaldi-ffmpeg-codecs
     kdenlive
     teams
     libreoffice
@@ -250,15 +252,40 @@
     papirus-icon-theme
     arc-theme
 
-    # Fonts
-    fontforge
-    source-sans-pro
-    source-code-pro
-    nerdfonts
+    
 
     # GNOME Extensions
     gnomeExtensions.appindicator
   ];
+
+
+  fonts = {
+    enableDefaultFonts = false;
+
+    fonts = with pkgs; [
+      # Sans-serif Fonts
+      fontforge
+      source-sans-pro
+      nerdfonts
+      noto-fonts
+
+      # Mono Fonts
+      source-code-pro
+      fantasque-sans-mono
+
+      # Emoji Fonts
+      twitter-color-emoji
+      noto-fonts-emoji-blob-bin
+
+      (nerdfonts.override { fonts = [ "FantasqueSansMono" "SourceCodePro" ]; })
+    ];
+
+    fontconfig = {
+      defaultFonts = {
+        emoji = [ "Blobmoji" ];
+      };
+    };
+  };
 
   environment.sessionVariables.TERMINAL = [ "alacritty" ];
   environment.sessionVariables.EDITOR = [ "micro" ];
@@ -300,7 +327,8 @@
       shellInit = builtins.readFile ./config/fish/colours.fish;
       shellAbbrs = {
         cat = "bat";
-        ls = "exa";
+        ls = "exa --icons";
+        "exa --icons -l" = "exa --icons -lah";
         nano = "micro";
         ssh = "mosh";
       };
@@ -427,6 +455,12 @@
           cursor.style = {
             shape = "beam";
             blinking = "on";
+          };
+          font = {
+            size = 14;
+            normal = {
+              family = "Fantasque Sans Mono Nerd Font";
+            };
           };
           colors = {
             # Theme based upon: Fairyfloss (FairyShell for Terminal)
