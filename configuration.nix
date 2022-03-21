@@ -100,6 +100,7 @@
   # Enable the GNOME 3 Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
+  environment.gnome.excludePackages = [ pkgs.dejavu_fonts ];
 
   #services.dbus.packages = with pkgs; [ gnome3.dconf ];
   
@@ -263,18 +264,21 @@
     enableDefaultFonts = false;
 
     fonts = with pkgs; [
+      # Serif Fonts
+      roboto-slab
+
       # Sans-serif Fonts
       fontforge
-      source-sans-pro
-      nerdfonts
+      source-sans # Previously 'source-sans-pro'
+      source-serif # Previously 'source-serif-pro'
       noto-fonts
+      ubuntu_font_family
 
       # Mono Fonts
       source-code-pro
       fantasque-sans-mono
 
       # Emoji Fonts
-      twitter-color-emoji
       noto-fonts-emoji-blob-bin
 
       (nerdfonts.override { fonts = [ "FantasqueSansMono" "SourceCodePro" ]; })
@@ -282,7 +286,11 @@
 
     fontconfig = {
       defaultFonts = {
+        serif = [ "Source Serif 4" "Roboto Slab" "Ubuntu" ];
+        sansSerif = [ "Source Sans 3" "Ubuntu" ];
+        monospace = [ "Fantasque Sans Mono" "Source Code Pro" "Ubuntu Mono" ];
         emoji = [ "Blobmoji" ];
+        
       };
     };
   };
@@ -390,6 +398,11 @@
             "browser.startup.homepage" = "https://snugg.ie";
             "services.sync.username" = "^-^@snugg.ie";
             "services.sync.engine.passwords" = false;
+            "font.name-list.emoji" = "Blobmoji";
+            "font.default.x-western" = "sans-serif";
+            "font.name.serif.x-western" = "Source Serif 4";
+            "font.name.sans-serif.x-western" = "Source Sans 3";
+            "font.name.monospace.x-western" = "Fantasque Sans Mono";
           };
         };
 

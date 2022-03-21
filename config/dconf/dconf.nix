@@ -13,16 +13,29 @@ with lib.hm.gvariant;
 
     "org/gnome/desktop/interface" = {
       cursor-theme = "Breeze_Snow";
-      font-antialiasing = "grayscale";
-      font-hinting = "slight";
-      gtk-im-module = "gtk-im-context-simple";
+      document-font-name = "Source Sans 3 11";
+      font-name = "Source Sans 3 Light 11";
       gtk-theme = "Yaru-dark";
       icon-theme = "Papirus";
+      monospace-font-name = "Fantasque Sans Mono 10";
+    };
+
+    "org/gnome/shell/extensions/user-theme" = {
+      name = "Yaru-magenta-dark";
+    };
+
+    "org/gnome/desktop/background" = {
+      picture-options = "zoom";
+      picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/Blobs.svg";
+      primary-color = "#ffffff";
+      secondary-color = "#000000";
     };
 
     "org/gnome/shell" = {
+      disabled-extensions = [ "window-list@gnome-shell-extensions.gcampax.github.com" "screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com" "drive-menu@gnome-shell-extensions.gcampax.github.com" "places-menu@gnome-shell-extensions.gcampax.github.com" "native-window-placement@gnome-shell-extensions.gcampax.github.com" "apps-menu@gnome-shell-extensions.gcampax.github.com" "workspace-indicator@gnome-shell-extensions.gcampax.github.com" ];
       enabled-extensions = [ "appindicatorsupport@rgcjonas.gmail.com" "windowsNavigator@gnome-shell-extensions.gcampax.github.com" "user-theme@gnome-shell-extensions.gcampax.github.com" "launch-new-instance@gnome-shell-extensions.gcampax.github.com" ];
       favorite-apps = [ "firefox.desktop" "org.gnome.Calendar.desktop" "org.gnome.Music.desktop" "org.gnome.Photos.desktop" "org.gnome.Nautilus.desktop" "code.desktop" "discord.desktop" "steam.desktop" "obsidian.desktop" "com.obsproject.Studio.desktop" "1password.desktop" ];
+      welcome-dialog-last-shown-version = "41.1";
     };
 
     "system/locale" = {
@@ -40,6 +53,7 @@ with lib.hm.gvariant;
 
     "org/gnome/desktop/sound" = {
       allow-volume-above-100-percent = true;
+      theme-name = "Yaru";
     };
 
     "org/gnome/desktop/wm/preferences" = {
