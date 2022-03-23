@@ -224,6 +224,7 @@
     dconf2nix
     tmux
     pavucontrol
+    linuxKernel.kernels.linux_zen
 
     # Applications
     firefox
