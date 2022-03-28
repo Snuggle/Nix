@@ -22,6 +22,10 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Don't take ~30s to boot
+  systemd.services.systemd-udev-settle.enable = false;
+  systemd.services.NetworkManager-wait-online.enable = false;
+
   boot.extraModulePackages = [
     config.boot.kernelPackages.v4l2loopback
   ];
@@ -58,6 +62,7 @@
 
   nixpkgs.config.permittedInsecurePackages = [
       "electron-13.6.9"
+      "electron-12.2.3"
   ];
 
   # Select internationalisation properties.
@@ -69,6 +74,8 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+
+
 
   # Setup symlinks for NAS-based home directory
   system.userActivationScripts.linktosharedfolder.text = ''
@@ -175,7 +182,6 @@
   
   nixpkgs.config.allowUnfree = true;
 
-  services.xserver.videoDrivers = [ "nvidia" ];
   services.pcscd.enable = true;
   services.udev.packages = with pkgs; [ pkgs.yubikey-personalization ];
 
@@ -217,6 +223,7 @@
     nv-codec-headers
     ntfs3g
     refind
+    etcher
     vlc
     dconf
     gnome.dconf-editor
@@ -258,6 +265,9 @@
 
     # GNOME Extensions
     gnomeExtensions.appindicator
+    gnomeExtensions.night-theme-switcher
+    gnomeExtensions.gsconnect
+    gnomeExtensions.mpris-indicator-button
   ];
 
 
@@ -396,7 +406,7 @@
           name = "Default";
           isDefault = true;
           settings = {
-            "browser.startup.homepage" = "https://snugg.ie";
+            "browser.startup.homepage" = "https://storage.snugg.ie";
             "services.sync.username" = "^-^@snugg.ie";
             "services.sync.engine.passwords" = false;
             "font.name-list.emoji" = "Blobmoji";
@@ -425,6 +435,11 @@
         enable = true;
         userName  = "Snuggle";
         userEmail = "^-^@snugg.ie";
+        signing.signByDefault = true;
+        signing.key = "2D3825B49C6BCBE1AC337723877300954D1493E6";
+        extraConfig = {
+          merge.conflictstyle = "diff3";
+        };
       };
 
       starship = {

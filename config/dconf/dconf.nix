@@ -26,7 +26,8 @@ with lib.hm.gvariant;
 
     "org/gnome/desktop/background" = {
       picture-options = "zoom";
-      picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/Blobs.svg";
+      picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/blobs-l.svg";
+      picture-uri-dark = "file:///run/current-system/sw/share/backgrounds/gnome/blobs-d.svg";
       primary-color = "#ffffff";
       secondary-color = "#000000";
     };
@@ -40,6 +41,21 @@ with lib.hm.gvariant;
 
     "system/locale" = {
       region = "en_GB.UTF-8";
+    };
+        "org/gnome/settings-daemon/plugins/power" = {
+      power-button-action = "suspend";
+      sleep-inactive-ac-type = "nothing";
+    };
+
+    "org/gnome/desktop/privacy" = {
+      old-files-age = mkUint32 30;
+      recent-files-max-age = -1;
+      remove-old-temp-files = true;
+      remove-old-trash-files = true;
+    };
+
+    "org/gnome/desktop/datetime" = {
+      automatic-timezone = true;
     };
 
     "org/gnome/desktop/peripherals/mouse" = {
@@ -59,6 +75,7 @@ with lib.hm.gvariant;
     "org/gnome/desktop/wm/preferences" = {
       button-layout = "appmenu:minimize,maximize,close";
       resize-with-right-button = true;
+      titlebar-font = "Source Sans 3 11";
     };
 
     "org/gnome/shell/weather" = {

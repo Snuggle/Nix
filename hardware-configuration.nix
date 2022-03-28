@@ -11,8 +11,19 @@
   boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
+  boot.kernelParams = [ "nvidia-drm.modeset=1" ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+
+  boot.loader.grub.useOSProber = true;
+  
+  boot.plymouth.enable = true;
+
+  hardware.nvidia.powerManagement.enable = true; # https://nixos.wiki/wiki/Nvidia#Fix_graphical_corruption_on_suspend.2Fresume
+
+  services.xserver = {
+    videoDrivers = [ "nvidia" ];
+  };
 
   hardware.enableAllFirmware = true;
 
