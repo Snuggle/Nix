@@ -179,6 +179,18 @@
     };
     wantedBy = [ "default.target" ];
   };
+
+  systemd.user.services.nextcloud-config-update = {
+    enable = true;
+    description = "Update Nextcloud Config";
+    path = [ pkgs.bash pkgs.stdenv pkgs.coreutils ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.coreutils}/bin/cp --no-clobber ${config/Nextcloud/nextcloud.cfg} ${config.users.users.snuggle.home}/.config/Nextcloud/nextcloud.cfg";
+      ExecStartPost="${pkgs.coreutils}/bin/chmod +w ${config.users.users.snuggle.home}/.config/Nextcloud/nextcloud.cfg";
+    };
+    wantedBy = [ "default.target" ];
+  };
   
   nixpkgs.config.allowUnfree = true;
 
@@ -378,7 +390,8 @@
   home-manager.users.snuggle = { 
     imports = [ ./config/dconf/dconf.nix ];
 
-    
+    #xdg.configFile."Nextcloud/nextcloud.cfg".source = config/Nextcloud/nextcloud.cfg;
+    xdg.configFile."Nextcloud/sync-exclude.lst".source = config/Nextcloud/sync-exclude.lst;
 
     gtk = {
       enable = true;
