@@ -124,34 +124,37 @@
       allowedUDPPorts = [ 51820 ];
     };
 
-    wireguard.interfaces = {
-      wg0 = {
-        ips = [ "10.100.0.2/32" ];
-        listenPort = 51820;
-        privateKeyFile = "${config.users.users.snuggle.home}/.wireguard/private";
+    wireguard = {
+      enable = false; # Poor performance, disabling for now.
+      interfaces = {
+        wg0 = {
+          ips = [ "10.100.0.2/32" ];
+          listenPort = 51820;
+          privateKeyFile = "${config.users.users.snuggle.home}/.wireguard/private";
 
-        peers = [
-          # For a client configuration, one peer entry for the server will suffice.
+          peers = [
+            # For a client configuration, one peer entry for the server will suffice.
 
-          {
-            # Public key of the server (not a file path).
-            publicKey = "2Y/T27X+ND1xUT3lfXQ0YpCjTocvMxn2c1Yv9eHG8kQ=";
+            {
+              # Public key of the server (not a file path).
+              publicKey = "2Y/T27X+ND1xUT3lfXQ0YpCjTocvMxn2c1Yv9eHG8kQ=";
 
-            # Forward all the traffic via VPN.
-            allowedIPs = [ "0.0.0.0/0" ];
-            # Or forward only particular subnets
-            #allowedIPs = [ "10.100.0.1" "91.108.12.0/22" ];
+              # Forward all the traffic via VPN.
+              allowedIPs = [ "0.0.0.0/0" ];
+              # Or forward only particular subnets
+              #allowedIPs = [ "10.100.0.1" "91.108.12.0/22" ];
 
-            # Set this to the server IP and port.
-            endpoint = "home.snugg.ie:51820"; # ToDo: route to endpoint not automatically configured https://wiki.archlinux.org/index.php/WireGuard#Loop_routing https://discourse.nixos.org/t/solved-minimal-firewall-setup-for-wireguard-client/7577
+              # Set this to the server IP and port.
+              endpoint = "home.snugg.ie:51820"; # ToDo: route to endpoint not automatically configured https://wiki.archlinux.org/index.php/WireGuard#Loop_routing https://discourse.nixos.org/t/solved-minimal-firewall-setup-for-wireguard-client/7577
 
-            # Send keepalives every 25 seconds. Important to keep NAT tables alive.
-            persistentKeepalive = 25;
+              # Send keepalives every 25 seconds. Important to keep NAT tables alive.
+              persistentKeepalive = 25;
 
-            # Update DNS of endpoint
-            dynamicEndpointRefreshSeconds = 30;
-          }
-        ];
+              # Update DNS of endpoint
+              dynamicEndpointRefreshSeconds = 30;
+            }
+          ];
+        };
       };
     };
   };
