@@ -17,7 +17,7 @@
 
   boot.loader.grub.useOSProber = true;
   
-  boot.plymouth.enable = true;
+  boot.plymouth.enable = false;
 
   hardware.nvidia.powerManagement.enable = true; # https://nixos.wiki/wiki/Nvidia#Fix_graphical_corruption_on_suspend.2Fresume
 
@@ -35,11 +35,13 @@
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/E266-52DA";
       fsType = "vfat";
+      options = [ "nofail" "x-systemd.device-timeout=1ms" "x-systemd.mount-timeout=1ms" "defaults" ]; # Cannot automount as this fails when Busybox is installed due to "No -M option on fsck.vfat"
     };
 
   fileSystems."/mnt/Games" =
     { device = "/dev/disk/by-uuid/917d6f24-1f40-4019-9efa-c9cd6be4c5f6";
       fsType = "btrfs";
+      options = [ "nofail" "x-systemd.device-timeout=10s" "defaults" ];
     };
 
   swapDevices =

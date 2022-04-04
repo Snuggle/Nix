@@ -221,7 +221,7 @@
       cp ${(builtins.fetchurl { 
         url = "https://github.com/Snuggle.png"; 
         sha256 = "0gyhr691jlyhdm6ha6jq67fal7appbk4mj2jp9bqh6sy5fflcj37"; 
-      })} "${config.users.users.snuggle.home}/.face"
+      })} "/var/lib/AccountsService/users/snuggle"
     '';
 
     # Setup symlinks for NAS-based home directory
@@ -268,55 +268,8 @@
     }) ];
   };
 
-
-  #virtualisation.libvirtd.enable = true;
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-
   environment.systemPackages = with pkgs; [
-    # Terminal Tools
-    alacritty
-    bat
-    bind
-    exa
-    fish
-    micro
-    mosh
-    neofetch
-    optipng
-    starship
-    vim
-    virt-manager
-    wget
-    xclip
-
-    # Development or Libraries
-    docker
-    jekyll
-    ruby
-
-    # Git, GnuPG & Signing
-    git
-    gnupg
-    yubikey-personalization
-
-    # System Utilities
-    dconf
-    dconf2nix
-    etcher
-    ffmpeg
-    glances
-    gnome.dconf-editor
-    gnome.gnome-software
-    linuxKernel.kernels.linux_zen
-    ntfs3g
-    nv-codec-headers
-    pavucontrol
-    refind
-    tmux
-    vlc
-    wireguard-tools
+    ### (Installed System Packages) ###
 
     # Applications
     _1password-gui
@@ -325,20 +278,54 @@
     firefox
     gparted
     inkscape
-    kdenlive
-    krita
+    kdenlive krita
     libreoffice
     nextcloud-client
-    obs-studio
-    obsidian
+    obs-studio obsidian
     spotify
-    tdesktop
-    teams
-    transmission-gtk
-    transmission-remote-gtk
-    vivaldi
-    vivaldi-ffmpeg-codecs
-    vscode
+    tdesktop teams transmission-gtk transmission-remote-gtk
+    vivaldi vivaldi-ffmpeg-codecs vscode
+
+    # Development, Git or Libraries
+    docker
+    ffmpeg
+    git gnupg
+    jekyll
+    ruby
+    yubikey-personalization
+
+    # GNOME Extensions
+    gnomeExtensions.appindicator
+    gnomeExtensions.gsconnect
+    gnomeExtensions.mpris-indicator-button
+    gnomeExtensions.night-theme-switcher
+
+    # System Utilities
+    dconf dconf2nix
+    etcher
+    glances gnome.dconf-editor gnome.gnome-software
+    linuxKernel.kernels.linux_zen
+    ntfs3g nv-codec-headers
+    obinskit
+    pavucontrol
+    refind
+    tmux
+    virt-manager vlc
+    wireguard-tools
+    
+
+    # Terminal Tools
+    alacritty
+    bat bind
+    exa
+    fish
+    micro mosh
+    neofetch
+    optipng
+    starship
+    vim
+    wget
+    xclip
 
     # Theming
     arc-theme
@@ -346,12 +333,6 @@
     gnome3.gnome-tweaks
     papirus-icon-theme
     yaru-theme
-
-    # GNOME Extensions
-    gnomeExtensions.appindicator
-    gnomeExtensions.gsconnect
-    gnomeExtensions.mpris-indicator-button
-    gnomeExtensions.night-theme-switcher
   ];
 
   fonts = {
