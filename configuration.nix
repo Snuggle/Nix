@@ -19,26 +19,84 @@
   };
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot = {
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
 
-  # Don't take ~30s to boot
-  systemd.services.systemd-udev-settle.enable = false;
-  systemd.services.NetworkManager-wait-online.enable = false;
+    extraModulePackages = [
+      config.boot.kernelPackages.v4l2loopback
+    ];
 
-  boot.extraModulePackages = [
-    config.boot.kernelPackages.v4l2loopback
-  ];
+    # Register a v4l2loopback device at boot
+    kernelModules = [
+      "v4l2loopback"
+    ];
+  };
 
-  # Register a v4l2loopback device at boot
-  boot.kernelModules = [
-    "v4l2loopback"
-  ];
+  environment.gnome.excludePackages = [ pkgs.dejavu_fonts ];
+  security.rtkit.enable = true;
+  # Enable sound.
+  hardware.pulseaudio.enable = false;
 
-  networking.hostName = "plum"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  systemd = {
+    services = {
+      # Don't take ~30s to boot
+      systemd-udev-settle.enable = false;
+      NetworkManager-wait-online.enable = false;
 
-  system.autoUpgrade.enable = true;
+      # Set Papirus Folder Colours
+      papirus-folders = {
+        description = "papirus-folders";
+        path = [ pkgs.bash pkgs.stdenv pkgs.coreutils pkgs.gawk pkgs.getent pkgs.gtk3 ];
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = "${pkgs.fetchFromGitHub
+              {
+                owner = "PapirusDevelopmentTeam";
+                repo = "papirus-folders";
+                rev = "86c63fdd21182e5cc8444ba488042559951ca106";
+                sha256 = "sha256-ZZMEZCWO+qW76eqa+TgxWGVz69VkSCPcttLoCrH7ppY=";
+              } + "/papirus-folders"} -t ${pkgs.papirus-icon-theme}/share/icons/Papirus --verbose --color yaru";
+        };
+        wantedBy = [ "default.target" ];
+      };
+    };
+
+    user.services = {
+      nextcloud-config-update = {
+        enable = true;
+        description = "Update Nextcloud Config";
+        path = [ pkgs.bash pkgs.stdenv pkgs.coreutils ];
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = "${pkgs.coreutils}/bin/cp --no-clobber ${config/Nextcloud/nextcloud.cfg} ${config.users.users.snuggle.home}/.config/Nextcloud/nextcloud.cfg";
+          ExecStartPost="${pkgs.coreutils}/bin/chmod +w ${config.users.users.snuggle.home}/.config/Nextcloud/nextcloud.cfg";
+        };
+        wantedBy = [ "default.target" ];
+      };
+
+      # My own public GPG key must be imported otherwise you'll get the below error when trying to sign a git commit:
+      # error: gpg failed to sign the data fatal: failed to write commit object
+      gpg-import-keys = {
+        enable = true;
+        description = "Automatically import my public GPG keys";
+        unitConfig = {
+          After = [ "gpg-agent.socket" ];
+        };
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.gnupg}/bin/gpg --import ${
+            builtins.fetchurl { 
+              url = "https://github.com/${config.users.users.snuggle.name}.gpg"; 
+              sha256 = "06ncqgs3fn5bp6w8qdzd33a22ckym9ndpz7q7hqxf4wg2rjri77r"; 
+            }}'";
+        };
+
+        wantedBy = [ "default.target" ];
+      };
+    };
+  };
+
   
   # Set your time zone.
   time.timeZone = "Europe/London";
@@ -46,130 +104,152 @@
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
-  networking.useDHCP = false;
-  networking.interfaces.enp38s0.useDHCP = true;
-  networking.interfaces.wlp37s0.useDHCP = true;
-	
-  networking.extraHosts =
-  ''
-    10.0.1.6 hug
-  '';
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  networking.firewall = {
-    allowedTCPPorts = [ 7777 ];
-    allowedUDPPorts = [ 51820 ];
-  };
+  networking = {
+    hostName = "plum"; # Define your hostname.
+    useDHCP = false;
+    interfaces.enp38s0.useDHCP = true;
+    interfaces.wlp37s0.useDHCP = true;
 
-  networking.wireguard.interfaces = {
-    wg0 = {
-      ips = [ "10.100.0.2/32" ];
-      listenPort = 51820;
-      privateKeyFile = "${config.users.users.snuggle.home}/.wireguard/private";
+    extraHosts =
+      ''
+        10.0.1.6 hug
+      '';
+    # Configure network proxy if necessary
+    # networking.proxy.default = "http://user:password@proxy:port/";
+    # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-      peers = [
-        # For a client configuration, one peer entry for the server will suffice.
+    firewall = {
+      allowedTCPPorts = [ 7777 ];
+      allowedUDPPorts = [ 51820 ];
+    };
 
-        {
-          # Public key of the server (not a file path).
-          publicKey = "2Y/T27X+ND1xUT3lfXQ0YpCjTocvMxn2c1Yv9eHG8kQ=";
+    wireguard = {
+      enable = false; # Poor performance, disabling for now.
+      interfaces = {
+        wg0 = {
+          ips = [ "10.100.0.2/32" ];
+          listenPort = 51820;
+          privateKeyFile = "${config.users.users.snuggle.home}/.wireguard/private";
 
-          # Forward all the traffic via VPN.
-          allowedIPs = [ "0.0.0.0/0" ];
-          # Or forward only particular subnets
-          #allowedIPs = [ "10.100.0.1" "91.108.12.0/22" ];
+          peers = [
+            # For a client configuration, one peer entry for the server will suffice.
 
-          # Set this to the server IP and port.
-          endpoint = "home.snugg.ie:51820"; # ToDo: route to endpoint not automatically configured https://wiki.archlinux.org/index.php/WireGuard#Loop_routing https://discourse.nixos.org/t/solved-minimal-firewall-setup-for-wireguard-client/7577
+            {
+              # Public key of the server (not a file path).
+              publicKey = "2Y/T27X+ND1xUT3lfXQ0YpCjTocvMxn2c1Yv9eHG8kQ=";
 
-          # Send keepalives every 25 seconds. Important to keep NAT tables alive.
-          persistentKeepalive = 25;
+              # Forward all the traffic via VPN.
+              allowedIPs = [ "0.0.0.0/0" ];
+              # Or forward only particular subnets
+              #allowedIPs = [ "10.100.0.1" "91.108.12.0/22" ];
 
-          # Update DNS of endpoint
-          dynamicEndpointRefreshSeconds = 30;
-        }
-      ];
+              # Set this to the server IP and port.
+              endpoint = "home.snugg.ie:51820"; # ToDo: route to endpoint not automatically configured https://wiki.archlinux.org/index.php/WireGuard#Loop_routing https://discourse.nixos.org/t/solved-minimal-firewall-setup-for-wireguard-client/7577
+
+              # Send keepalives every 25 seconds. Important to keep NAT tables alive.
+              persistentKeepalive = 25;
+
+              # Update DNS of endpoint
+              dynamicEndpointRefreshSeconds = 30;
+            }
+          ];
+        };
+      };
     };
   };
+	
+  nixpkgs.config = { 
+    allowUnfree = true;
+    permittedInsecurePackages = [
+        "electron-13.6.9"
+        "electron-12.2.3"
+    ];
+  };  
 
-  nixpkgs.config.permittedInsecurePackages = [
-      "electron-13.6.9"
-      "electron-12.2.3"
-  ];
+  services = {
+    # Enable the X11 windowing system.
+    xserver.enable = true;
 
-  # Select internationalisation properties.
-  # i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  # };
+    # Enable the GNOME 3 Desktop Environment.
+    xserver.displayManager.gdm.enable = true;
+    xserver.desktopManager.gnome.enable = true;
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
+      # List services that you want to enable:
 
+    # Enable the OpenSSH daemon.
+    openssh.enable = true;
+    openssh.passwordAuthentication = false;
+    openssh.permitRootLogin = "yes";
+    openssh.kbdInteractiveAuthentication = false;
+    openssh.extraConfig = ''
+      PubkeyAcceptedAlgorithms +ssh-rsa
+      HostkeyAlgorithms +ssh-rsa
+    '';
 
+    #services.dbus.packages = with pkgs; [ gnome3.dconf ];
+    
 
-  # Setup symlinks for NAS-based home directory
-  system.userActivationScripts.linktosharedfolder.text = ''
-  for location in \
-    Desktop \
-    Documents \
-    Downloads \
-    Games \
-    Pictures \
-    Public \
-    Templates \
-    Temporary \
-    Videos \
-    Music 
-  do
-    if [[ -d "${config.users.users.snuggle.home}/$location" ]]; then
-      find "${config.users.users.snuggle.home}/$location" -type d -empty -exec rm --dir --verbose {} \;
-    fi
-    if [[ -d "${config.users.users.snuggle.home}/$location" ]]; then
-      continue
-    fi
-    if [[ ! -L "${config.users.users.snuggle.home}/$location" ]]; then
-      ln --symbolic --no-target-directory --verbose "$(findmnt /dev/disk/by-label/Games --noheadings --first-only --output TARGET)/Homesweet/$location/" "${config.users.users.snuggle.home}/$location"
-    fi
-  done
-  '';
+    # Configure keymap in X11
+    # services.xserver.layout = "us";
+    # services.xserver.xkbOptions = "eurosign:e";
 
+    # Enable CUPS to print documents.
+    printing.enable = true;
 
-  # Enable the GNOME 3 Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-  environment.gnome.excludePackages = [ pkgs.dejavu_fonts ];
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      # If you want to use JACK applications, uncomment this
+      #jack.enable = true;
 
-  #services.dbus.packages = with pkgs; [ gnome3.dconf ];
-  
+      # use the example session manager (no others are packaged yet so this is enabled by default,
+      # no need to redefine it in your config for now)
+      #media-session.enable = true;
+    };
 
-  # Configure keymap in X11
-  # services.xserver.layout = "us";
-  # services.xserver.xkbOptions = "eurosign:e";
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
-  # Enable sound.
-  hardware.pulseaudio.enable = false;
-  
-  security.rtkit.enable = true;
-  services.pipewire = {
-  enable = true;
-  alsa.enable = true;
-  alsa.support32Bit = true;
-  pulse.enable = true;
-  # If you want to use JACK applications, uncomment this
-  #jack.enable = true;
-
-  # use the example session manager (no others are packaged yet so this is enabled by default,
-  # no need to redefine it in your config for now)
-  #media-session.enable = true;
+    pcscd.enable = true;
+    udev.packages = with pkgs; [ pkgs.yubikey-personalization ];
   };
 
+  system = {
+    autoUpgrade.enable = true;
+
+    activationScripts.setavatar.text = ''
+      cp ${(builtins.fetchurl { 
+        url = "https://github.com/Snuggle.png"; 
+        sha256 = "0gyhr691jlyhdm6ha6jq67fal7appbk4mj2jp9bqh6sy5fflcj37"; 
+      })} "${config.users.users.snuggle.home}/.face"
+    '';
+
+    # Setup symlinks for NAS-based home directory
+    userActivationScripts.linktosharedfolder.text = ''
+      for location in \
+        Desktop \
+        Documents \
+        Downloads \
+        Games \
+        Pictures \
+        Public \
+        Templates \
+        Temporary \
+        Videos \
+        Music 
+      do
+        if [[ -d "${config.users.users.snuggle.home}/$location" ]]; then
+          find "${config.users.users.snuggle.home}/$location" -type d -empty -exec rm --dir --verbose {} \;
+        fi
+        if [[ -d "${config.users.users.snuggle.home}/$location" ]]; then
+          continue
+        fi
+        if [[ ! -L "${config.users.users.snuggle.home}/$location" ]]; then
+          ln --symbolic --no-target-directory --verbose "$(findmnt /dev/disk/by-label/Games --noheadings --first-only --output TARGET)/Homesweet/$location/" "${config.users.users.snuggle.home}/$location"
+        fi
+      done
+    '';
+  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -189,48 +269,6 @@
   };
 
 
-  system.activationScripts.setavatar.text = ''
-    cp ${(builtins.fetchurl { 
-      url = "https://github.com/Snuggle.png"; 
-      sha256 = "0gyhr691jlyhdm6ha6jq67fal7appbk4mj2jp9bqh6sy5fflcj37"; 
-    })} "${config.users.users.snuggle.home}/.face"
-  '';
-
-
-  # Set Papirus Folder Colours
-  systemd.services.papirus-folders = {
-    description = "papirus-folders";
-    path = [ pkgs.bash pkgs.stdenv pkgs.coreutils pkgs.gawk pkgs.getent pkgs.gtk3 ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.fetchFromGitHub
-          {
-            owner = "PapirusDevelopmentTeam";
-            repo = "papirus-folders";
-            rev = "86c63fdd21182e5cc8444ba488042559951ca106";
-            sha256 = "sha256-ZZMEZCWO+qW76eqa+TgxWGVz69VkSCPcttLoCrH7ppY=";
-          } + "/papirus-folders"} -t ${pkgs.papirus-icon-theme}/share/icons/Papirus --verbose --color yaru";
-    };
-    wantedBy = [ "default.target" ];
-  };
-
-  systemd.user.services.nextcloud-config-update = {
-    enable = true;
-    description = "Update Nextcloud Config";
-    path = [ pkgs.bash pkgs.stdenv pkgs.coreutils ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.coreutils}/bin/cp --no-clobber ${config/Nextcloud/nextcloud.cfg} ${config.users.users.snuggle.home}/.config/Nextcloud/nextcloud.cfg";
-      ExecStartPost="${pkgs.coreutils}/bin/chmod +w ${config.users.users.snuggle.home}/.config/Nextcloud/nextcloud.cfg";
-    };
-    wantedBy = [ "default.target" ];
-  };
-  
-  nixpkgs.config.allowUnfree = true;
-
-  services.pcscd.enable = true;
-  services.udev.packages = with pkgs; [ pkgs.yubikey-personalization ];
-
   #virtualisation.libvirtd.enable = true;
 
   # List packages installed in system profile. To search, run:
@@ -238,86 +276,83 @@
 
   environment.systemPackages = with pkgs; [
     # Terminal Tools
-    wget
-    vim
+    alacritty
+    bat
+    bind
+    exa
     fish
     micro
-    bat
-    exa
-    xclip
-    neofetch
-    alacritty
-    starship
-    #virt-manager
-    bind
-    optipng
     mosh
+    neofetch
+    optipng
+    starship
+    vim
+    virt-manager
+    wget
+    xclip
 
     # Development or Libraries
+    docker
     jekyll
     ruby
-    docker
 
     # Git, GnuPG & Signing
-    gnupg
     git
+    gnupg
     yubikey-personalization
-    
+
     # System Utilities
-    glances
-    ffmpeg
-    nv-codec-headers
-    ntfs3g
-    refind
-    etcher
-    vlc
     dconf
+    dconf2nix
+    etcher
+    ffmpeg
+    glances
     gnome.dconf-editor
     gnome.gnome-software
-    dconf2nix
-    tmux
-    pavucontrol
     linuxKernel.kernels.linux_zen
+    ntfs3g
+    nv-codec-headers
+    pavucontrol
+    refind
+    tmux
+    vlc
     wireguard-tools
 
     # Applications
-    firefox
-    discord
-    vscode
-    nextcloud-client
-    tdesktop
-    spotify
-    obs-studio
-    krita
-    obsidian
-    # davinci-resolve # https://github.com/NixOS/nixpkgs/issues/94032
-    gparted
     _1password-gui
+    # davinci-resolve # https://github.com/NixOS/nixpkgs/issues/94032
+    discord
+    firefox
+    gparted
     inkscape
+    kdenlive
+    krita
+    libreoffice
+    nextcloud-client
+    obs-studio
+    obsidian
+    spotify
+    tdesktop
+    teams
     transmission-gtk
     transmission-remote-gtk
     vivaldi
     vivaldi-ffmpeg-codecs
-    kdenlive
-    teams
-    libreoffice
+    vscode
 
     # Theming
-    yaru-theme
+    arc-theme
     breeze-gtk
     gnome3.gnome-tweaks
     papirus-icon-theme
-    arc-theme
-
-    
+    yaru-theme
 
     # GNOME Extensions
     gnomeExtensions.appindicator
-    gnomeExtensions.night-theme-switcher
     gnomeExtensions.gsconnect
     gnomeExtensions.mpris-indicator-button
+    gnomeExtensions.night-theme-switcher
   ];
-
 
   fonts = {
     enableDefaultFonts = false;
@@ -363,26 +398,6 @@
     export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
   '';
 
-  # My own public GPG key must be imported otherwise you'll get the below error when trying to sign a git commit:
-  # error: gpg failed to sign the data fatal: failed to write commit object
-  systemd.user.services.gpg-import-keys = {
-    enable = true;
-    description = "Automatically import my public GPG keys";
-    unitConfig = {
-      After = [ "gpg-agent.socket" ];
-    };
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.gnupg}/bin/gpg --import ${
-        builtins.fetchurl { 
-          url = "https://github.com/${config.users.users.snuggle.name}.gpg"; 
-          sha256 = "06ncqgs3fn5bp6w8qdzd33a22ckym9ndpz7q7hqxf4wg2rjri77r"; 
-        }}'";
-    };
-
-    wantedBy = [ "default.target" ];
-  };
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -407,19 +422,6 @@
       enableSSHSupport = true;
     };
   };
-
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-  services.openssh.passwordAuthentication = false;
-  services.openssh.permitRootLogin = "yes";
-  services.openssh.kbdInteractiveAuthentication = false;
-  services.openssh.extraConfig = ''
-    PubkeyAcceptedAlgorithms +ssh-rsa
- 	HostkeyAlgorithms +ssh-rsa
-  '';
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -582,7 +584,6 @@
       };
     };
   };
-
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
