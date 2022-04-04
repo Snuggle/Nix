@@ -255,6 +255,7 @@
     obs-studio
     krita
     obsidian
+    # davinci-resolve # https://github.com/NixOS/nixpkgs/issues/94032
     gparted
     _1password-gui
     inkscape
