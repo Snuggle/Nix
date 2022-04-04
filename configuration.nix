@@ -333,6 +333,16 @@
     gnome3.gnome-tweaks
     papirus-icon-theme
     yaru-theme
+
+    # Un-GNU Coreutils, Replace GNU Coreutils with Busybox/Toybox
+    (pkgs.hiPrio unixtools.fsck)
+    # Required for NixOS with busybox otherwise "systemd-fsck[4070]: fsck.vfat: invalid option -- 'M'" error.
+    # This ensures that `ls -l $(which fsck)` is pointing to the 'util-linux/bin/fsck' rather than 'busybox/bin/fsck'.
+    # Failing to do this causes systemd to fail booting, dropping into emergency mode, on FAT32 /boot EFI partitions.
+    busybox
+    (pkgs.hiPrio toybox)
+    (pkgs.lowPrio coreutils)
+    (coreutils.override { minimal = true; })
   ];
 
   fonts = {
