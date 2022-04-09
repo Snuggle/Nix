@@ -35,7 +35,6 @@
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/E266-52DA";
       fsType = "vfat";
-      options = [ "nofail" "x-systemd.device-timeout=1ms" "x-systemd.mount-timeout=1ms" "defaults" ]; # Cannot automount as this fails when Busybox is installed due to "No -M option on fsck.vfat"
     };
 
   fileSystems."/mnt/Games" =

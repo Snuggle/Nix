@@ -271,6 +271,20 @@
   environment.systemPackages = with pkgs; [
     ### (Installed System Packages) ###
 
+    # Electron Patches
+    (pkgs.writeShellApplication {
+      name = "discord";
+      text = "${pkgs.discord}/bin/discord --enable-features=UseOzonePlatform --ozone-platform=wayland";
+    })
+    (pkgs.writeShellApplication {
+      name = "code";
+      text = "${pkgs.vscode}/bin/code --enable-features=UseOzonePlatform --ozone-platform=wayland";
+    })
+    (pkgs.writeShellApplication {
+      name = "slack";
+      text = "${pkgs.slack}/bin/slack --enable-features=UseOzonePlatform --ozone-platform=wayland";
+    })
+
     # Applications
     _1password-gui
     # davinci-resolve # https://github.com/NixOS/nixpkgs/issues/94032
@@ -283,6 +297,7 @@
     nextcloud-client
     obs-studio obsidian
     spotify
+    slack
     tdesktop teams transmission-gtk transmission-remote-gtk
     vivaldi vivaldi-ffmpeg-codecs vscode
 
@@ -296,6 +311,7 @@
 
     # GNOME Extensions
     gnomeExtensions.appindicator
+    gnomeExtensions.burn-my-windows
     gnomeExtensions.gsconnect
     gnomeExtensions.mpris-indicator-button
     gnomeExtensions.night-theme-switcher
