@@ -300,6 +300,7 @@
     slack
     tdesktop teams transmission-gtk transmission-remote-gtk
     vivaldi vivaldi-ffmpeg-codecs vscode
+    zoom-us
 
     # Development, Git or Libraries
     docker
@@ -308,6 +309,7 @@
     jekyll
     ruby
     yubikey-personalization
+    tailscale
 
     # GNOME Extensions
     gnomeExtensions.appindicator
@@ -331,10 +333,11 @@
     
 
     # Terminal Tools
-    alacritty
+    #alacritty
     bat bind
     exa
     fish
+    kitty
     micro mosh
     neofetch
     optipng
@@ -396,7 +399,8 @@
     };
   };
 
-  environment.sessionVariables.TERMINAL = [ "alacritty" ];
+  environment.sessionVariables.TERMINAL = [ "kitty" ];
+  environment.sessionVariables.VISUAL = [ "micro" ];
   environment.sessionVariables.EDITOR = [ "micro" ];
 
   environment.shellInit = ''
@@ -540,8 +544,51 @@
         };
       };
 
-      alacritty = {
+      kitty = {
         enable = true;
+        #theme = "fairyfloss";
+        font = {
+          name = "Fantasque Sans Mono";
+          package = pkgs.fantasque-sans-mono;
+          size = 14;
+        };
+        settings = {
+          linux_display_server = "wayland";
+          cursor_shape = "beam";
+          background = "#5a5475";
+          foreground = "#f8f8f0";
+          cursor = "#ffb8d1";
+          selection_foreground = "#ad5877";
+          selection_background = "#ffb8d1";
+          # Black
+          color0 = "#464258";
+          color8 = "#c19fd8";
+          # Red
+          color1 = "#ff857f";
+          color9 = "#f44747";
+          # Green
+          color2 = "#ad5877";
+          color10 = "#ffb8d1";
+          # Yellow
+          color3 = "#e6c000";
+          color11 = "#ffea00";
+          # Blue
+          color4 = "#6c71c4";
+          color12 = "#6796e6";
+          # Magenta
+          color5 = "#b267e6";
+          color13 = "#c5a3ff";
+          # Cyan
+          color6 = "#afecad";
+          color14 = "#b2ffdd";
+          # White
+          color7 = "#cccccc";
+          color15 = "#f8f8f0";
+        };
+      };
+
+      alacritty = {
+        enable = false;
         settings = {
           cursor.style = {
             shape = "beam";
