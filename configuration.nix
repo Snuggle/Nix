@@ -271,20 +271,6 @@
   environment.systemPackages = with pkgs; [
     ### (Installed System Packages) ###
 
-    # Electron Patches
-    (pkgs.writeShellApplication {
-      name = "discord";
-      text = "${pkgs.discord}/bin/discord --enable-features=UseOzonePlatform --ozone-platform=wayland";
-    })
-    (pkgs.writeShellApplication {
-      name = "code";
-      text = "${pkgs.vscode}/bin/code --enable-features=UseOzonePlatform --ozone-platform=wayland";
-    })
-    (pkgs.writeShellApplication {
-      name = "slack";
-      text = "${pkgs.slack}/bin/slack --enable-features=UseOzonePlatform --ozone-platform=wayland";
-    })
-
     # Applications
     _1password-gui
     # davinci-resolve # https://github.com/NixOS/nixpkgs/issues/94032
@@ -319,6 +305,7 @@
     gnomeExtensions.night-theme-switcher
 
     # System Utilities
+    brlaser
     dconf dconf2nix
     etcher
     glances gnome.dconf-editor gnome.gnome-software
@@ -331,7 +318,7 @@
     virt-manager vlc
     wireguard-tools
     
-
+    
     # Terminal Tools
     #alacritty
     bat bind
@@ -385,6 +372,9 @@
       # Emoji Fonts
       noto-fonts-emoji-blob-bin
 
+      # Non-English Fonts
+      noto-fonts-cjk
+
       (nerdfonts.override { fonts = [ "FantasqueSansMono" "SourceCodePro" ]; })
     ];
 
@@ -402,6 +392,7 @@
   environment.sessionVariables.TERMINAL = [ "kitty" ];
   environment.sessionVariables.VISUAL = [ "micro" ];
   environment.sessionVariables.EDITOR = [ "micro" ];
+  environment.sessionVariables.NIXOS_OZONE_WL = "true"; # Apply Wayland flags to Electron apps where necessary
 
   environment.shellInit = ''
     export GPG_TTY="$(tty)"
