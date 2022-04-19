@@ -4,10 +4,10 @@
 set +x
 
 build_ci_system() {
-  sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+  nix-channel --add https://nixos.org/channels/nixos-unstable nixos
   cmd="
     nix-build-uncached '<nixpkgs/nixos>' \
-      -I nixos-config=system/configuration.nix \
+      -I nixos-config=configuration.nix \
       -A system
   "
   nix-shell -p nix-build-uncached --run "$cmd"
