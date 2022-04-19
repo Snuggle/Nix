@@ -275,7 +275,7 @@
     _1password-gui
     # davinci-resolve # https://github.com/NixOS/nixpkgs/issues/94032
     discord
-    firefox
+    firefox-wayland
     gparted
     inkscape
     kdenlive krita
@@ -309,7 +309,7 @@
     dconf dconf2nix
     etcher
     glances gnome.dconf-editor gnome.gnome-software
-    linuxKernel.kernels.linux_zen
+    linuxKernel.kernels.linux_zen libglvnd
     ntfs3g nv-codec-headers
     obinskit
     pavucontrol
@@ -317,7 +317,6 @@
     tmux
     virt-manager vlc
     wireguard-tools
-    
     
     # Terminal Tools
     #alacritty
@@ -432,6 +431,7 @@
   # networking.firewall.enable = false;
 
   home-manager.users.snuggle = { 
+    home.stateVersion = "20.09";
     imports = [ ./config/dconf/dconf.nix ];
 
     #xdg.configFile."Nextcloud/nextcloud.cfg".source = config/Nextcloud/nextcloud.cfg;
@@ -457,6 +457,8 @@
     programs = {
       firefox = {
         enable = true;
+
+        package = pkgs.firefox-wayland;
 
         profiles.default = {
           id = 0;
