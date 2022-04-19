@@ -24,6 +24,11 @@ with lib.hm.gvariant;
       name = "Yaru-magenta-dark";
     };
 
+    "org/gnome/shell/extensions/burn-my-windows" = {
+      energize-b-close-effect="true";
+      energize-b-open-effect="true";
+    };
+
     "org/gnome/desktop/background" = {
       picture-options = "zoom";
       picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/blobs-l.svg";
