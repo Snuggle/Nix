@@ -300,6 +300,7 @@
     # GNOME Extensions
     gnomeExtensions.appindicator
     gnomeExtensions.burn-my-windows
+    gnomeExtensions.compiz-windows-effect
     gnomeExtensions.gsconnect
     gnomeExtensions.mpris-indicator-button
     gnomeExtensions.night-theme-switcher
@@ -308,7 +309,7 @@
     brlaser
     dconf dconf2nix
     etcher
-    glances gnome.dconf-editor gnome.gnome-software
+    glances gnome.dconf-editor gnome.gnome-software gnome.gucharmap
     linuxKernel.kernels.linux_zen libglvnd
     ntfs3g nv-codec-headers
     obinskit
