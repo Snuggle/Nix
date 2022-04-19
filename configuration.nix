@@ -220,7 +220,6 @@ system = {
 	activationScripts.setavatar.text = ''
 		cp ${(builtins.fetchurl { 
 			url = "https://github.com/Snuggle.png"; 
-			sha256 = "0gyhr691jlyhdm6ha6jq67fal7appbk4mj2jp9bqh6sy5fflcj37"; 
 		})} "/var/lib/AccountsService/users/snuggle"
 	'';
 
