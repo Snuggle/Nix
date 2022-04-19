@@ -39,6 +39,7 @@ environment.systemPackages = with pkgs; [
 
 	# System Utilities
 	brlaser
+	cachix
 	dconf dconf2nix
 	etcher
 	glances gnome.dconf-editor gnome.gnome-software gnome.gucharmap

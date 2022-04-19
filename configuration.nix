@@ -6,6 +6,7 @@
 { config, lib, pkgs, ... }:
 {
 imports = [ # Include the results of the hardware scan.
+	./cachix.nix
 	./hardware-configuration.nix
 	./packages.nix
 	./snuggle.nix
