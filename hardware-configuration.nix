@@ -17,6 +17,7 @@ boot.kernelModules = [ "kvm-amd" ];
 boot.extraModulePackages = [ ];
 
 boot.loader.grub.useOSProber = true;
+boot.loader.timeout = 0;
 
 boot.plymouth.enable = false;
 

@@ -49,7 +49,7 @@ systemd = {
 		# Set Papirus Folder Colours
 		papirus-folders = {
 			description = "papirus-folders";
-			path = [ pkgs.bash pkgs.stdenv pkgs.coreutils pkgs.gawk pkgs.getent pkgs.gtk3 ];
+			path = [ pkgs.bash pkgs.stdenv pkgs.gawk pkgs.getent pkgs.gtk3 ];
 			serviceConfig = {
 				Type = "oneshot";
 				ExecStart = "${pkgs.fetchFromGitHub
@@ -62,17 +62,34 @@ systemd = {
 			};
 			wantedBy = [ "default.target" ];
 		};
+
+		refind-theme = {
+			description = "Set rEFInd theme";
+			path = [ pkgs.git pkgs.stdenv pkgs.toybox pkgs.busybox ];
+			serviceConfig = {
+				Type = "oneshot";
+				ExecStart = "${pkgs.toybox}/bin/toybox cp -RFv ${pkgs.fetchFromGitHub
+						{
+							owner = "bobafetthotmail";
+							repo = "refind-theme-regular";
+							rev = "508ff82526b76ead3a8cbd77cb90a91d4be871b9";
+							sha256 = "sha256-HDs4RWCo6bi1tjpja7k3ex0JFGJExTcqbmikvM2xjnE=";
+						} + "/."} /boot/EFI/refind/themes/";
+				ExecStartPost = "${pkgs.bash}/bin/bash -c '${pkgs.toybox}/bin/toybox cp -Fv ${config/rEFInd/theme.conf} /boot/EFI/refind/themes/theme.conf && cp -Fv ${config/rEFInd/refind.conf} /boot/EFI/refind/refind.conf'";
+			};
+			wantedBy = [ "default.target" ];
+		};
 	};
 
 	user.services = {
 		nextcloud-config-update = {
 			enable = true;
 			description = "Update Nextcloud Config";
-			path = [ pkgs.bash pkgs.stdenv pkgs.coreutils ];
+			path = [ pkgs.bash pkgs.stdenv pkgs.toybox ];
 			serviceConfig = {
 				Type = "oneshot";
-				ExecStart = "${pkgs.coreutils}/bin/cp --no-clobber ${config/Nextcloud/nextcloud.cfg} ${config.users.users.snuggle.home}/.config/Nextcloud/nextcloud.cfg";
-				ExecStartPost="${pkgs.coreutils}/bin/chmod +w ${config.users.users.snuggle.home}/.config/Nextcloud/nextcloud.cfg";
+				ExecStart = "${pkgs.toybox}/bin/toybox cp -n ${config/Nextcloud/nextcloud.cfg} ${config.users.users.snuggle.home}/.config/Nextcloud/nextcloud.cfg";
+				ExecStartPost="${pkgs.toybox}/bin/toybox chmod +w ${config.users.users.snuggle.home}/.config/Nextcloud/nextcloud.cfg";
 			};
 			wantedBy = [ "default.target" ];
 		};
@@ -222,7 +239,7 @@ system = {
 		accountServiceIcons="/var/lib/AccountsService/icons/snuggle"
 		accountServiceUsers="/var/lib/AccountsService/users/snuggle"
 		cp ${(builtins.fetchurl { 
-			url = "https://github.com/Snuggle.png"; 
+			url = "https://github.com/snuggle.png"; 
 		})} "$accountServiceIcons"
 
 		if ! grep -Fxq "Icon=$accountServiceIcons" "$accountServiceUsers"; then
@@ -280,7 +297,7 @@ fonts = import ./fonts.nix pkgs;
 environment.sessionVariables.TERMINAL = [ "kitty" ];
 environment.sessionVariables.VISUAL = [ "micro" ];
 environment.sessionVariables.EDITOR = [ "micro" ];
-environment.sessionVariables.NIXOS_OZONE_WL = "true"; # Apply Wayland flags to Electron apps where necessary
+environment.sessionVariables.NIXOS_OZONE_WL = "1"; # Apply Wayland flags to Electron apps where necessary
 
 environment.shellInit = ''
 	export GPG_TTY="$(tty)"
@@ -306,7 +323,13 @@ programs = {
 		};
 	};
 
-	ssh.startAgent = false;
+	ssh = {
+		startAgent = false;
+		extraConfig = ''
+			PubkeyAcceptedAlgorithms +ssh-rsa
+			HostkeyAlgorithms +ssh-rsa
+		'';
+	};
 	gnupg.agent = {
 		enable = true;
 		enableSSHSupport = true;

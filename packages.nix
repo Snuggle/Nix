@@ -22,7 +22,7 @@ environment.systemPackages = with pkgs; [
 
 	# Development, Git or Libraries
 	docker
-	ffmpeg
+	ffmpeg-full
 	git gnupg
 	jekyll
 	ruby
@@ -63,6 +63,7 @@ environment.systemPackages = with pkgs; [
 	optipng
 	starship
 	vim
+	jq
 	wget
 	xclip
 
