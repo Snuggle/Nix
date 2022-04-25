@@ -40,6 +40,12 @@ security.rtkit.enable = true;
 # Enable sound.
 hardware.pulseaudio.enable = false;
 
+# Inspired by: https://github.com/divnix/digga/blob/4ebf259d11930774b3a13b370b955a8765bfcae6/configuration.nix#L30
+nixpkgs.overlays = let
+    overlays = map (name: import (./overlays + "/${name}"))
+      (builtins.attrNames (builtins.readDir ./overlays));
+  in overlays;
+
 systemd = {
 	services = {
 		# Don't take ~30s to boot
@@ -139,15 +145,15 @@ networking = {
 
 	firewall = {
 		allowedTCPPorts = [ 7777 ];
-		allowedUDPPorts = [ 51820 ];
+		allowedUDPPorts = [ 50 ];
 	};
 
 	wireguard = {
-		enable = false; # Poor performance, disabling for now.
+		enable = true; # Poor performance, disabling for now.
 		interfaces = {
 			wg0 = {
 				ips = [ "10.100.0.2/32" ];
-				listenPort = 51820;
+				listenPort = 50;
 				privateKeyFile = "${config.users.users.snuggle.home}/.wireguard/private";
 
 				peers = [
@@ -163,7 +169,7 @@ networking = {
 						#allowedIPs = [ "10.100.0.1" "91.108.12.0/22" ];
 
 						# Set this to the server IP and port.
-						endpoint = "home.snugg.ie:51820"; # ToDo: route to endpoint not automatically configured https://wiki.archlinux.org/index.php/WireGuard#Loop_routing https://discourse.nixos.org/t/solved-minimal-firewall-setup-for-wireguard-client/7577
+						endpoint = "10.0.1.1:50"; # ToDo: route to endpoint not automatically configured https://wiki.archlinux.org/index.php/WireGuard#Loop_routing https://discourse.nixos.org/t/solved-minimal-firewall-setup-for-wireguard-client/7577
 
 						# Send keepalives every 25 seconds. Important to keep NAT tables alive.
 						persistentKeepalive = 25;
