@@ -36,15 +36,33 @@ boot = {
 };
 
 environment.gnome.excludePackages = [ pkgs.dejavu_fonts ];
-security.rtkit.enable = true;
+security = {
+	rtkit.enable = true;
+	pam = {
+		u2f = {
+			enable = true;
+			control = "sufficient";
+			cue = true;
+			#prompt = "🤔 Please tap your security key to confirm you are human…";
+			#interactive = true;
+		};
+		services = {
+			sudo.u2fAuth = true;
+			login.u2fAuth = true;
+			gbm.u2fAuth = true;
+			gnome-keyring.u2fAuth = true;
+		};
+	};
+};
+
 # Enable sound.
 hardware.pulseaudio.enable = false;
 
 # Inspired by: https://github.com/divnix/digga/blob/4ebf259d11930774b3a13b370b955a8765bfcae6/configuration.nix#L30
 nixpkgs.overlays = let
     overlays = map (name: import (./overlays + "/${name}"))
-      (builtins.attrNames (builtins.readDir ./overlays));
-  in overlays;
+		(builtins.attrNames (builtins.readDir ./overlays));
+	in overlays;
 
 systemd = {
 	services = {
@@ -188,6 +206,8 @@ nixpkgs.config = {
 	permittedInsecurePackages = [
 			"electron-13.6.9"
 			"electron-12.2.3"
+			"electron-14.2.9"
+			"electron-11.5.0"
 	];
 };  
 
@@ -205,7 +225,7 @@ services = {
 	openssh.enable = true;
 	openssh.passwordAuthentication = false;
 	openssh.permitRootLogin = "yes";
-	openssh.kbdInteractiveAuthentication = false;
+	#openssh.kbdInteractiveAuthentication = false;
 	openssh.extraConfig = ''
 		PubkeyAcceptedAlgorithms +ssh-rsa
 		HostkeyAlgorithms +ssh-rsa
@@ -235,7 +255,7 @@ services = {
 	};
 
 	pcscd.enable = true;
-	udev.packages = with pkgs; [ pkgs.yubikey-personalization ];
+	udev.packages = with pkgs; [ pkgs.yubikey-personalization pkgs.libu2f-host ];
 };
 
 system = {
