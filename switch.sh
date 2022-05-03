@@ -4,14 +4,22 @@ normal=$(tput sgr0)
 
 echo "${bold}⚗️ Testing Configuratinon ${normal}"
 #hyperfine --export-markdown /etc/nixos/measure.md --runs 3 "nixos-rebuild dry-activate"
-nixos-rebuild dry-build
+case "$OSTYPE" in
+  darwin*)  darwin-rebuild --dry-run build ;; 
+  linux*)   nixos-rebuild dry-build ;;
+  *)        echo "unknown: $OSTYPE" ;;
+esac
+
 if [ $? -eq 0 ]; then
 	echo "🔨 Rebuilding Configuration…"
-	sudo nixos-rebuild switch --upgrade --max-jobs 16
+	case "$OSTYPE" in
+	  darwin*)  darwin-rebuild switch --max-jobs 4 ;; 
+	  linux*)   sudo nixos-rebuild switch --upgrade --max-jobs 16 ;;
+	  *)        echo "unknown: $OSTYPE" ;;
+	esac
 	if [ $? -eq 0 ]; then
 		echo "❄️ Done! NixOS is Now Running Generation $(sudo nix-env --list-generations --profile /nix/var/nix/profiles/system | grep current | awk '{print $1}')."
 	fi
 else 
 	echo "🚨 Could Not Build Configuration…"
-	nixos-rebuild dry-activate
 fi
