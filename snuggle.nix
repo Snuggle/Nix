@@ -1,21 +1,20 @@
 { pkgs, config, ... }:
 {
-home-manager.users.snuggle = { 
-	home.stateVersion = "20.09";
+	home.stateVersion = "22.05";
 	home.file.".ssh/authorized_keys" = {
     source = builtins.fetchurl { 
-			url = "https://github.com/${config.users.users.snuggle.name}.keys"; 
+			url = "https://github.com/snuggle.keys"; 
 			sha256 = "1d16baihs6d95zkj0mvm7drmyxjnxybwbrivjf91a0innjlhdz07"; 
 		};
 	};
-	imports = [ ./config/dconf/dconf.nix ];
+	#imports = [ ./config/dconf/dconf.nix ];
 
 	#xdg.configFile."Nextcloud/nextcloud.cfg".source = config/Nextcloud/nextcloud.cfg;
 	xdg.configFile."Yubico/u2f_keys".source = config/Yubico/u2f_keys;
 	xdg.configFile."Nextcloud/sync-exclude.lst".source = config/Nextcloud/sync-exclude.lst;
 
 	gtk = {
-		enable = true;
+		enable = false;
 		iconTheme.name = "Papirus";
 		iconTheme.package = pkgs.papirus-icon-theme;
 		theme.name = "Yaru-dark";
@@ -26,14 +25,12 @@ home-manager.users.snuggle = {
 
 	services = {
 		nextcloud-client = {
-		enable = true;
 		startInBackground = true;
 		};
 	};
 
 	programs = {
 		firefox = {
-		enable = true;
 
 		package = pkgs.firefox-wayland;
 
@@ -115,7 +112,7 @@ home-manager.users.snuggle = {
 		};
 
 		kitty = {
-		enable = true;
+		enable = false;
 		#theme = "fairyfloss";
 		font = {
 			name = "Fantasque Sans Mono";
@@ -207,5 +204,4 @@ home-manager.users.snuggle = {
 		};
 		};
 	};
-};
 }

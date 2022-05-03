@@ -55,6 +55,8 @@ security = {
 	};
 };
 
+home-manager.users.snuggle = ./snuggle.nix
+
 # Enable sound.
 hardware.pulseaudio.enable = false;
 
