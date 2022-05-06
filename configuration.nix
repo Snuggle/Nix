@@ -167,7 +167,7 @@ networking = {
 	};
 
 	wireguard = {
-		enable = true; # Poor performance, disabling for now.
+		enable = false; # Poor performance, disabling for now.
 		interfaces = {
 			wg0 = {
 				ips = [ "10.100.0.2/32" ];
@@ -225,7 +225,7 @@ services = {
 	openssh.enable = true;
 	openssh.passwordAuthentication = false;
 	openssh.permitRootLogin = "yes";
-	#openssh.kbdInteractiveAuthentication = false;
+	openssh.kbdInteractiveAuthentication = false;
 	openssh.extraConfig = ''
 		PubkeyAcceptedAlgorithms +ssh-rsa
 		HostkeyAlgorithms +ssh-rsa

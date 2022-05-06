@@ -9,7 +9,7 @@ case "$OSTYPE" in
   linux*)   nixos-rebuild dry-build ;;
   *)        echo "unknown: $OSTYPE" ;;
 esac
-
+>>>>>>> 9f187dc (💚 Remove sha256 which keeps breaking CI build)
 if [ $? -eq 0 ]; then
 	echo "🔨 Rebuilding Configuration…"
 	case "$OSTYPE" in
