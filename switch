@@ -2,14 +2,14 @@
 bold=$(tput bold)
 normal=$(tput sgr0)
 
-echo "${bold}⚗️ Testing Configuratinon ${normal}"
+echo "${bold}⚗️ Testing Configuration ${normal}"
 #hyperfine --export-markdown /etc/nixos/measure.md --runs 3 "nixos-rebuild dry-activate"
 case "$OSTYPE" in
   darwin*)  darwin-rebuild --dry-run build ;; 
   linux*)   nixos-rebuild dry-build ;;
   *)        echo "unknown: $OSTYPE" ;;
 esac
->>>>>>> 9f187dc (💚 Remove sha256 which keeps breaking CI build)
+
 if [ $? -eq 0 ]; then
 	echo "🔨 Rebuilding Configuration…"
 	case "$OSTYPE" in

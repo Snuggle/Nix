@@ -6,6 +6,7 @@ environment.systemPackages = with pkgs; [
 	# Applications
 	_1password-gui
 	# davinci-resolve # https://github.com/NixOS/nixpkgs/issues/94032
+	cider
 	discord
 	firefox-wayland
 	gparted
@@ -16,7 +17,7 @@ environment.systemPackages = with pkgs; [
 	obs-studio obsidian
 	spotify
 	slack
-	tdesktop teams transmission-gtk transmission-remote-gtk
+	tdesktop transmission-gtk transmission-remote-gtk
 	vivaldi vivaldi-ffmpeg-codecs vscode
 	zoom-us
 
@@ -26,6 +27,7 @@ environment.systemPackages = with pkgs; [
 	git gnupg
 	jekyll
 	ruby
+	jetbrains.idea-ultimate
 	yubikey-personalization
 	tailscale
 
@@ -67,6 +69,7 @@ environment.systemPackages = with pkgs; [
 	jq
 	wget
 	xclip
+	python3
 
 	# Theming
 	arc-theme
