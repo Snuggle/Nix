@@ -24,10 +24,10 @@ environment.systemPackages = with pkgs; [
 	# Development, Git or Libraries
 	docker
 	ffmpeg-full
+	openiscsi
 	git gnupg
 	jekyll
 	ruby
-	jetbrains.idea-ultimate
 	yubikey-personalization
 	tailscale
 
@@ -51,7 +51,7 @@ environment.systemPackages = with pkgs; [
 	pavucontrol
 	refind
 	tmux
-	virt-manager vlc
+	virt-manager vlc libvirt
 	xdg-desktop-portal
 	wireguard-tools
 	

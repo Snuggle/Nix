@@ -20,6 +20,8 @@ nixpkgs.config.packageOverrides = pkgs: {
 	};
 };
 
+virtualisation.libvirtd.enable = true;
+
 # Use the systemd-boot EFI boot loader.
 boot = {
 	loader.systemd-boot.enable = true;
@@ -214,6 +216,11 @@ nixpkgs.config = {
 services = {
 	# Enable the X11 windowing system.
 	xserver.enable = true;
+
+	openiscsi = {
+		enable = true;
+		name = "10.0.1.52";
+	};
 
 	# Enable the GNOME 3 Desktop Environment.
 	xserver.displayManager.gdm.enable = true;
