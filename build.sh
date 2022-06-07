@@ -11,7 +11,7 @@ build_ci_system() {
         -I nixos-config=configuration.nix \
         -A system
     "
-    rm -fv "hardware-configuration.nix"
+    sed -i 's/"nvidia"//g' hardware-configuration.nix
     nix-shell -p nix-build-uncached --run "$cmd"
   elif [[ "$OSTYPE" == "darwin"* ]]; then
     build_darwin_system
