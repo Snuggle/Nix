@@ -11,6 +11,7 @@ build_ci_system() {
         -I nixos-config=configuration.nix \
         -A system
     "
+    rm -fv "hardware-configuration.nix"
     nix-shell -p nix-build-uncached --run "$cmd"
   elif [[ "$OSTYPE" == "darwin"* ]]; then
     build_darwin_system
@@ -23,6 +24,7 @@ build_darwin_system() {
   nix-channel --add http://nixos.org/channels/nixpkgs-unstable nixpkgs
   nix-channel --update
   nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
+  rm -fv /etc/nix/nix.conf
   ./result/bin/darwin-installer
   nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
   nix-channel --update
