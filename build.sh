@@ -28,6 +28,8 @@ build_darwin_system() {
   ./result/bin/darwin-installer
   nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
   nix-channel --update
+  echo "Sourcing /etc/static/bashrc…"
+  source /etc/static/bashrc
   darwin-rebuild build
   darwin-rebuild check
 }
