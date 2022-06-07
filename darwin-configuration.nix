@@ -25,6 +25,7 @@
       	echo "tell app \"Finder\" to make alias file at POSIX file \"/Applications/\" to POSIX file \"$foop\" with properties {name: \"$base\"}"
         osascript -e "tell app \"Finder\" to make alias file at POSIX file \"/Applications/\" to POSIX file \"$foop\" with properties {name: \"$base\"}";
       done
+      sudo cp -fv ${./config/Nextcloud/sync-exclude.lst} /Applications/Nextcloud.app/Contents/Resources/sync-exclude.lst
       echo "📦✅ Finished wrapping applications!"
   '');
 
@@ -33,7 +34,7 @@
       fish = {
         enable = true;
         interactiveShellInit = "starship init fish | source";
-        shellInit = builtins.readFile ./config/fish/colours.fish;
+        shellInit = builtins.readFile ./config/fish/init.fish;
         shellAbbrs = {
           cat = "bat";
           ls = "exa --icons";
@@ -63,9 +64,9 @@
       };
     };
 
-    #xdg.configFile."Nextcloud/nextcloud.cfg".source = config/Nextcloud/nextcloud.cfg;
     xdg.configFile."Yubico/u2f_keys".source = config/Yubico/u2f_keys;
-    xdg.configFile."Nextcloud/sync-exclude.lst".source = config/Nextcloud/sync-exclude.lst;
+    home.file.".gnupg/gpg-agent.conf".source = config/gnupg/gpg-agent.conf;
+    home.file.".gnupg/scdaemon.conf".source = config/gnupg/scdaemon.conf;
   };
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix

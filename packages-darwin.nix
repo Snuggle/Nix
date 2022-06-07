@@ -12,6 +12,7 @@ environment.systemPackages = with pkgs; [
     #slack
     transmission-gtk
     vscode
+    pinentry-curses
     #zoom-us
 
     # Development, Git or Libraries
