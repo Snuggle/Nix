@@ -7,14 +7,14 @@ build_ci_system() {
   if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     nix-channel --add https://nixos.org/channels/nixos-unstable nixos
     cmd="
-      nix-build-uncached '<nixpkgs/nixos>' \
+      nix-build '<nixpkgs/nixos>' \
         -I nixos-config=configuration.nix \
         -A system
     "
-    
+
     sed -i 's/"nvidia"//g' hardware-configuration.nix
     sed -i 's/boot.kernelPackages = pkgs.linuxPackages_zen;//g' hardware-configuration.nix
-    nix-shell -p nix-build-uncached --run "$cmd"
+    nix-shell -p nix-build --run "$cmd"
   elif [[ "$OSTYPE" == "darwin"* ]]; then
     build_darwin_system
   else 
