@@ -20,6 +20,7 @@ environment.systemPackages = with pkgs; [
 	tdesktop transmission-gtk transmission-remote-gtk
 	vivaldi vivaldi-ffmpeg-codecs vscode
 	zoom-us
+	minecraft
 
 	# Development, Git or Libraries
 	docker
