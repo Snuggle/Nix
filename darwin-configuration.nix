@@ -27,6 +27,8 @@
       done
       sudo cp -fv ${./config/Nextcloud/sync-exclude.lst} /Applications/Nextcloud.app/Contents/Resources/sync-exclude.lst
       echo "📦✅ Finished wrapping applications!"
+      echo "⛓  Importing GPG public keys…"
+      curl https://github.com/Snuggle.gpg | gpg --import
   '');
 
   home-manager.users.snuggle = { pkgs, ... }: {
