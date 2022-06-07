@@ -13,7 +13,7 @@ build_ci_system() {
     "
     nix-shell -p nix-build-uncached --run "$cmd"
   elif [[ "$OSTYPE" == "darwin"* ]]; then
-    build_darwin_system()
+    build_darwin_system
   else 
     echo "Unknown system/OS?"
   fi
