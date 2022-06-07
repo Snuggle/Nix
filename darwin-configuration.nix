@@ -14,12 +14,24 @@
       pkgs.libu2f-host
       pkgs.yubikey-personalization
       pkgs.discord
+      pkgs.vscode
       
     ];
   users.users.snuggle = {
     name = "Evie Snuggle";
     home = "/Users/snuggle";
   };
+
+  system.activationScripts.applications.text = pkgs.lib.mkForce (''
+      find /Users/snuggle/Applications/ -maxdepth 1  -type l | while read file; do
+      	base="$(basename "$file")"
+      	echo "$base"
+      	foop="$(readlink -f "/Users/snuggle/Applications/$base")"
+      	rm -vf "/Applications/$base"
+      	echo "tell app \"Finder\" to make alias file at POSIX file \"/Applications/\" to POSIX file \"$foop\" with properties {name: \"$base\"}"
+        osascript -e "tell app \"Finder\" to make alias file at POSIX file \"/Applications/\" to POSIX file \"$foop\" with properties {name: \"$base\"}";
+    done
+  '');
 
   home-manager.users.snuggle = { pkgs, ... }: {
     programs.git = {
