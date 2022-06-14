@@ -1,8 +1,11 @@
 # [@Snuggle](https://github.com/Snuggle)'s NixOS Configuration
-[![NixOS 22.05](https://github.com/Snuggle/NixOS/actions/workflows/nixos-stable.yml/badge.svg)](https://github.com/Snuggle/NixOS/actions/workflows/nixos-stable.yml)
-[![NixOS Unstable](https://github.com/Snuggle/NixOS/actions/workflows/nixos-unstable.yml/badge.svg)](https://github.com/Snuggle/NixOS/actions/workflows/nixos-unstable.yml)
-[![Nix on macOS 22.05](https://github.com/Snuggle/NixOS/actions/workflows/nix-darwin-stable.yml/badge.svg)](https://github.com/Snuggle/NixOS/actions/workflows/nix-darwin-stable.yml)
-[![Nix on macOS Unstable](https://github.com/Snuggle/NixOS/actions/workflows/nix-darwin-unstable.yml/badge.svg)](https://github.com/Snuggle/NixOS/actions/workflows/nix-darwin-unstable.yml)
+
+
+| NixOS  | macOS / Darwin |
+| ------------- | ------------- |
+| [![NixOS 22.05](https://github.com/Snuggle/NixOS/actions/workflows/nixos-stable.yml/badge.svg)](https://github.com/Snuggle/NixOS/actions/workflows/nixos-stable.yml) | [![Nix on macOS 22.05](https://github.com/Snuggle/NixOS/actions/workflows/nix-darwin-stable.yml/badge.svg)](https://github.com/Snuggle/NixOS/actions/workflows/nix-darwin-stable.yml)  |
+| [![NixOS Unstable](https://github.com/Snuggle/NixOS/actions/workflows/nixos-unstable.yml/badge.svg)](https://github.com/Snuggle/NixOS/actions/workflows/nixos-unstable.yml) | [![Nix on macOS Unstable](https://github.com/Snuggle/NixOS/actions/workflows/nix-darwin-unstable.yml/badge.svg)](https://github.com/Snuggle/NixOS/actions/workflows/nix-darwin-unstable.yml) |
+
 [![Mirroring](https://github.com/Snuggle/NixOS/actions/workflows/main.yml/badge.svg)](https://github.com/Snuggle/NixOS/actions/workflows/main.yml)
 
 Welcome to my personal NixOS configuration files using home-manager!
