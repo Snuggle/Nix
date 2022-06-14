@@ -61,7 +61,7 @@ build_darwin_unstable_system() {
 }
 
 build_darwin_stable_system() {
-  nix-channel --add http://nixos.org/channels/nixpkgs-22.05 nixpkgs
+  nix-channel --add http://nixos.org/channels/nixpkgs-22.05-darwin nixpkgs
   nix-channel --update
   nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
   sudo rm -fv /etc/nix/nix.conf
