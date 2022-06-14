@@ -16,6 +16,7 @@ environment.systemPackages = with pkgs; [
 	nextcloud-client
 	obs-studio obsidian
 	spotify
+	jellyfin-media-player
 	slack
 	tdesktop transmission-gtk transmission-remote-gtk
 	vivaldi vivaldi-ffmpeg-codecs vscode

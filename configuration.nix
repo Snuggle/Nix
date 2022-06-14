@@ -324,7 +324,7 @@ users.users.snuggle = {
 	}) ];
 };
 
-fonts = import ./fonts.nix pkgs;
+#fonts = import ./fonts.nix pkgs;
 
 
 environment.sessionVariables.TERMINAL = [ "kitty" ];
