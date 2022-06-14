@@ -1,4 +1,4 @@
-name: NixOS 22.05
+name: NixOS (22.05)
 
 on:
   pull_request:
@@ -33,4 +33,4 @@ jobs:
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
       - name: "Build NixOS config ❄️"
-        run: ./build.sh stable
+        run: ./build.sh nixos-stable
