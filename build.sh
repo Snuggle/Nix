@@ -5,6 +5,20 @@ set +x
 
 build_ci_system() {
   if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    if [[ $1 == "stable" ]]; then
+      build_stable_system
+    else
+      build_unstable_system
+    fi
+  elif [[ "$OSTYPE" == "darwin"* ]]; then
+    build_darwin_system
+  else 
+    echo "Unknown system/OS?"
+  fi
+}
+
+build_unstable_system() {
+  if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     nix-channel --add https://nixos.org/channels/nixos-unstable nixos
     cmd="
       nix-build-uncached '<nixpkgs/nixos>' \
@@ -22,6 +36,26 @@ build_ci_system() {
   fi
 }
 
+build_stable_system() {
+  if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    nix-channel --add https://nixos.org/channels/nixos-22.05 nixos
+    cmd="
+      nix-build-uncached '<nixpkgs/nixos>' \
+        -I nixos-config=configuration.nix \
+        -A system
+    "
+    
+    sed -i 's/"nvidia"//g' hardware-configuration.nix
+    sed -i 's/boot.kernelPackages = pkgs.linuxPackages_zen;//g' hardware-configuration.nix
+    nix-shell -p nix-build-uncached --run "$cmd"
+  elif [[ "$OSTYPE" == "darwin"* ]]; then
+    build_darwin_system
+  else 
+    echo "Unknown system/OS?"
+  fi
+}
+
+
 build_darwin_system() {
   nix-channel --add http://nixos.org/channels/nixpkgs-unstable nixpkgs
   nix-channel --update
@@ -36,4 +70,3 @@ build_darwin_system() {
   darwin-rebuild check
 }
 
-build_ci_system
