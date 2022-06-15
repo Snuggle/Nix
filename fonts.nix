@@ -26,12 +26,12 @@ fonts = with pkgs; [
 	(nerdfonts.override { fonts = [ "FantasqueSansMono" "SourceCodePro" ]; })
 ];
 
-#fontconfig = {
-#	defaultFonts = {
-#		serif = [ "Source Serif 4" "Roboto Slab" "Ubuntu" ];
-#		sansSerif = [ "Source Sans 3" "Ubuntu" ];
-#		monospace = [ "Fantasque Sans Mono" "Source Code Pro" "Ubuntu Mono" ];
-#		emoji = [ "Blobmoji" ];
-#		};
-#	};
+fontconfig = {
+	defaultFonts = {
+		serif = [ "Source Serif 4" "Roboto Slab" "Ubuntu" ];
+		sansSerif = [ "Source Sans 3" "Ubuntu" ];
+		monospace = [ "Fantasque Sans Mono" "Source Code Pro" "Ubuntu Mono" ];
+		emoji = [ "Blobmoji" ];
+		};
+	};
 }
