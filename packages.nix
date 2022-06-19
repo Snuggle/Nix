@@ -20,6 +20,7 @@ environment.systemPackages = with pkgs; [
 	slack
 	tdesktop transmission-gtk transmission-remote-gtk
 	vivaldi vivaldi-ffmpeg-codecs vscode
+	yubikey-manager
 	zoom-us
 	minecraft
 
@@ -52,6 +53,7 @@ environment.systemPackages = with pkgs; [
 	obinskit
 	pavucontrol
 	refind
+	smartmontools
 	tmux
 	virt-manager vlc libvirt
 	xdg-desktop-portal
