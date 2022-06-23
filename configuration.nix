@@ -53,7 +53,6 @@ security = {
 			login.u2fAuth = true;
 			gbm.u2fAuth = true;
 			gnome-keyring.u2fAuth = true;
-			gnome-keyring.enable = false;
 		};
 	};
 };
@@ -228,7 +227,8 @@ services = {
 	xserver.desktopManager.gnome.enable = true;
 
 		# List services that you want to enable:
-
+		
+	gnome.gnome-keyring.enable
 	# Enable the OpenSSH daemon.
 	openssh.enable = true;
 	openssh.passwordAuthentication = false;
