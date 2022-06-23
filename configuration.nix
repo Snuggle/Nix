@@ -228,7 +228,7 @@ services = {
 
 		# List services that you want to enable:
 		
-	gnome.gnome-keyring.enable
+	gnome.gnome-keyring.enable = lib.mkForce false;
 	# Enable the OpenSSH daemon.
 	openssh.enable = true;
 	openssh.passwordAuthentication = false;
