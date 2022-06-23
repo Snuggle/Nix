@@ -53,6 +53,7 @@ security = {
 			login.u2fAuth = true;
 			gbm.u2fAuth = true;
 			gnome-keyring.u2fAuth = true;
+			gnome-keyring.enable = false;
 		};
 	};
 };
