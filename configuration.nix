@@ -45,7 +45,7 @@ security = {
 			enable = true;
 			control = "sufficient";
 			cue = true;
-			#prompt = "🤔 Please tap your security key to confirm you are human…";
+			#cue = "🤔 Please tap your security key to confirm you are human…";
 			#interactive = true;
 		};
 		services = {

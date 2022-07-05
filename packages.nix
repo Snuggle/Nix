@@ -5,9 +5,10 @@ environment.systemPackages = with pkgs; [
 
 	# Applications
 	_1password-gui
-	# davinci-resolve # https://github.com/NixOS/nixpkgs/issues/94032
+	davinci-resolve # https://github.com/NixOS/nixpkgs/issues/94032
 	cider
 	discord
+	espanso
 	firefox-wayland
 	gparted
 	inkscape
@@ -15,7 +16,7 @@ environment.systemPackages = with pkgs; [
 	libreoffice
 	nextcloud-client
 	obs-studio obsidian
-	spotify
+	spotify spotify-tui
 	jellyfin-media-player
 	slack
 	tdesktop transmission-gtk transmission-remote-gtk
@@ -29,6 +30,9 @@ environment.systemPackages = with pkgs; [
 	ffmpeg-full
 	openiscsi
 	git gnupg
+	rustc
+	rustup
+	cargo
 	jekyll
 	ruby
 	yubikey-personalization
@@ -36,7 +40,7 @@ environment.systemPackages = with pkgs; [
 
 	# GNOME Extensions
 	gnomeExtensions.appindicator
-	#gnomeExtensions.burn-my-windows
+	gnomeExtensions.burn-my-windows
 	gnomeExtensions.compiz-windows-effect
 	gnomeExtensions.gsconnect
 	gnomeExtensions.mpris-indicator-button
@@ -57,6 +61,8 @@ environment.systemPackages = with pkgs; [
 	tmux
 	virt-manager vlc libvirt
 	xdg-desktop-portal
+	ox
+	rust-petname
 	wireguard-tools
 	
 	# Terminal Tools
@@ -70,8 +76,11 @@ environment.systemPackages = with pkgs; [
 	optipng
 	starship
 	vim
+	rust-motd
+	hyperfine
 	jq
 	wget
+	lychee
 	xclip
 	python3
 
