@@ -14,6 +14,7 @@
     name = "snuggle";
     description = "Evie Snuggle";
     home = "/Users/snuggle";
+    shell = pkgs.fish;
   };
 
   system.activationScripts.applications.text = pkgs.lib.mkForce (''
