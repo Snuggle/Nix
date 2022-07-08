@@ -29,6 +29,7 @@ environment.systemPackages = with pkgs; [
     # Terminal Tools
     alacritty
     bat bind
+    glances
     exa
     fish
     #kitty
@@ -36,6 +37,7 @@ environment.systemPackages = with pkgs; [
     neofetch
     optipng
     starship
+    youtube-dl
     vim
     jq
     wget

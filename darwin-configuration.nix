@@ -29,6 +29,7 @@
       echo "📦✅ Finished wrapping applications!"
       echo "⛓  Importing GPG public keys…"
       curl https://github.com/Snuggle.gpg | gpg --import
+      gpgconf --reload gpg-agent
   '');
 
   home-manager.users.snuggle = { pkgs, ... }: {
