@@ -14,6 +14,7 @@ environment.systemPackages = with pkgs; [
     vscode
     pinentry-curses
     #zoom-us
+    iterm2
 
     # Development, Git or Libraries
     ffmpeg

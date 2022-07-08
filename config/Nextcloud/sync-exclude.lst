@@ -46,7 +46,9 @@ My Saved Places.
 *.git/*
 .git/*
 *.git
-Photos Library/*
+Photos Library.photoslibrary
+Lightroom Library.lrlibrary
+TV Library.tvlibrary
 Music Library/*
 Media.localized/*
 .imovielibrary/*
