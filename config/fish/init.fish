@@ -14,3 +14,6 @@ if [ -f "$HOME/.gpg-agent-info" ]; then
     export GPG_AGENT_INFO
     export SSH_AUTH_SOCK
 end
+
+set -gx EDITOR micro
+git config --global core.editor micro

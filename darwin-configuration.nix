@@ -58,6 +58,9 @@
         enable = true;
         userName  = "Snuggle";
         userEmail = "^-^@snugg.ie";
+        signing.signByDefault = true;
+        signing.key = "877300954D1493E6";
+        
       };
     };
 
