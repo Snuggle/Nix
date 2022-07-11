@@ -317,7 +317,7 @@ users.users.snuggle = {
 	description = "Evie Snuggle";
 	createHome = true;
 	shell = pkgs.fish;
-	extraGroups = [ "wheel" "libvirtd" "scanner" "lp" ]; # Enable ‘sudo’ for the user.
+	extraGroups = [ "wheel" "libvirtd" "scanner" "lp" "adbusers" ]; # Enable ‘sudo’ for the user.
 
 	openssh.authorizedKeys.keyFiles = [ (builtins.fetchurl { 
 		url = "https://github.com/${config.users.users.snuggle.name}.keys"; 
@@ -344,6 +344,7 @@ environment.shellInit = ''
 # programs.mtr.enable = true;
 programs = {
 	steam.enable = true;
+	adb.enable = true;
 	fish = {
 		enable = true;
 		promptInit = "starship init fish | source";

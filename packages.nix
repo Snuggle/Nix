@@ -45,6 +45,7 @@ environment.systemPackages = with pkgs; [
 	gnomeExtensions.gsconnect
 	gnomeExtensions.mpris-indicator-button
 	gnomeExtensions.night-theme-switcher
+	gnomeExtensions.pop-shell
 
 	# System Utilities
 	brlaser

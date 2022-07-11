@@ -24,11 +24,6 @@ with lib.hm.gvariant;
       name = "Yaru-magenta-dark";
     };
 
-    "org/gnome/shell/extensions/burn-my-windows" = {
-      energize-b-close-effect="true";
-      energize-b-open-effect="true";
-    };
-
     "org/gnome/desktop/background" = {
       picture-options = "zoom";
       picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/blobs-l.svg";
@@ -39,7 +34,7 @@ with lib.hm.gvariant;
 
     "org/gnome/shell" = {
       disabled-extensions = [ "window-list@gnome-shell-extensions.gcampax.github.com" "screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com" "drive-menu@gnome-shell-extensions.gcampax.github.com" "places-menu@gnome-shell-extensions.gcampax.github.com" "native-window-placement@gnome-shell-extensions.gcampax.github.com" "apps-menu@gnome-shell-extensions.gcampax.github.com" "workspace-indicator@gnome-shell-extensions.gcampax.github.com" ];
-      enabled-extensions = [ "appindicatorsupport@rgcjonas.gmail.com" "windowsNavigator@gnome-shell-extensions.gcampax.github.com" "user-theme@gnome-shell-extensions.gcampax.github.com" "launch-new-instance@gnome-shell-extensions.gcampax.github.com" ];
+      enabled-extensions = [ "appindicatorsupport@rgcjonas.gmail.com" "windowsNavigator@gnome-shell-extensions.gcampax.github.com" "user-theme@gnome-shell-extensions.gcampax.github.com" "launch-new-instance@gnome-shell-extensions.gcampax.github.com" "burn-my-windows@schneegans.github.com" "compiz-windows-effect@hermes83.github.com" "pop-shell@system76.com" ];
       favorite-apps = [ "firefox.desktop" "org.gnome.Calendar.desktop" "org.gnome.Music.desktop" "org.gnome.Photos.desktop" "org.gnome.Nautilus.desktop" "code.desktop" "discord.desktop" "steam.desktop" "obsidian.desktop" "com.obsproject.Studio.desktop" "1password.desktop" ];
       welcome-dialog-last-shown-version = "41.1";
     };
@@ -86,5 +81,28 @@ with lib.hm.gvariant;
     "org/gnome/shell/weather" = {
       automatic-location = true;
     };
+
+    "org/gnome/shell/extensions/burn-my-windows" = {
+    	energize-b-close-effect = true;
+        energize-b-open-effect = true;
+    };
+
+    "org/gnome/shell/extensions/com/github/hermes83/compiz-windows-effect" = {
+    	speedup-factor-divider = 2.6;
+    	resize-effect = true;
+    };
+
+    "org/gnome/shell/extensions/pop-shell" = {
+     	tile-by-default = true;
+     	show-skip-taskbar = true;
+     	show-title = false;
+     	smart-gaps = false;
+     	snap-to-grid = false;
+     	active-hint = false;
+     	hint-color-rgba = "rgba(100, 0, 50, 1)";
+     	log-level = 0;
+     	gap-inner = 2;
+     	gap-outer = 2;
+     };
   };
 }
