@@ -1,0 +1,3 @@
+[submodule "config/gnome-keyring-yubikey-unlock/gnome-keyring-yubikey-unlock"]
+	path = config/gnome-keyring-yubikey-unlock/gnome-keyring-yubikey-unlock
+	url = https://git.recolic.net/root/gnome-keyring-yubikey-unlock.git
