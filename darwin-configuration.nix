@@ -73,6 +73,7 @@
     xdg.configFile."Yubico/u2f_keys".source = config/Yubico/u2f_keys;
     home.file.".gnupg/gpg-agent.conf".source = config/gnupg/gpg-agent.conf;
     home.file.".gnupg/scdaemon.conf".source = config/gnupg/scdaemon.conf;
+    home.stateVersion = "20.09";
   };
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
