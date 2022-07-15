@@ -8,8 +8,11 @@ if [[ ! -f /etc/nixos/switch && ! -f ~/.nixpkgs/switch ]]; then
 	echo "☺️ Hello, ${bold}$USER${normal}. Creating new generation for ${bold}$OSTYPE${normal}!"
 	echo "😨 ${bold}Nix is not installed${normal}, running installer now…"
 	mkdir -p setup/
-	curl "https://raw.githubusercontent.com/Snuggle/NixOS/main/setup/linux_setup.sh" > setup/linux_setup.sh
-	curl "https://raw.githubusercontent.com/Snuggle/NixOS/main/setup/macos_setup.sh" > setup/macos_setup.sh
+	if [[ ! -f setup/linux_setup.sh && ! -f setup/macos_setup.sh ]]; then
+		echo "🎾 Fetching install scripts from GitHub…"
+		curl "https://raw.githubusercontent.com/Snuggle/NixOS/main/setup/linux_setup.sh" > setup/linux_setup.sh
+		curl "https://raw.githubusercontent.com/Snuggle/NixOS/main/setup/macos_setup.sh" > setup/macos_setup.sh
+	fi
 	chmod +x setup/macos_setup.sh setup/linux_setup.sh
 	case "$OSTYPE" in
 		darwin*) setup/macos_setup.sh ;;
