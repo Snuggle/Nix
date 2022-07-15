@@ -50,6 +50,7 @@ build_darwin_unstable_system() {
   nix-channel --add http://nixos.org/channels/nixpkgs-unstable nixpkgs
   nix-channel --update
   ./macos_setup.sh
+  source /etc/static/bashrc
   darwin-rebuild build --dry-run
   darwin-rebuild check --dry-run
 }
@@ -58,6 +59,7 @@ build_darwin_stable_system() {
   nix-channel --add http://nixos.org/channels/nixpkgs-22.05-darwin nixpkgs
   nix-channel --update
   ./macos_setup.sh
+  source /etc/static/bashrc
   darwin-rebuild build --dry-run
   darwin-rebuild check --dry-run
 }
