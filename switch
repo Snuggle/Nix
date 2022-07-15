@@ -9,8 +9,8 @@ if [ ! -d "/nix" ]; then
 	if [ ! -e /etc/nixos/switch || ! -e ~/.nixpkgs/switch ]; then
 		echo "😨 ${bold}Nix is not installed${normal}, running installer now…"
 		mkdir -p setup/
-		curl "https://raw.githubusercontent.com/Snuggle/NixOS/setup/macos_setup.sh" > setup/macos_setup.sh
-		curl "https://raw.githubusercontent.com/Snuggle/NixOS/setup/linux_setup.sh" > setup/linux_setup.sh
+		curl "https://raw.githubusercontent.com/Snuggle/NixOS/main/setup/macos_setup.sh" > setup/macos_setup.sh
+		curl "https://raw.githubusercontent.com/Snuggle/NixOS/main/setup/linux_setup.sh" > setup/linux_setup.sh
 		case "$OSTYPE" in
 			darwin*) setup/macos_setup.sh ;;
 			linux*) setup/linux_setup.sh ;;
