@@ -1,25 +1,44 @@
 #!/usr/bin/env bash
 bold=$(tput bold)
 normal=$(tput sgr0)
-
-echo "${bold}⚗️ Testing Configuration ${normal}"
 #hyperfine --export-markdown /etc/nixos/measure.md --runs 3 "nixos-rebuild dry-activate"
-case "$OSTYPE" in
-  darwin*)  darwin-rebuild --dry-run build ;; 
-  linux*)   nixos-rebuild dry-build ;;
-  *)        echo "unknown: $OSTYPE" ;;
-esac
 
-if [ $? -eq 0 ]; then
-	echo "🔨 Rebuilding Configuration…"
+
+if [ ! -d "/nix" ]; then
+	echo "☺️ Hello, ${bold}$USER${normal}. Creating new generation for ${bold}$OSTYPE${normal}!"
+	if [ ! -e /etc/nixos/switch || ! -e ~/.nixpkgs/switch ]; then
+		echo "😨 ${bold}Nix is not installed${normal}, running installer now…"
+		mkdir -p setup/
+		curl "https://raw.githubusercontent.com/Snuggle/NixOS/setup/macos_setup.sh" > setup/macos_setup.sh
+		curl "https://raw.githubusercontent.com/Snuggle/NixOS/setup/linux_setup.sh" > setup/linux_setup.sh
+		case "$OSTYPE" in
+			darwin*) setup/macos_setup.sh ;;
+			linux*) setup/linux_setup.sh ;;
+			*) echo "unknown: $OSTYPE" ;;
+		esac
+	else
+		echo "Nix is installed but cannot find system configuration."
+	fi
+else
+	echo "😀 Welcome back, ${bold}$USER${normal}. Creating new generation for ${bold}$OSTYPE${normal}!"
+	echo "${bold}⚗️ Testing Configuration ${normal}"
 	case "$OSTYPE" in
-	  darwin*)  darwin-rebuild switch --max-jobs 4 ;; 
-	  linux*)   sudo nixos-rebuild switch --upgrade --max-jobs 16 ;;
+	  darwin*)  darwin-rebuild --dry-run build ;; 
+	  linux*)   nixos-rebuild dry-build ;;
 	  *)        echo "unknown: $OSTYPE" ;;
 	esac
+
 	if [ $? -eq 0 ]; then
-		echo "❄️ Done! NixOS is Now Running Generation $(sudo nix-env --list-generations --profile /nix/var/nix/profiles/system | grep current | awk '{print $1}')."
+		echo "🔨 Rebuilding Configuration…"
+		case "$OSTYPE" in
+		  darwin*)  darwin-rebuild switch --max-jobs 4 ;; 
+		  linux*)   sudo nixos-rebuild switch --upgrade --max-jobs 16 ;;
+		  *)        echo "unknown: $OSTYPE" ;;
+		esac
+		if [ $? -eq 0 ]; then
+			echo "❄️ Done! NixOS is Now Running Generation $(sudo nix-env --list-generations --profile /nix/var/nix/profiles/system | grep current | awk '{print $1}')."
+		fi
+	else 
+		echo "🚨 Could Not Build Configuration…"
 	fi
-else 
-	echo "🚨 Could Not Build Configuration…"
 fi
