@@ -49,13 +49,7 @@ build_nixos_stable_system() {
 build_darwin_unstable_system() {
   nix-channel --add http://nixos.org/channels/nixpkgs-unstable nixpkgs
   nix-channel --update
-  nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
-  sudo rm -fv /etc/nix/nix.conf
-  ./result/bin/darwin-installer
-  nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-  nix-channel --update
-  echo "Sourcing /etc/static/bashrc…"
-  source /etc/static/bashrc
+  ./macos_setup.sh
   darwin-rebuild build --dry-run
   darwin-rebuild check --dry-run
 }
@@ -63,13 +57,7 @@ build_darwin_unstable_system() {
 build_darwin_stable_system() {
   nix-channel --add http://nixos.org/channels/nixpkgs-22.05-darwin nixpkgs
   nix-channel --update
-  nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
-  sudo rm -fv /etc/nix/nix.conf
-  ./result/bin/darwin-installer
-  nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-  nix-channel --update
-  echo "Sourcing /etc/static/bashrc…"
-  source /etc/static/bashrc
+  ./macos_setup.sh
   darwin-rebuild build --dry-run
   darwin-rebuild check --dry-run
 }

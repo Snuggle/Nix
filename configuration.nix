@@ -356,7 +356,6 @@ programs = {
 		shellAbbrs = {
 			cat = "bat";
 			ls = "exa --icons";
-			"exa --icons -l" = "exa --icons -lah";
 			nano = "micro";
 			ssh = "mosh";
 		};

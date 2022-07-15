@@ -12,6 +12,6 @@ read
 echo "🏚 Installing home-manager…"
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 nix-channel --update
-echo "🏠 home-manager is installed! Press ENTER to build system configuration."
-darwin-rebuild switch
+source /etc/static/bashrc
+echo "🏠 home-manager is installed!"
 echo "☃️ Nix on macOS install complete!"
