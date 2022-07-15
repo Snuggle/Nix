@@ -19,7 +19,7 @@ build_ci_system() {
 }
 
 build_nixos_unstable_system() {
-  echo "Building unstable"
+  echo "🔨 Building nixos_unstable"
   nix-channel --add https://nixos.org/channels/nixos-unstable nixos
   cmd="
     nix-build-uncached '<nixpkgs/nixos>' \
@@ -29,11 +29,12 @@ build_nixos_unstable_system() {
   
   sed -i 's/"nvidia"//g' hardware-configuration.nix
   sed -i 's/boot.kernelPackages = pkgs.linuxPackages_zen;//g' hardware-configuration.nix
+  echo  "🧪 Testing system configuration…"
   nix-shell -p nix-build-uncached --run "$cmd"
 }
 
 build_nixos_stable_system() {
-  echo "Building stable"
+  echo "🔨 Building nixos_stable"
   nix-channel --add https://nixos.org/channels/nixos-22.05 nixos
   cmd="
     nix-build-uncached '<nixpkgs/nixos>' \
@@ -43,22 +44,27 @@ build_nixos_stable_system() {
   
   sed -i 's/"nvidia"//g' hardware-configuration.nix
   sed -i 's/boot.kernelPackages = pkgs.linuxPackages_zen;//g' hardware-configuration.nix
+  echo "🧪 Testing system configuration…"
   nix-shell -p nix-build-uncached --run "$cmd"
 }
 
 build_darwin_unstable_system() {
+  echo "🔨 Building darwin_unstable"
   nix-channel --add http://nixos.org/channels/nixpkgs-unstable nixpkgs
   nix-channel --update
   ./macos_setup.sh
+  echo "🧪 Testing system configuration…"
   source /etc/static/bashrc
   darwin-rebuild build --dry-run
   darwin-rebuild check --dry-run
 }
 
 build_darwin_stable_system() {
+  echo "🔨 Building darwin_stable"
   nix-channel --add http://nixos.org/channels/nixpkgs-22.05-darwin nixpkgs
   nix-channel --update
   ./macos_setup.sh
+  echo "🧪 Testing system configuration…"
   source /etc/static/bashrc
   darwin-rebuild build --dry-run
   darwin-rebuild check --dry-run
