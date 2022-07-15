@@ -25,7 +25,7 @@ environment.systemPackages = with pkgs; [
 	yubikey-manager
 	zoom-us
 
-	# Development, Git or Libraries
+	# Development, Git, or Libraries
 	docker
 	ffmpeg-full
 	openiscsi
