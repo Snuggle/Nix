@@ -24,7 +24,7 @@ build_nixos_unstable_system() {
   cmd="
     nix-build-uncached '<nixpkgs/nixos>' \
       -I nixos-config=configuration.nix \
-      -A system
+      -A system --dry-run
   "
   
   sed -i 's/"nvidia"//g' hardware-configuration.nix
@@ -38,7 +38,7 @@ build_nixos_stable_system() {
   cmd="
     nix-build-uncached '<nixpkgs/nixos>' \
       -I nixos-config=configuration.nix \
-      -A system
+      -A system --dry-run
   "
   
   sed -i 's/"nvidia"//g' hardware-configuration.nix
@@ -56,8 +56,8 @@ build_darwin_unstable_system() {
   nix-channel --update
   echo "Sourcing /etc/static/bashrc…"
   source /etc/static/bashrc
-  darwin-rebuild build
-  darwin-rebuild check
+  darwin-rebuild build --dry-run
+  darwin-rebuild check --dry-run
 }
 
 build_darwin_stable_system() {
@@ -70,8 +70,8 @@ build_darwin_stable_system() {
   nix-channel --update
   echo "Sourcing /etc/static/bashrc…"
   source /etc/static/bashrc
-  darwin-rebuild build
-  darwin-rebuild check
+  darwin-rebuild build --dry-run
+  darwin-rebuild check --dry-run
 }
 
 build_ci_system $@
