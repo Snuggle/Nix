@@ -30,14 +30,14 @@ build_nixos_unstable_system() {
   sed -i 's/"nvidia"//g' hardware-configuration.nix
   sed -i 's/boot.kernelPackages = pkgs.linuxPackages_zen;//g' hardware-configuration.nix
   echo  "🧪 Testing system configuration…"
-  nix-shell -p nix-build-uncached --run "$cmd"
+  nix-shell -p nix-build --run "$cmd" --dry-run
 }
 
 build_nixos_stable_system() {
   echo "🔨 Building nixos_stable"
   nix-channel --add https://nixos.org/channels/nixos-22.05 nixos
   cmd="
-    nix-build-uncached '<nixpkgs/nixos>' \
+    nix-build '<nixpkgs/nixos>' \
       -I nixos-config=configuration.nix \
       -A system --dry-run
   "
@@ -45,7 +45,7 @@ build_nixos_stable_system() {
   sed -i 's/"nvidia"//g' hardware-configuration.nix
   sed -i 's/boot.kernelPackages = pkgs.linuxPackages_zen;//g' hardware-configuration.nix
   echo "🧪 Testing system configuration…"
-  nix-shell -p nix-build-uncached --run "$cmd"
+  nix-shell -p nix-build --run "$cmd" --dry-run
 }
 
 build_darwin_unstable_system() {
