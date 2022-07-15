@@ -48,9 +48,10 @@ My Saved Places.
 *.git
 Photos Library.photoslibrary
 Lightroom Library.lrlibrary
-TV Library.tvlibrary
+TV Library.tvlibrary/
 Music Library/*
 Media.localized/*
 .imovielibrary/*
 .tvlibrary/*
 .photoslibrary/*
+*.icloud

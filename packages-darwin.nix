@@ -36,6 +36,7 @@ environment.systemPackages = with pkgs; [
     #kitty
     micro mosh
     neofetch
+    nodePackages.gitmoji-cli
     optipng
     starship
     youtube-dl
