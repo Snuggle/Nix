@@ -10,6 +10,10 @@
 
 Welcome to my personal NixOS configuration files using home-manager!
 
+Use `curl -L https://snuggle.link/setup | bash` to install.
+
+_(No promises this will actually work, use at your own risk)_
+
 
 # Screenshots
 
