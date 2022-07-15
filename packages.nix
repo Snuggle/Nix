@@ -14,6 +14,7 @@ environment.systemPackages = with pkgs; [
 	inkscape
 	kdenlive krita
 	libreoffice
+	minecraft
 	nextcloud-client
 	obs-studio obsidian
 	spotify spotify-tui
@@ -23,7 +24,6 @@ environment.systemPackages = with pkgs; [
 	vivaldi vivaldi-ffmpeg-codecs vscode
 	yubikey-manager
 	zoom-us
-	minecraft
 
 	# Development, Git or Libraries
 	docker
