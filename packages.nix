@@ -20,7 +20,7 @@ environment.systemPackages = with pkgs; [
 	spotify spotify-tui
 	jellyfin-media-player
 	slack
-	tdesktop transmission-gtk transmission-remote-gtk
+	tdesktop transmission-gtk transmission-remote-gtk teams
 	vivaldi vivaldi-ffmpeg-codecs vscode
 	yubikey-manager
 	zoom-us
@@ -42,9 +42,11 @@ environment.systemPackages = with pkgs; [
 	gnomeExtensions.appindicator
 	gnomeExtensions.burn-my-windows
 	gnomeExtensions.compiz-windows-effect
+	gnomeExtensions.hide-top-bar
 	gnomeExtensions.gsconnect
 	gnomeExtensions.mpris-indicator-button
 	gnomeExtensions.night-theme-switcher
+	gnomeExtensions.mpris-label
 	gnomeExtensions.pop-shell
 
 	# System Utilities
@@ -92,6 +94,9 @@ environment.systemPackages = with pkgs; [
 	gnome3.gnome-tweaks
 	papirus-icon-theme
 	yaru-theme
+
+	haskellPackages.gtk-sni-tray
+	taffybar
 
 	# Un-GNU Coreutils, Replace GNU Coreutils with Busybox/Toybox
 	(pkgs.hiPrio unixtools.fsck)

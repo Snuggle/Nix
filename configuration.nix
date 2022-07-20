@@ -336,6 +336,7 @@ environment.sessionVariables.TERMINAL = [ "kitty" ];
 environment.sessionVariables.VISUAL = [ "micro" ];
 environment.sessionVariables.EDITOR = [ "micro" ];
 environment.sessionVariables.NIXOS_OZONE_WL = "1"; # Apply Wayland flags to Electron apps where necessary
+environment.sessionVariables.MOZ_WAYLAND = "true";
 environment.variables.OSTYPE = [ "linux-toybox" ];
 
 environment.shellInit = ''

@@ -34,9 +34,10 @@ with lib.hm.gvariant;
 
     "org/gnome/shell" = {
       disabled-extensions = [ "window-list@gnome-shell-extensions.gcampax.github.com" "screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com" "drive-menu@gnome-shell-extensions.gcampax.github.com" "places-menu@gnome-shell-extensions.gcampax.github.com" "native-window-placement@gnome-shell-extensions.gcampax.github.com" "apps-menu@gnome-shell-extensions.gcampax.github.com" "workspace-indicator@gnome-shell-extensions.gcampax.github.com" ];
-      enabled-extensions = [ "appindicatorsupport@rgcjonas.gmail.com" "windowsNavigator@gnome-shell-extensions.gcampax.github.com" "user-theme@gnome-shell-extensions.gcampax.github.com" "launch-new-instance@gnome-shell-extensions.gcampax.github.com" "burn-my-windows@schneegans.github.com" "compiz-windows-effect@hermes83.github.com" "pop-shell@system76.com" ];
+      enabled-extensions = [ "appindicatorsupport@rgcjonas.gmail.com" "windowsNavigator@gnome-shell-extensions.gcampax.github.com" "user-theme@gnome-shell-extensions.gcampax.github.com" "launch-new-instance@gnome-shell-extensions.gcampax.github.com" "burn-my-windows@schneegans.github.com" "compiz-windows-effect@hermes83.github.com" "pop-shell@system76.com" "mprisindicatorbutton@JasonLG1979.github.io" ];
       favorite-apps = [ "firefox.desktop" "org.gnome.Calendar.desktop" "org.gnome.Music.desktop" "org.gnome.Photos.desktop" "org.gnome.Nautilus.desktop" "code.desktop" "discord.desktop" "steam.desktop" "obsidian.desktop" "com.obsproject.Studio.desktop" "1password.desktop" ];
       welcome-dialog-last-shown-version = "41.1";
+      disable-user-extensions = false;
     };
 
     "system/locale" = {
