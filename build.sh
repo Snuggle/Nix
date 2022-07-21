@@ -20,7 +20,9 @@ build_ci_system() {
 
 build_nixos_unstable_system() {
   echo "🔨 Building nixos_unstable"
-  nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+  sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+  sudo nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+  sudo nix-channel --update
   ./switch
   sed -i 's/"nvidia"//g' hardware-configuration.nix
   sed -i 's/boot.kernelPackages = pkgs.linuxPackages_zen;//g' hardware-configuration.nix
@@ -32,7 +34,9 @@ build_nixos_unstable_system() {
 
 build_nixos_stable_system() {
   echo "🔨 Building nixos_stable"
-  nix-channel --add https://nixos.org/channels/nixos-22.05 nixos
+  sudo nix-channel --add https://nixos.org/channels/nixos-22.05 nixos
+  sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz home-manager
+  sudo nix-channel --update
   ./switch
   sed -i 's/"nvidia"//g' hardware-configuration.nix
   sed -i 's/boot.kernelPackages = pkgs.linuxPackages_zen;//g' hardware-configuration.nix
@@ -44,8 +48,9 @@ build_nixos_stable_system() {
 
 build_darwin_unstable_system() {
   echo "🔨 Building darwin_unstable"
-  nix-channel --add http://nixos.org/channels/nixpkgs-unstable nixpkgs
-  nix-channel --update
+  sudo nix-channel --add http://nixos.org/channels/nixpkgs-unstable nixpkgs
+  sudo nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+  sudo nix-channel --update
   ./switch
   echo "🧪 Testing system configuration…"
   source /etc/static/bashrc
@@ -55,8 +60,9 @@ build_darwin_unstable_system() {
 
 build_darwin_stable_system() {
   echo "🔨 Building darwin_stable"
-  nix-channel --add http://nixos.org/channels/nixpkgs-22.05-darwin nixpkgs
-  nix-channel --update
+  sudo nix-channel --add http://nixos.org/channels/nixpkgs-22.05-darwin nixpkgs
+  sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz home-manager
+  sudo nix-channel --update
   ./switch
   echo "🧪 Testing system configuration…"
   source /etc/static/bashrc

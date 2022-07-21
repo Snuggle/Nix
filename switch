@@ -23,16 +23,16 @@ else
 	echo "😀 Welcome back, ${bold}$USER${normal}. Creating new generation for ${bold}$OSTYPE${normal}!"
 	echo "${bold}⚗️ Testing Configuration ${normal}"
 	case "$OSTYPE" in
-	  darwin*)  darwin-rebuild --dry-run build ;; 
-	  linux*)   nixos-rebuild dry-build ;;
+		darwin*)  darwin-rebuild --dry-run build ;; 
+		linux*)   nixos-rebuild dry-build ;;
 	  *)        echo "unknown: $OSTYPE" ;;
 	esac
 
 	if [ $? -eq 0 ]; then
 		echo "🔨 Rebuilding Configuration…"
 		case "$OSTYPE" in
-		  darwin*)  darwin-rebuild switch --max-jobs 4 ;; 
-		  linux*)   sudo nixos-rebuild switch --upgrade --max-jobs 16 ;;
+			darwin*)  darwin-rebuild switch --max-jobs 4 ;; 
+			linux*)   sudo nixos-rebuild switch --upgrade --max-jobs 16 ;;
 		  *)        echo "unknown: $OSTYPE" ;;
 		esac
 		if [ $? -eq 0 ]; then
