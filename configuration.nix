@@ -11,6 +11,7 @@ imports = [ # Include the results of the hardware scan.
 	./hardware-configuration.nix
 	./packages.nix
 	./snuggle.nix
+	(import "${builtins.fetchTarball https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz}/nixos")
 ];
 
 nixpkgs.config.packageOverrides = pkgs: {
