@@ -1,10 +1,10 @@
 
 {
-  nix = {
-    binaryCaches = [
+  nix.settings = {
+    substituters = [
       "https://snuggle.cachix.org"
     ];
-    binaryCachePublicKeys = [
+    trusted-public-keys = [
       "snuggle.cachix.org-1:0NGbcJVVAV0lVzqeEGv6LiliMGER3hHn2i3VGw4LMyI="
     ];
   };

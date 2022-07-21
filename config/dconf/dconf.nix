@@ -104,6 +104,7 @@ with lib.hm.gvariant;
      	log-level = 0;
      	gap-inner = 2;
      	gap-outer = 2;
+     	toggle-stacking-global = "<Shift>s";
      };
   };
 }

@@ -12,7 +12,7 @@ imports =
 
 boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" ];
 boot.initrd.kernelModules = [ ];
-boot.kernelParams = [ "nvidia-drm.modeset=1" ];
+boot.kernelParams = [ "nvidia-drm.modeset=1" "iommu=soft" "idle=nomwait" ];
 boot.kernelModules = [ "kvm-amd" ];
 boot.extraModulePackages = [ ];
 
@@ -25,6 +25,11 @@ hardware.nvidia.powerManagement.enable = true; # https://nixos.wiki/wiki/Nvidia#
 
 services.xserver = {
 	videoDrivers = [ "nvidia" ];
+	screenSection = ''
+	  Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
+	  Option         "AllowIndirectGLXProtocol" "off"
+	  Option         "TripleBuffer" "on"
+	'';
 };
 
 hardware.enableAllFirmware = true;
