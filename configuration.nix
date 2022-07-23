@@ -83,6 +83,7 @@ systemd = {
 			path = [ pkgs.bash pkgs.stdenv pkgs.gawk pkgs.getent pkgs.gtk3 ];
 			serviceConfig = {
 				Type = "oneshot";
+				ExecStartPre = "/run/current-system/sw/bin/sleep 10";
 				ExecStart = "${pkgs.fetchFromGitHub
 						{
 							owner = "PapirusDevelopmentTeam";
@@ -91,7 +92,7 @@ systemd = {
 							sha256 = "sha256-ZZMEZCWO+qW76eqa+TgxWGVz69VkSCPcttLoCrH7ppY=";
 						} + "/papirus-folders"} -t ${pkgs.papirus-icon-theme}/share/icons/Papirus --verbose --color yaru";
 			};
-			wantedBy = [ "default.target" ];
+			wantedBy = [ "graphical.target" ];
 		};
 
 		refind-theme = {

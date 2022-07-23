@@ -20,7 +20,8 @@ environment.systemPackages = with pkgs; [
 	spotify spotify-tui
 	jellyfin-media-player
 	slack
-	tdesktop transmission-gtk transmission-remote-gtk teams
+	#tdesktop
+	transmission-gtk transmission-remote-gtk teams
 	vivaldi vivaldi-ffmpeg-codecs vscode
 	yubikey-manager
 	zoom-us
