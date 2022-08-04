@@ -24,6 +24,7 @@ environment.systemPackages = with pkgs; [
 	transmission-gtk transmission-remote-gtk teams
 	vivaldi vivaldi-ffmpeg-codecs vscode
 	yubikey-manager
+	xkeysnail
 	zoom-us
 
 	# Development, Git, or Libraries
@@ -49,6 +50,9 @@ environment.systemPackages = with pkgs; [
 	gnomeExtensions.night-theme-switcher
 	gnomeExtensions.mpris-label
 	gnomeExtensions.pop-shell
+
+	libevdev
+	python310Packages.evdev
 
 	# System Utilities
 	brlaser
@@ -87,6 +91,7 @@ environment.systemPackages = with pkgs; [
 	wget
 	lychee
 	xclip
+	xdotool
 	python3
 
 	# Theming

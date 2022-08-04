@@ -70,6 +70,7 @@ nixpkgs.overlays = let
 	in overlays;
 
 services.gnome.gnome-keyring.enable = true;
+services.flatpak.enable = true;
 
 systemd = {
 	services = {
@@ -158,9 +159,8 @@ time.timeZone = "Europe/London";
 
 networking = {
 	hostName = "plum"; # Define your hostname.
-	useDHCP = false;
-	interfaces.enp38s0.useDHCP = true;
-	interfaces.wlp37s0.useDHCP = true;
+	networkmanager.enable = true;
+	#useDHCP = true;
 
 	extraHosts = ''
 		10.0.1.6 hug
