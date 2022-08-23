@@ -29,6 +29,9 @@ else
 	esac
 
 	if [ $? -eq 0 ]; then
+		echo "🧹 Removing Any Temporary Packages…"
+		nix-env -e '.*'
+		sudo nix-env -e '.*'
 		echo "🔨 Rebuilding Configuration…"
 		case "$OSTYPE" in
 			darwin*)  darwin-rebuild switch --max-jobs 4 ;; 
