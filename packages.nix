@@ -29,6 +29,8 @@ environment.systemPackages = with pkgs; [
 
 	# Development, Git, or Libraries
 	docker
+	sane-airscan
+	sane-backends
 	ffmpeg-full
 	openiscsi
 	git gnupg

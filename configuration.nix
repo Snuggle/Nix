@@ -11,6 +11,7 @@ imports = [ # Include the results of the hardware scan.
 	./hardware-configuration.nix
 	./packages.nix
 	./snuggle.nix
+	 <nixpkgs/nixos/modules/services/hardware/sane_extra_backends/brscan4.nix>
 	(import "${builtins.fetchTarball https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz}/nixos")
 ];
 
@@ -21,6 +22,7 @@ nixpkgs.config.packageOverrides = pkgs: {
 };
 
 virtualisation.libvirtd.enable = true;
+nix.settings.auto-optimise-store = true;
 
 # Use the systemd-boot EFI boot loader.
 boot = {
@@ -37,6 +39,18 @@ boot = {
 	];
 };
 
+hardware = {
+  sane = {
+    enable = true;
+    brscan4 = {
+      enable = true;
+      netDevices = {
+        home = { model = "DCP-1610W"; ip = "10.0.1.196"; };
+      };
+    };
+  };
+};
+  
 environment.gnome.excludePackages = [ pkgs.dejavu_fonts ];
 security = {
 	rtkit.enable = true;
@@ -253,6 +267,7 @@ services = {
 
 	# Enable CUPS to print documents.
 	printing.enable = true;
+    printing.drivers = [ pkgs.brlaser pkgs.brscan4 ];
 
 	pipewire = {
 		enable = true;
