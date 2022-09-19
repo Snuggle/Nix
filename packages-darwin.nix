@@ -36,6 +36,7 @@ environment.systemPackages = with pkgs; [
     #kitty
     micro mosh
     neofetch
+    imagemagick
     nodePackages.gitmoji-cli
     optipng
     starship
@@ -44,5 +45,10 @@ environment.systemPackages = with pkgs; [
     jq
     wget
     xclip
+
+    ##### Homebrew Packages Only #####
+    # LinearMouse
+    # brew install --cask linearmouse
+    ##### Homebrew Packages Only #####
   ];
 }
