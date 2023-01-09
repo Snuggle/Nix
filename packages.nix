@@ -19,6 +19,7 @@ environment.systemPackages = with pkgs; [
 	obs-studio obsidian
 	spotify spotify-tui
 	jellyfin-media-player
+	thunderbolt bolt
 	slack
 	#tdesktop
 	transmission-gtk transmission-remote-gtk teams
@@ -55,7 +56,7 @@ environment.systemPackages = with pkgs; [
 
 	libevdev
 	python310Packages.evdev
-
+	
 	# System Utilities
 	brlaser
 	cachix

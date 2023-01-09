@@ -23,7 +23,7 @@ nixpkgs.config.packageOverrides = pkgs: {
 
 virtualisation.libvirtd.enable = true;
 nix.settings.auto-optimise-store = true;
-
+virtualisation.docker.enable = true;
 # Use the systemd-boot EFI boot loader.
 boot = {
 	loader.systemd-boot.enable = true;
@@ -37,6 +37,8 @@ boot = {
 	kernelModules = [
 		"v4l2loopback"
 	];
+
+	kernelParams = [ "pci=assign-busses,hpbussize=0x33,realloc,hpmemsize=128M,hpmemprefsize=1G" ];
 };
 
 hardware = {
@@ -284,6 +286,11 @@ services = {
 
 	pcscd.enable = true;
 	udev.packages = with pkgs; [ pkgs.yubikey-personalization pkgs.libu2f-host ];
+	udev.extraRules = ''
+	    # Always authorize thunderbolt connections when they are plugged in.
+	    # This is to make sure the USB hub of Thunderbolt is working.
+	    ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{authorized}=="0", ATTR{authorized}="1"
+	  '';
 };
 
 system = {
@@ -337,7 +344,7 @@ users.users.snuggle = {
 	description = "Evie Snuggle";
 	createHome = true;
 	shell = pkgs.fish;
-	extraGroups = [ "wheel" "libvirtd" "scanner" "lp" "adbusers" ]; # Enable ‘sudo’ for the user.
+	extraGroups = [ "wheel" "libvirtd" "scanner" "lp" "adbusers" "docker" ]; # Enable ‘sudo’ for the user.
 
 	openssh.authorizedKeys.keyFiles = [ (builtins.fetchurl { 
 		url = "https://github.com/${config.users.users.snuggle.name}.keys"; 
