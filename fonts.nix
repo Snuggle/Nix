@@ -22,13 +22,14 @@ fonts = with pkgs; [
 
 	# Non-English Fonts
 	noto-fonts-cjk
+	noto-fonts-cjk-sans
 
 	(nerdfonts.override { fonts = [ "FantasqueSansMono" "SourceCodePro" ]; })
 ];
 
 fontconfig = {
 	defaultFonts = {
-		serif = [ "Source Serif 4" "Roboto Slab" "Ubuntu" ];
+		serif = [ "Source Serif 4" "Roboto Slab" "Ubuntu" "Noto Sans CJK HK" ];
 		sansSerif = [ "Source Sans 3" "Ubuntu" ];
 		monospace = [ "Fantasque Sans Mono" "Source Code Pro" "Ubuntu Mono" ];
 		emoji = [ "Blobmoji" ];

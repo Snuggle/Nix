@@ -43,6 +43,8 @@ environment.systemPackages = with pkgs; [
 	yubikey-personalization
 	tailscale
 
+	ibus-engines.libpinyin
+
 	# GNOME Extensions
 	gnomeExtensions.appindicator
 	gnomeExtensions.burn-my-windows

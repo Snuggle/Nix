@@ -1,0 +1,3 @@
+iscsiadm -m node --targetname iqn.2005-10.org.freenas.ctl:snuggle-games-linux -p 10.0.1.52:3260
+sudo iscsiadm -m node --targetname iqn.2005-10.org.freenas.ctl:snuggles-games-linux -p 10.0.1.52:3260 --login
+sudo iscsiadm -m discovery -t sendtargets -p 10.0.1.52:3260

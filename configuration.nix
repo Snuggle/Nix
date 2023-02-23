@@ -4,6 +4,7 @@
 # pkgs.lib.mkForce
 
 { config, lib, pkgs, ... }:
+
 {
 imports = [ # Include the results of the hardware scan.
 	./cachix.nix
@@ -38,7 +39,7 @@ boot = {
 		"v4l2loopback"
 	];
 
-	kernelParams = [ "pci=assign-busses,hpbussize=0x33,realloc,hpmemsize=128M,hpmemprefsize=1G" ];
+	kernelParams = [ "pci=assign-busses,hpbussize=0x33,realloc" ];
 };
 
 hardware = {
@@ -95,22 +96,22 @@ systemd = {
 		NetworkManager-wait-online.enable = false;
 
 		# Set Papirus Folder Colours
-		papirus-folders = {
-			description = "papirus-folders";
-			path = [ pkgs.bash pkgs.stdenv pkgs.gawk pkgs.getent pkgs.gtk3 ];
-			serviceConfig = {
-				Type = "oneshot";
-				ExecStartPre = "/run/current-system/sw/bin/sleep 10";
-				ExecStart = "${pkgs.fetchFromGitHub
-						{
-							owner = "PapirusDevelopmentTeam";
-							repo = "papirus-folders";
-							rev = "86c63fdd21182e5cc8444ba488042559951ca106";
-							sha256 = "sha256-ZZMEZCWO+qW76eqa+TgxWGVz69VkSCPcttLoCrH7ppY=";
-						} + "/papirus-folders"} -t ${pkgs.papirus-icon-theme}/share/icons/Papirus --verbose --color yaru";
-			};
-			wantedBy = [ "graphical.target" ];
-		};
+		#papirus-folders = {
+		#	description = "papirus-folders";
+		#	path = [ pkgs.bash pkgs.stdenv pkgs.gawk pkgs.getent pkgs.gtk3 ];
+		#	serviceConfig = {
+		#		Type = "oneshot";
+		#		ExecStartPre = "/run/current-system/sw/bin/sleep 10";
+		#		ExecStart = "${pkgs.fetchFromGitHub
+		#				{
+		#					owner = "PapirusDevelopmentTeam";
+		#					repo = "papirus-folders";
+		#					rev = "86c63fdd21182e5cc8444ba488042559951ca106";
+		#					sha256 = "sha256-ZZMEZCWO+qW76eqa+TgxWGVz69VkSCPcttLoCrH7ppY=";
+		#				} + "/papirus-folders"} -t ${pkgs.papirus-icon-theme}/share/icons/Papirus --verbose --color yaru";
+		#	};
+		#	wantedBy = [ "graphical.target" ];
+	#	};
 
 		refind-theme = {
 			description = "Set rEFInd theme";
@@ -232,6 +233,7 @@ nixpkgs.config = {
 			"electron-12.2.3"
 			"electron-14.2.9"
 			"electron-11.5.0"
+			"electron-18.1.0"
 	];
 };  
 
@@ -247,6 +249,9 @@ services = {
 	# Enable the GNOME 3 Desktop Environment.
 	xserver.displayManager.gdm.enable = true;
 	xserver.desktopManager.gnome.enable = true;
+
+	xserver.displayManager.sddm.enable = false;
+	xserver.desktopManager.plasma5.enable = false;
 
 		# List services that you want to enable:
 		
@@ -283,6 +288,8 @@ services = {
 		# no need to redefine it in your config for now)
 		#media-session.enable = true;
 	};
+
+	hardware.bolt.enable = true;
 
 	pcscd.enable = true;
 	udev.packages = with pkgs; [ pkgs.yubikey-personalization pkgs.libu2f-host ];
