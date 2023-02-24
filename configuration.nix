@@ -8,9 +8,9 @@
 {
 imports = [ # Include the results of the hardware scan.
 	./cachix.nix
-	./discord.nix
-	./hardware-configuration.nix
-	./packages.nix
+	./overlays/discord.nix
+	./linux/hardware-configuration.nix
+	./linux/packages.nix
 	./snuggle.nix
 	 <nixpkgs/nixos/modules/services/hardware/sane_extra_backends/brscan4.nix>
 	(import "${builtins.fetchTarball https://github.com/nix-community/home-manager/archive/release-22.11.tar.gz}/nixos")
@@ -360,7 +360,7 @@ users.users.snuggle = {
 	}) ];
 };
 
-fonts = import ./fonts.nix pkgs;
+fonts = import ./linux/fonts.nix pkgs;
 
 
 environment.sessionVariables.TERMINAL = [ "kitty" ];

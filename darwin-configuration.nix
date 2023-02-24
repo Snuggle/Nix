@@ -3,12 +3,12 @@
 {
   imports = [ 
     <home-manager/nix-darwin>
-    ./packages-darwin.nix
+    ./macos/packages-darwin.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
 
-  fonts = import ./fonts-darwin.nix pkgs;
+  fonts = import ./macos/fonts-darwin.nix pkgs;
 
   users.users.snuggle = {
     name = "snuggle";
