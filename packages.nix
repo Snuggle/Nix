@@ -68,6 +68,7 @@ environment.systemPackages = with pkgs; [
 	linuxKernel.kernels.linux_zen libglvnd
 	ntfs3g nv-codec-headers
 	obinskit
+	nfs-utils
 	pavucontrol
 	refind
 	smartmontools

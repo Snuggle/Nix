@@ -13,7 +13,7 @@ imports = [ # Include the results of the hardware scan.
 	./packages.nix
 	./snuggle.nix
 	 <nixpkgs/nixos/modules/services/hardware/sane_extra_backends/brscan4.nix>
-	(import "${builtins.fetchTarball https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz}/nixos")
+	(import "${builtins.fetchTarball https://github.com/nix-community/home-manager/archive/release-22.11.tar.gz}/nixos")
 ];
 
 nixpkgs.config.packageOverrides = pkgs: {
@@ -234,6 +234,7 @@ nixpkgs.config = {
 			"electron-14.2.9"
 			"electron-11.5.0"
 			"electron-18.1.0"
+			"python-2.7.18.6"
 	];
 };  
 

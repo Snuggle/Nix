@@ -4,6 +4,7 @@
 set +x
 
 build_ci_system() {
+	export NIX_BUILD_VERSION=22.11
     echo "$1"
     if [[ $1 == "nixos-stable" ]]; then
       build_nixos_stable_system
@@ -34,8 +35,8 @@ build_nixos_unstable_system() {
 
 build_nixos_stable_system() {
   echo "🔨 Building nixos_stable"
-  sudo nix-channel --add https://nixos.org/channels/nixos-22.05 nixos
-  sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz home-manager
+  sudo nix-channel --add https://nixos.org/channels/nixos-$NIX_BUILD_VERSION nixos
+  sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-$NIX_BUILD_VERSION.tar.gz home-manager
   sudo nix-channel --update
   ./switch
   sed -i 's/"nvidia"//g' hardware-configuration.nix
@@ -60,8 +61,8 @@ build_darwin_unstable_system() {
 
 build_darwin_stable_system() {
   echo "🔨 Building darwin_stable"
-  sudo nix-channel --add http://nixos.org/channels/nixpkgs-22.05-darwin nixpkgs
-  sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz home-manager
+  sudo nix-channel --add http://nixos.org/channels/nixpkgs-$NIX_BUILD_VERSION-darwin nixpkgs
+  sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-$NIX_BUILD_VERSION.tar.gz home-manager
   sudo nix-channel --update
   ./switch
   echo "🧪 Testing system configuration…"
