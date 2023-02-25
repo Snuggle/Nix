@@ -7,11 +7,11 @@
 
 {
 imports = [ # Include the results of the hardware scan.
-	./cachix.nix
+	./setup/cachix/cachix.nix
 	./linux/discord.nix
 	./linux/hardware-configuration.nix
 	./linux/packages.nix
-	./snuggle.nix
+	./users/snuggle.nix
 	 <nixpkgs/nixos/modules/services/hardware/sane_extra_backends/brscan4.nix>
 	(import "${builtins.fetchTarball https://github.com/nix-community/home-manager/archive/release-22.11.tar.gz}/nixos")
 ];
@@ -82,8 +82,8 @@ hardware.pulseaudio.enable = false;
 
 # Inspired by: https://github.com/divnix/digga/blob/4ebf259d11930774b3a13b370b955a8765bfcae6/configuration.nix#L30
 nixpkgs.overlays = let
-    overlays = map (name: import (./overlays + "/${name}"))
-		(builtins.attrNames (builtins.readDir ./overlays));
+    overlays = map (name: import (./packages/overlays + "/${name}"))
+		(builtins.attrNames (builtins.readDir ./packages/overlays));
 	in overlays;
 
 services.gnome.gnome-keyring.enable = true;

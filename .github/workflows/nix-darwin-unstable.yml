@@ -33,4 +33,4 @@ jobs:
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
       - name: "Build nix-darwin config ❄️"
-        run: ./build.sh darwin-unstable
+        run: ./setup/build.sh darwin-unstable

@@ -10,11 +10,11 @@ home-manager.users.snuggle = {
 			sha256 = "1d16baihs6d95zkj0mvm7drmyxjnxybwbrivjf91a0innjlhdz07"; 
 		};
 	};
-	imports = [ ./config/dconf/dconf.nix ];
+	imports = [ ../config/dconf/dconf.nix ];
 
 	#xdg.configFile."Nextcloud/nextcloud.cfg".source = config/Nextcloud/nextcloud.cfg;
-	xdg.configFile."Yubico/u2f_keys".source = config/Yubico/u2f_keys;
-	xdg.configFile."Nextcloud/sync-exclude.lst".source = config/Nextcloud/sync-exclude.lst;
+	xdg.configFile."Yubico/u2f_keys".source = ../config/Yubico/u2f_keys;
+	xdg.configFile."Nextcloud/sync-exclude.lst".source = ../config/Nextcloud/sync-exclude.lst;
 
 	gtk = {
 		enable = true;
