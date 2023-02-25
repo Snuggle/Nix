@@ -8,7 +8,7 @@
 {
 imports = [ # Include the results of the hardware scan.
 	./cachix.nix
-	./overlays/discord.nix
+	./linux/discord.nix
 	./linux/hardware-configuration.nix
 	./linux/packages.nix
 	./snuggle.nix
