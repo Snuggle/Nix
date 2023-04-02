@@ -21,26 +21,28 @@ build_ci_system() {
 
 build_nixos_unstable_system() {
   echo "🔨 Building nixos_unstable"
+  echo $NIX_PATH
   sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
   sudo nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
   sudo nix-channel --update
   ./switch
   sed -i 's/boot.kernelPackages = pkgs.linuxPackages_zen;//g' hardware-configuration.nix
   echo  "🧪 Testing system configuration…"
-  NIX_PATH=/home/$USER/.nix-defexpr/channels:nixpkgs=/home/$USER/.nix-defexpr/channels/nixos nix-build '<nixpkgs/nixos>' \
+  NIX_PATH=/home/$USER/.nix-defexpr/channels:nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos nix-build '<nixpkgs/nixos>' \
         -I nixos-config=configuration.nix \
         -A system --dry-run
 }
 
 build_nixos_stable_system() {
   echo "🔨 Building nixos_stable"
+  echo $NIX_PATH
   sudo nix-channel --add https://nixos.org/channels/nixos-$NIX_BUILD_VERSION nixos
   sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-$NIX_BUILD_VERSION.tar.gz home-manager
   sudo nix-channel --update
   ./switch
   sed -i 's/boot.kernelPackages = pkgs.linuxPackages_zen;//g' hardware-configuration.nix
   echo "🧪 Testing system configuration…"
-  NIX_PATH=/home/$USER/.nix-defexpr/channels:nixpkgs=/home/$USER/.nix-defexpr/channels/nixos nix-build '<nixpkgs/nixos>' \
+  NIX_PATH=/home/$USER/.nix-defexpr/channels:nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos nix-build '<nixpkgs/nixos>' \
         -I nixos-config=configuration.nix \
         -A system --dry-run
 }
