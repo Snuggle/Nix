@@ -126,7 +126,7 @@ systemd = {
 							rev = "508ff82526b76ead3a8cbd77cb90a91d4be871b9";
 							sha256 = "sha256-HDs4RWCo6bi1tjpja7k3ex0JFGJExTcqbmikvM2xjnE=";
 						} + "/."} /boot/EFI/refind/themes/";
-				ExecStartPost = "${pkgs.bash}/bin/bash -c '${pkgs.toybox}/bin/toybox cp -Fv ${config/rEFInd/theme.conf} /boot/EFI/refind/themes/theme.conf && cp -Fv ${config/rEFInd/refind.conf} /boot/EFI/refind/refind.conf'";
+				ExecStartPost = "${pkgs.bash}/bin/bash -c '${pkgs.busybox}/bin/busybox cp -v ${config/rEFInd/theme.conf} /boot/EFI/refind/themes/theme.conf && ${pkgs.busybox}/bin/busybox cp -v ${config/rEFInd/refind.conf} /boot/EFI/refind/refind.conf'";
 			};
 			wantedBy = [ "default.target" ];
 		};
@@ -229,6 +229,7 @@ networking = {
 
 nixpkgs.config = { 
 	allowUnfree = true;
+	
 	permittedInsecurePackages = [
 			"electron-13.6.9"
 			"electron-12.2.3"
