@@ -13,7 +13,5 @@ else
 	cd ~/.nixpkgs
 	git remote remove origin
 	git remote add origin git@github.com:Snuggle/nixos
-	sh <(curl -L https://nixos.org/nix/install) --daemon
 fi
-sh <(curl -L https://nixos.org/nix/install) --daemon
 echo "❄️ Nix is installed!"
