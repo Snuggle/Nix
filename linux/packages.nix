@@ -23,7 +23,13 @@ environment.systemPackages = with pkgs; [
 	slack
 	#tdesktop
 	transmission-gtk transmission-remote-gtk teams
-	vivaldi vivaldi-ffmpeg-codecs vscode
+	vscode
+    (vivaldi.override {
+      proprietaryCodecs = true;
+      enableWidevine = false;
+    })
+    vivaldi-ffmpeg-codecs
+    vivaldi-widevine
 	yubikey-manager
 	xkeysnail
 	zoom-us
@@ -68,6 +74,7 @@ environment.systemPackages = with pkgs; [
 	linuxKernel.kernels.linux_zen libglvnd
 	ntfs3g nv-codec-headers
 	obinskit
+	imagemagick
 	nfs-utils
 	pavucontrol
 	refind
