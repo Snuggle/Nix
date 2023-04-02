@@ -29,7 +29,7 @@ environment.systemPackages = with pkgs; [
       enableWidevine = false;
     })
     vivaldi-ffmpeg-codecs
-    vivaldi-widevine
+	widevine-cdm
 	yubikey-manager
 	xkeysnail
 	zoom-us
