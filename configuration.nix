@@ -13,7 +13,6 @@ imports = [ # Include the results of the hardware scan.
 	./linux/packages.nix
 	./users/snuggle.nix
 	 <nixpkgs/nixos/modules/services/hardware/sane_extra_backends/brscan4.nix>
-	 <home-manager/nixos>
 ];
 
 nixpkgs.config.packageOverrides = pkgs: {
