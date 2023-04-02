@@ -60,7 +60,6 @@ home-manager.users.snuggle = {
 			ublock-origin
 			onepassword-password-manager
 			firefox-color
-			netflix-1080p
 			refined-github
 		]; 
 		};

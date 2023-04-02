@@ -11,8 +11,8 @@ imports =
 
 
 boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" ];
-boot.initrd.kernelModules = [ ];
-boot.kernelParams = [ "nvidia-drm.modeset=1" "iommu=soft" "idle=nomwait" ];
+boot.initrd.kernelModules = [ "amdgpu" ];
+#boot.kernelParams = [ "nvidia-drm.modeset=1" "iommu=soft" "idle=nomwait" ];
 boot.kernelModules = [ "kvm-amd" ];
 boot.extraModulePackages = [ ];
 
@@ -21,15 +21,15 @@ boot.loader.timeout = 3;
 
 boot.plymouth.enable = false;
 
-hardware.nvidia.powerManagement.enable = true; # https://nixos.wiki/wiki/Nvidia#Fix_graphical_corruption_on_suspend.2Fresume
+#hardware.nvidia.powerManagement.enable = true; # https://nixos.wiki/wiki/Nvidia#Fix_graphical_corruption_on_suspend.2Fresume
 
 services.xserver = {
-	videoDrivers = [ "nvidia" ];
-	screenSection = ''
-	  Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
-	  Option         "AllowIndirectGLXProtocol" "off"
-	  Option         "TripleBuffer" "on"
-	'';
+	videoDrivers = [ "amdgpu" ];
+#	screenSection = ''
+#	  Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
+#	  Option         "AllowIndirectGLXProtocol" "off"
+#	  Option         "TripleBuffer" "on"
+#	'';
 };
 
 hardware.enableAllFirmware = true;
