@@ -1,6 +1,6 @@
 { pkgs, config, ... }:
 {
-imports = [	<home-manager/nixos> ];
+#imports = [	<home-manager/nixos> ];
 
 home-manager.users.snuggle = { 
 	home.stateVersion = "20.09";
