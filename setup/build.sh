@@ -25,10 +25,9 @@ build_nixos_unstable_system() {
   sudo nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
   sudo nix-channel --update
   ./switch
-  sed -i 's/"nvidia"//g' hardware-configuration.nix
   sed -i 's/boot.kernelPackages = pkgs.linuxPackages_zen;//g' hardware-configuration.nix
   echo  "🧪 Testing system configuration…"
-  nix-build '<nixpkgs/nixos>' \
+  NIX_PATH=/home/$USER/.nix-defexpr/channels:nixpkgs=/home/$USER/.nix-defexpr/channels/nixpkgs nix-build '<nixpkgs/nixos>' \
         -I nixos-config=configuration.nix \
         -A system --dry-run
 }
@@ -39,10 +38,9 @@ build_nixos_stable_system() {
   sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-$NIX_BUILD_VERSION.tar.gz home-manager
   sudo nix-channel --update
   ./switch
-  sed -i 's/"nvidia"//g' hardware-configuration.nix
   sed -i 's/boot.kernelPackages = pkgs.linuxPackages_zen;//g' hardware-configuration.nix
   echo "🧪 Testing system configuration…"
-  nix-build '<nixpkgs/nixos>' \
+  NIX_PATH=/home/$USER/.nix-defexpr/channels:nixpkgs=/home/$USER/.nix-defexpr/channels/nixpkgs nix-build '<nixpkgs/nixos>' \
         -I nixos-config=configuration.nix \
         -A system --dry-run
 }
