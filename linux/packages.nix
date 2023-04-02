@@ -7,7 +7,7 @@ environment.systemPackages = with pkgs; [
 	_1password-gui
 	davinci-resolve # https://github.com/NixOS/nixpkgs/issues/94032
 	cider
-	discord
+	discord-ptb
 	espanso
 	firefox-wayland
 	gparted
