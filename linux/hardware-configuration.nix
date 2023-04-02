@@ -44,10 +44,16 @@ fileSystems."/boot" = {
 	fsType = "vfat";
 };
 
-fileSystems."/mnt/Games" = { 
+fileSystems."/mnt/fruit-salad" = { 
 	device = "/dev/disk/by-uuid/917d6f24-1f40-4019-9efa-c9cd6be4c5f6";
 	fsType = "btrfs";
 	options = [ "nofail" "x-systemd.device-timeout=10s" "defaults" ];
+};
+
+fileSystems."/homesweet" = {
+    device = "homesweet.server:/mnt/homesweet/users/snuggle";
+    fsType = "nfs";	
+    options = [ "nfsvers=4.2" "x-systemd.automount" "noauto" "soft" "nofail" "_netdev" ];
 };
 
 swapDevices = [

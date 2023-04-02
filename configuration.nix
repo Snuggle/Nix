@@ -324,7 +324,6 @@ system = {
 			Desktop \
 			Documents \
 			Downloads \
-			Games \
 			Pictures \
 			Public \
 			Templates \
@@ -339,7 +338,7 @@ system = {
 				continue
 			fi
 			if [[ ! -L "${config.users.users.snuggle.home}/$location" ]]; then
-				ln --symbolic --no-target-directory --verbose "$(findmnt /dev/disk/by-label/Games --noheadings --first-only --output TARGET)/Homesweet/$location/" "${config.users.users.snuggle.home}/$location"
+				ln --symbolic --no-target-directory --verbose "$(findmnt homesweet.server:/mnt/homesweet/users/snuggle --noheadings --first-only --output TARGET)/$location/" "${config.users.users.snuggle.home}/$location"
 			fi
 		done
 	'';
