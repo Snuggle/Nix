@@ -29,6 +29,7 @@ virtualisation.docker.enable = true;
 boot = {
 	loader.systemd-boot.enable = true;
 	loader.efi.canTouchEfiVariables = true;
+	loader.grub.configurationLimit = 10;
 
 	extraModulePackages = [
 		config.boot.kernelPackages.v4l2loopback
