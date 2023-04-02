@@ -7,13 +7,13 @@
 
 {
 imports = [ # Include the results of the hardware scan.
+	<home-manager/nixos>
 	./setup/cachix/cachix.nix
 	./linux/discord.nix
 	./linux/hardware-configuration.nix
 	./linux/packages.nix
 	./users/snuggle.nix
-	 <nixpkgs/nixos/modules/services/hardware/sane_extra_backends/brscan4.nix>
-	(import "${builtins.fetchTarball https://github.com/nix-community/home-manager/archive/release-22.11.tar.gz}/nixos")
+	<nixpkgs/nixos/modules/services/hardware/sane_extra_backends/brscan4.nix>
 ];
 
 nixpkgs.config.packageOverrides = pkgs: {
