@@ -53,15 +53,16 @@ home-manager.users.snuggle = {
 			"font.name.sans-serif.x-western" = "Source Sans 3";
 			"font.name.monospace.x-western" = "Fantasque Sans Mono";
 			};
+			# PLEASE RE-ENABLE AFTER NEW NIXOS STABLE RELEASE
+			#extensions = 
+			#		with pkgs.nur.repos.rycee.firefox-addons; [
+			#			ublock-origin
+			#			onepassword-password-manager
+			#			firefox-color
+			#			refined-github
+			#		]; 
 		};
-
-		extensions = 
-		with pkgs.nur.repos.rycee.firefox-addons; [
-			ublock-origin
-			onepassword-password-manager
-			firefox-color
-			refined-github
-		]; 
+		
 		};
 
 		exa = {
