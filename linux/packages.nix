@@ -7,6 +7,7 @@ environment.systemPackages = with pkgs; [
 	_1password-gui
 	davinci-resolve # https://github.com/NixOS/nixpkgs/issues/94032
 	cider
+	darktable
 	discord-ptb
 	espanso
 	firefox-wayland
@@ -82,6 +83,7 @@ environment.systemPackages = with pkgs; [
 	tmux
 	virt-manager vlc libvirt
 	xdg-desktop-portal
+	xorg.xkill
 	ox
 	rust-petname
 	wireguard-tools

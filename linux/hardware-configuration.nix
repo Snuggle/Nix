@@ -53,7 +53,7 @@ fileSystems."/mnt/fruit-salad" = {
 fileSystems."/homesweet" = {
     device = "homesweet.server:/mnt/homesweet/users/snuggle";
     fsType = "nfs";	
-    options = [ "nfsvers=4.2" "x-systemd.automount" "noauto" "soft" "nofail" "_netdev" ];
+    options = [ "nfsvers=4.2" "soft" "nofail" "_netdev" "x-systemd.automount" "x-systemd.requires=network-online.target" "x-systemd.device-timeout=10 0 0" ];
 };
 
 swapDevices = [

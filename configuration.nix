@@ -9,7 +9,6 @@
 imports = [ # Include the results of the hardware scan.
 	<home-manager/nixos>
 	./setup/cachix/cachix.nix
-	./linux/discord.nix
 	./linux/hardware-configuration.nix
 	./linux/packages.nix
 	./users/snuggle.nix
@@ -94,7 +93,7 @@ systemd = {
 	services = {
 		# Don't take ~30s to boot
 		systemd-udev-settle.enable = false;
-		NetworkManager-wait-online.enable = false;
+		NetworkManager-wait-online.enable = true;
 
 		# Set Papirus Folder Colours
 		#papirus-folders = {
