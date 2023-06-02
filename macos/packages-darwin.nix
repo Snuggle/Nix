@@ -4,7 +4,8 @@ environment.systemPackages = with pkgs; [
     # Darwin Specific
     opensc
     libu2f-host
-    
+    pinentry_mac
+
     ### (Installed System Packages) ###
 
     # Applications
@@ -15,6 +16,7 @@ environment.systemPackages = with pkgs; [
     pinentry-curses
     #zoom-us
     iterm2
+   # vivaldi
 
     # Development, Git or Libraries
     ffmpeg

@@ -61,6 +61,14 @@
         signing.key = "877300954D1493E6";
         
       };
+
+      gpg = {
+	    # Required on MacOS for GPG to recognise YubiKey.
+	    # https://github.com/NixOS/nixpkgs/issues/155629
+	    scdaemonSettings = pkgs.lib.mkIf pkgs.stdenv.isDarwin {
+	      disable-ccid = true;
+        };
+      };
     };
 
     home.file.".ssh/authorized_keys" = {
