@@ -8,8 +8,6 @@
 {
 
 imports = [ # Include the results of the hardware scan.
-	<home-manager/nixos>
-	./users/snuggle.nix
     ./setup/cachix/cachix.nix
     ./linux/hardware-configuration.nix
     ./linux/packages.nix
