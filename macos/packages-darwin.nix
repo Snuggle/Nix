@@ -23,7 +23,7 @@ environment.systemPackages = with pkgs; [
     git gnupg
     jekyll
     ruby
-    yubikey-personalization
+    #yubikey-personalization
     tailscale
 
     # System Utilities
@@ -46,7 +46,6 @@ environment.systemPackages = with pkgs; [
     vim
     jq
     wget
-    xclip
 
     ##### Homebrew Packages Only #####
     # LinearMouse

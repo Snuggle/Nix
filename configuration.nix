@@ -6,14 +6,23 @@
 { config, lib, pkgs, ... }:
 
 {
+
 imports = [ # Include the results of the hardware scan.
 	<home-manager/nixos>
-	./setup/cachix/cachix.nix
-	./linux/hardware-configuration.nix
-	./linux/packages.nix
 	./users/snuggle.nix
-	<nixpkgs/nixos/modules/services/hardware/sane_extra_backends/brscan4.nix>
+    ./setup/cachix/cachix.nix
+    ./linux/hardware-configuration.nix
+    ./linux/packages.nix
 ];
+
+/* #imports = pkgs.lib.mkIf pkgs.stdenv.isDarwin [./platforms/darwin.nix];
+imports = pkgs.lib.mkIf pkgs.stdenv.isLinux  ([	<home-manager/nixos>
+./setup/cachix/cachix.nix
+./linux/hardware-configuration.nix
+./linux/packages.nix
+./users/snuggle.nix
+<nixpkgs/nixos/modules/services/hardware/sane_extra_backends/brscan4.nix>]);
+ */
 
 nixpkgs.config.packageOverrides = pkgs: {
 	nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
@@ -86,8 +95,6 @@ nixpkgs.overlays = let
 		(builtins.attrNames (builtins.readDir ./packages/overlays));
 	in overlays;
 
-services.gnome.gnome-keyring.enable = true;
-services.flatpak.enable = true;
 
 systemd = {
 	services = {
@@ -175,7 +182,7 @@ time.timeZone = "Europe/London";
 # replicates the default behaviour.
 
 networking = {
-	hostName = "plum"; # Define your hostname.
+	hostName = "cherry"; # Define your hostname.
 	networkmanager.enable = true;
 	#useDHCP = true;
 
@@ -235,7 +242,11 @@ nixpkgs.config = {
 			"electron-14.2.9"
 			"electron-11.5.0"
 			"electron-18.1.0"
+			"electron-19.1.9"
+			"electron-25.9.0"
 			"python-2.7.18.6"
+			"openssl-1.1.1u"
+			"openssl-1.1.1w"
 	];
 };  
 
@@ -259,23 +270,24 @@ services = {
 		
 	# Enable the OpenSSH daemon.
 	openssh.enable = true;
-	openssh.passwordAuthentication = false;
-	openssh.permitRootLogin = "yes";
-	openssh.kbdInteractiveAuthentication = false;
-	openssh.extraConfig = ''
-		PubkeyAcceptedAlgorithms +ssh-rsa
-		HostkeyAlgorithms +ssh-rsa
-	'';
+#	openssh.settings.PasswordAuthentication = "no";
+#	openssh.settings.PermitRootLogin = "yes";
+#	openssh.extraConfig = ''
+#		PubkeyAcceptedAlgorithms +ssh-rsa
+#		HostkeyAlgorithms +ssh-rsa
+#	'';
 
 	#services.dbus.packages = with pkgs; [ gnome3.dconf ];
-	
+
+	gnome.gnome-keyring.enable = true;
+	flatpak.enable = true;
 
 	# Configure keymap in X11
 	# services.xserver.layout = "us";
 	# services.xserver.xkbOptions = "eurosign:e";
 
 	# Enable CUPS to print documents.
-	printing.enable = true;
+	printing.enable = false;
     printing.drivers = [ pkgs.brlaser pkgs.brscan4 ];
 
 	pipewire = {
@@ -318,13 +330,14 @@ system = {
 	'';
 
 	# Setup symlinks for NAS-based home directory
-	userActivationScripts.linktosharedfolder.text = ''
+	/* 	userActivationScripts.linktosharedfolder.text = ''
 		for location in \
 			Desktop \
 			Documents \
 			Downloads \
 			Pictures \
 			Public \
+			Screenshots \
 			Templates \
 			Temporary \
 			Videos \
@@ -340,7 +353,7 @@ system = {
 				ln --symbolic --no-target-directory --verbose "$(findmnt homesweet.server:/mnt/homesweet/users/snuggle --noheadings --first-only --output TARGET)/$location/" "${config.users.users.snuggle.home}/$location"
 			fi
 		done
-	'';
+	''; */
 };
 
 # Enable touchpad support (enabled default in most desktopManager).
@@ -352,7 +365,7 @@ users.users.snuggle = {
 	description = "Evie Snuggle";
 	createHome = true;
 	shell = pkgs.fish;
-	extraGroups = [ "wheel" "libvirtd" "scanner" "lp" "adbusers" "docker" ]; # Enable ‘sudo’ for the user.
+	extraGroups = [ "wheel" "libvirtd" "scanner" "lp" "adbusers" "docker" "networkmanager" ]; # Enable ‘sudo’ for the user.
 
 	openssh.authorizedKeys.keyFiles = [ (builtins.fetchurl { 
 		url = "https://github.com/${config.users.users.snuggle.name}.keys"; 
@@ -390,7 +403,6 @@ programs = {
 			cat = "bat";
 			ls = "exa --icons";
 			nano = "micro";
-			ssh = "mosh";
 		};
 	};
 

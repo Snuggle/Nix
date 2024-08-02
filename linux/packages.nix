@@ -5,9 +5,10 @@ environment.systemPackages = with pkgs; [
 
 	# Applications
 	_1password-gui
-	davinci-resolve # https://github.com/NixOS/nixpkgs/issues/94032
+	aws-workspaces
+	#davinci-resolve # https://github.com/NixOS/nixpkgs/issues/94032
 	cider
-	darktable
+	#darktable
 	discord-ptb
 	espanso
 	firefox-wayland
@@ -15,25 +16,29 @@ environment.systemPackages = with pkgs; [
 	inkscape
 	kdenlive krita
 	libreoffice
-	minecraft
+	#minecraft
 	nextcloud-client
-	obs-studio obsidian
-	spotify spotify-tui
+	obs-studio #obsidian
+	spotify #spotify-tui
 	jellyfin-media-player
 	thunderbolt bolt
 	slack
-	#tdesktop
-	transmission-gtk transmission-remote-gtk teams
+	tdesktop
+	transmission-gtk transmission-remote-gtk
 	vscode
-    (vivaldi.override {
-      proprietaryCodecs = true;
-      enableWidevine = false;
-    })
-    vivaldi-ffmpeg-codecs
-	widevine-cdm
+    #(vivaldi.override {
+    #  proprietaryCodecs = true;
+    #  enableWidevine = false;
+    #})
+    #vivaldi-ffmpeg-codecs
+	#widevine-cdm
+	obsidian
 	yubikey-manager
-	xkeysnail
+    yubioath-flutter
+	#xkeysnail
 	zoom-us
+
+	#displaylink
 
 	# Development, Git, or Libraries
 	docker
@@ -47,10 +52,10 @@ environment.systemPackages = with pkgs; [
 	cargo
 	jekyll
 	ruby
-	yubikey-personalization
+	#yubikey-personalization
 	tailscale
 
-	ibus-engines.libpinyin
+	#ibus-engines.libpinyin
 
 	# GNOME Extensions
 	gnomeExtensions.appindicator
@@ -58,7 +63,7 @@ environment.systemPackages = with pkgs; [
 	gnomeExtensions.compiz-windows-effect
 	gnomeExtensions.hide-top-bar
 	gnomeExtensions.gsconnect
-	gnomeExtensions.mpris-indicator-button
+	#gnomeExtensions.mpris-indicator-button
 	gnomeExtensions.night-theme-switcher
 	gnomeExtensions.mpris-label
 	gnomeExtensions.pop-shell
@@ -70,11 +75,11 @@ environment.systemPackages = with pkgs; [
 	brlaser
 	cachix
 	dconf dconf2nix
-	etcher
+	#etcher
 	glances gnome.dconf-editor gnome.gnome-software gnome.gucharmap
 	linuxKernel.kernels.linux_zen libglvnd
 	ntfs3g nv-codec-headers
-	obinskit
+	#obinskit
 	imagemagick
 	nfs-utils
 	pavucontrol
@@ -91,7 +96,7 @@ environment.systemPackages = with pkgs; [
 	# Terminal Tools
 	alacritty
 	bat bind
-	exa
+	eza
 	fish
 	kitty
 	micro mosh
@@ -105,8 +110,6 @@ environment.systemPackages = with pkgs; [
 	jq
 	wget
 	lychee
-	xclip
-	xdotool
 	python3
 
 	# Theming
@@ -119,15 +122,16 @@ environment.systemPackages = with pkgs; [
 	haskellPackages.gtk-sni-tray
 	taffybar
 
+	coreutils
 	# Un-GNU Coreutils, Replace GNU Coreutils with Busybox/Toybox
-	(pkgs.hiPrio unixtools.fsck)
-	(pkgs.hiPrio ripgrep)
+	#(pkgs.hiPrio unixtools.fsck)
+	#(pkgs.hiPrio ripgrep)
 	# Required for NixOS with busybox otherwise "systemd-fsck[4070]: fsck.vfat: invalid option -- 'M'" error.
 	# This ensures that `ls -l $(which fsck)` is pointing to the 'util-linux/bin/fsck' rather than 'busybox/bin/fsck'.
 	# Failing to do this causes systemd to fail booting, dropping into emergency mode, on FAT32 /boot EFI partitions.
-	busybox
-	(pkgs.hiPrio toybox)
-	(pkgs.lowPrio coreutils)
-	(coreutils.override { minimal = true; })
+	#busybox
+	#(pkgs.hiPrio toybox)
+	#(pkgs.lowPrio coreutils)
+	#(coreutils.override { minimal = true; })
 ];
 }

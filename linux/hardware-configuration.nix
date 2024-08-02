@@ -16,6 +16,8 @@ boot.initrd.kernelModules = [ "amdgpu" ];
 boot.kernelModules = [ "kvm-amd" ];
 boot.extraModulePackages = [ ];
 
+boot.loader.systemd-boot.configurationLimit = 15;
+boot.loader.grub.configurationLimit = 15;
 boot.loader.grub.useOSProber = true;
 boot.loader.timeout = 3;
 
@@ -24,13 +26,22 @@ boot.plymouth.enable = false;
 #hardware.nvidia.powerManagement.enable = true; # https://nixos.wiki/wiki/Nvidia#Fix_graphical_corruption_on_suspend.2Fresume
 
 services.xserver = {
-	videoDrivers = [ "amdgpu" ];
+	videoDrivers = [ "amdgpu" "modesetting" ];
 #	screenSection = ''
 #	  Option         "metamodes" "nvidia-auto-select +0+0 {ForceFullCompositionPipeline=On}"
 #	  Option         "AllowIndirectGLXProtocol" "off"
 #	  Option         "TripleBuffer" "on"
 #	'';
 };
+
+
+# DisplayLink
+
+#services.xserver.displayManager.sessionCommands = ''
+#    ${lib.getBin pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource 2 0
+#'';
+
+# End DisplayLink
 
 hardware.enableAllFirmware = true;
 
@@ -50,11 +61,11 @@ fileSystems."/mnt/fruit-salad" = {
 	options = [ "nofail" "x-systemd.device-timeout=10s" "defaults" ];
 };
 
-fileSystems."/homesweet" = {
+/* fileSystems."/homesweet" = {
     device = "homesweet.server:/mnt/homesweet/users/snuggle";
     fsType = "nfs";	
     options = [ "nfsvers=4.2" "soft" "nofail" "_netdev" "x-systemd.automount" "x-systemd.requires=network-online.target" "x-systemd.device-timeout=10 0 0" ];
-};
+}; */
 
 swapDevices = [
 	{ device = "/dev/disk/by-uuid/488c55c6-d271-4bc4-89b4-63690ee49c24"; }

@@ -42,7 +42,7 @@ build_nixos_stable_system() {
   ./switch
   sed -i 's/boot.kernelPackages = pkgs.linuxPackages_zen;//g' hardware-configuration.nix
   echo "🧪 Testing system configuration…"
-  NIX_PATH=/home/$USER/.nix-defexpr/channels:nixpkgs=channel:nixos-22.11 nix-build '<nixpkgs/nixos>' \
+  NIX_PATH=/home/$USER/.nix-defexpr/channels:nixpkgs=channel:nixos-$NIX_BUILD_VERSION nix-build '<nixpkgs/nixos>' \
         -I nixos-config=configuration.nix \
         -A system --dry-run
 }

@@ -169,7 +169,7 @@ home-manager.users.snuggle = {
 			font = {
 			size = 14;
 			normal = {
-				family = "Fantasque Sans Mono Nerd Font";
+				family = "Fantasque Sans Mono";
 			};
 			};
 			colors = {
