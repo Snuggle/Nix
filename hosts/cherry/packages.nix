@@ -33,7 +33,7 @@ environment.systemPackages = with pkgs; [
     yubioath-flutter
     #whatsapp-for-linux
 	#xkeysnail
-	zoom-us
+	#zoom-us
 
 	#displaylink
 

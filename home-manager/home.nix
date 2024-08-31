@@ -9,6 +9,7 @@
 }: {
   # You can import other home-manager modules here
   imports = [
+    ../config/dconf/dconf.nix
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
 
@@ -38,14 +39,6 @@
     };
   };
 
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "24.05"; # Please read the comment before changing.
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -110,7 +103,6 @@
 			sha256 = "1d16baihs6d95zkj0mvm7drmyxjnxybwbrivjf91a0innjlhdz07"; 
 		};
 	};
-	imports = [ ../config/dconf/dconf.nix ];
 
 	gtk = {
 		enable = true;
@@ -327,10 +319,6 @@
 		};
 	};
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
-
-  # TODO: Set your username
   home = {
     username = "snuggle";
     homeDirectory = "/home/snuggle";
@@ -340,9 +328,8 @@
   # programs.neovim.enable = true;
   # home.packages = with pkgs; [ steam ];
 
-  # Enable home-manager and git
+  # Enable home-manager
   programs.home-manager.enable = true;
-  programs.git.enable = true;
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
