@@ -1,20 +1,84 @@
-{ pkgs, config, ... }:
-{
-#imports = [	<home-manager/nixos> ];
+{ config, pkgs, ... }:
 
-home-manager.users.snuggle = { 
-	home.stateVersion = "20.09";
-	home.file.".ssh/authorized_keys" = {
+{
+  # Home Manager needs a bit of information about you and the paths it should
+  # manage.
+  home.username = "snuggle";
+  home.homeDirectory = "/home/snuggle";
+
+  # This value determines the Home Manager release that your configuration is
+  # compatible with. This helps avoid breakage when a new Home Manager release
+  # introduces backwards incompatible changes.
+  #
+  # You should not change this value, even if you update Home Manager. If you do
+  # want to update the value, then make sure to first check the Home Manager
+  # release notes.
+  home.stateVersion = "24.05"; # Please read the comment before changing.
+
+  # The home.packages option allows you to install Nix packages into your
+  # environment.
+  home.packages = [
+    # # Adds the 'hello' command to your environment. It prints a friendly
+    # # "Hello, world!" when run.
+    # pkgs.hello
+
+    # # It is sometimes useful to fine-tune packages, for example, by applying
+    # # overrides. You can do that directly here, just don't forget the
+    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
+    # # fonts?
+    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+
+    # # You can also create simple shell scripts directly inside your
+    # # configuration. For example, this adds a command 'my-hello' to your
+    # # environment:
+    # (pkgs.writeShellScriptBin "my-hello" ''
+    #   echo "Hello, ${config.home.username}!"
+    # '')
+  ];
+
+  # Home Manager is pretty good at managing dotfiles. The primary way to manage
+  # plain files is through 'home.file'.
+  home.file = {
+    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
+    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
+    # # symlink to the Nix store copy.
+    # ".screenrc".source = dotfiles/screenrc;
+
+    # # You can also set the file content immediately.
+    # ".gradle/gradle.properties".text = ''
+    #   org.gradle.console=verbose
+    #   org.gradle.daemon.idletimeout=3600000
+    # '';
+  };
+
+  home.file."Deck".source = config.lib.file.mkOutOfStoreSymlink "/mnt/homesweet/Deck";
+  home.file."Desktop".source = config.lib.file.mkOutOfStoreSymlink "/mnt/homesweet/Desktop";
+  home.file."Documents".source = config.lib.file.mkOutOfStoreSymlink "/mnt/homesweet/Documents";
+  home.file."Downloads".source = config.lib.file.mkOutOfStoreSymlink "/mnt/homesweet/Downloads";
+  home.file."Music".source = config.lib.file.mkOutOfStoreSymlink "/mnt/homesweet/Music";
+  home.file."Notes".source = config.lib.file.mkOutOfStoreSymlink "/mnt/homesweet/Notes";
+  home.file."Pictures".source = config.lib.file.mkOutOfStoreSymlink "/mnt/homesweet/Pictures";
+  home.file."Public".source = config.lib.file.mkOutOfStoreSymlink "/mnt/homesweet/Public";
+  home.file."Screenshots".source = config.lib.file.mkOutOfStoreSymlink "/mnt/homesweet/Screenshots";
+  home.file."Talk".source = config.lib.file.mkOutOfStoreSymlink "/mnt/homesweet/Talk";
+  home.file."Templates".source = config.lib.file.mkOutOfStoreSymlink "/mnt/homesweet/Templates";
+  home.file."Temporary".source = config.lib.file.mkOutOfStoreSymlink "/mnt/homesweet/Temporary";
+  home.file."Vault".source = config.lib.file.mkOutOfStoreSymlink "/mnt/homesweet/Vault";
+  home.file."Videos".source = config.lib.file.mkOutOfStoreSymlink "/mnt/homesweet/Videos";
+
+  home.file = {
+  ".config/home-manager/home.nix" = {
+    source = config.lib.file.mkOutOfStoreSymlink ../users/snuggle.nix;
+  };
+  };
+  
+  home.file.".ssh/authorized_keys" = {
     source = builtins.fetchurl { 
-			url = "https://github.com/${config.users.users.snuggle.name}.keys"; 
+			url = "https://github.com/${config.home.username}.keys"; 
 			sha256 = "1d16baihs6d95zkj0mvm7drmyxjnxybwbrivjf91a0innjlhdz07"; 
 		};
 	};
 	imports = [ ../config/dconf/dconf.nix ];
-
-	#xdg.configFile."Nextcloud/nextcloud.cfg".source = config/Nextcloud/nextcloud.cfg;
-	xdg.configFile."Yubico/u2f_keys".source = ../config/Yubico/u2f_keys;
-	xdg.configFile."Nextcloud/sync-exclude.lst".source = ../config/Nextcloud/sync-exclude.lst;
 
 	gtk = {
 		enable = true;
@@ -32,6 +96,31 @@ home-manager.users.snuggle = {
 		startInBackground = true;
 		};
 	};
+
+  #xdg.configFile."Nextcloud/nextcloud.cfg".source = config/Nextcloud/nextcloud.cfg;
+	xdg.configFile."Yubico/u2f_keys".source = ../config/Yubico/u2f_keys;
+	xdg.configFile."Nextcloud/sync-exclude.lst".source = ../config/Nextcloud/sync-exclude.lst;
+
+  # Home Manager can also manage your environment variables through
+  # 'home.sessionVariables'. These will be explicitly sourced when using a
+  # shell provided by Home Manager. If you don't want to manage your shell
+  # through Home Manager then you have to manually source 'hm-session-vars.sh'
+  # located at either
+  #
+  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+  #
+  # or
+  #
+  #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
+  #
+  # or
+  #
+  #  /etc/profiles/per-user/snuggle/etc/profile.d/hm-session-vars.sh
+  #
+  home.sessionVariables = {
+    # EDITOR = "emacs";
+  };
+
 
 	programs = {
 		firefox = {
@@ -63,10 +152,6 @@ home-manager.users.snuggle = {
 			#		]; 
 		};
 		
-		};
-
-		exa = {
-		enableAliases = true;
 		};
 
 		git = {
@@ -209,5 +294,7 @@ home-manager.users.snuggle = {
 		};
 		};
 	};
-};
+
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
 }

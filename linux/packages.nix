@@ -5,10 +5,6 @@ environment.systemPackages = with pkgs; [
 
 	# Applications
 	_1password-gui
-	aws-workspaces
-	#davinci-resolve # https://github.com/NixOS/nixpkgs/issues/94032
-	cider
-	#darktable
 	discord-ptb
 	espanso
 	firefox-wayland
@@ -16,13 +12,13 @@ environment.systemPackages = with pkgs; [
 	inkscape
 	kdenlive krita
 	libreoffice
-	#minecraft
 	nextcloud-client
-	obs-studio #obsidian
-	spotify #spotify-tui
+	obs-studio obsidian
+	spotify
 	jellyfin-media-player
 	thunderbolt bolt
 	slack
+	signal-desktop
 	tdesktop
 	transmission-gtk transmission-remote-gtk
 	vscode
@@ -35,6 +31,7 @@ environment.systemPackages = with pkgs; [
 	obsidian
 	yubikey-manager
     yubioath-flutter
+    #whatsapp-for-linux
 	#xkeysnail
 	zoom-us
 
@@ -122,7 +119,7 @@ environment.systemPackages = with pkgs; [
 	haskellPackages.gtk-sni-tray
 	taffybar
 
-	coreutils
+	#coreutils
 	# Un-GNU Coreutils, Replace GNU Coreutils with Busybox/Toybox
 	#(pkgs.hiPrio unixtools.fsck)
 	#(pkgs.hiPrio ripgrep)
