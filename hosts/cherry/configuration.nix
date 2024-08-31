@@ -19,7 +19,7 @@
 
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
-    ./linux/packages.nix
+    #./packages.nix
   ];
 
   nixpkgs = {
@@ -62,7 +62,6 @@
   };
 
   virtualisation.libvirtd.enable = true;
-  nix.settings.auto-optimise-store = true;
   virtualisation.docker.enable = true;
   # Use the systemd-boot EFI boot loader.
   boot = {
@@ -110,10 +109,10 @@
   hardware.pulseaudio.enable = false;
 
   # Inspired by: https://github.com/divnix/digga/blob/4ebf259d11930774b3a13b370b955a8765bfcae6/configuration.nix#L30
-  nixpkgs.overlays = let
-      overlays = map (name: import (./packages/overlays + "/${name}"))
-      (builtins.attrNames (builtins.readDir ./packages/overlays));
-    in overlays;
+  #nixpkgs.overlays = let
+  #    overlays = map (name: import (./packages/overlays + "/${name}"))
+  #    (builtins.attrNames (builtins.readDir ./packages/overlays));
+  #  in overlays;
 
 
   systemd = {
@@ -140,7 +139,7 @@
       #	wantedBy = [ "graphical.target" ];
     #	};
 
-      refind-theme = {
+/*       refind-theme = {
         description = "Set rEFInd theme";
         path = [ pkgs.git pkgs.stdenv pkgs.toybox pkgs.busybox ];
         serviceConfig = {
@@ -155,10 +154,10 @@
           ExecStartPost = "${pkgs.bash}/bin/bash -c '${pkgs.busybox}/bin/busybox cp -v ${config/rEFInd/theme.conf} /boot/EFI/refind/themes/theme.conf && ${pkgs.busybox}/bin/busybox cp -v ${config/rEFInd/refind.conf} /boot/EFI/refind/refind.conf'";
         };
         wantedBy = [ "default.target" ];
-      };
-    };
+      }; */
+    }; 
 
-    user.services = {
+    /* user.services = {
       nextcloud-config-update = {
         enable = true;
         description = "Update Nextcloud Config";
@@ -190,7 +189,7 @@
 
         wantedBy = [ "default.target" ];
       };
-    };
+    }; */
   };
 
 
@@ -217,9 +216,9 @@
       allowedTCPPorts = [ 7777 ];
       allowedUDPPorts = [ 50 ];
     };
+  };
 
   nixpkgs.config = { 
-    allowUnfree = true;
     
     permittedInsecurePackages = [
         "electron-13.6.9"
@@ -296,6 +295,7 @@
       accountServiceUsers="/var/lib/AccountsService/users/snuggle"
       cp ${(builtins.fetchurl { 
         url = "https://github.com/snuggle.png"; 
+        sha256 = "1x4ajji4ip6bw9dkwf7bykkw00avzw7wg21cn0w4kwbcv71h052c"; 
       })} "$accountServiceIcons"
 
       if ! grep -Fxq "Icon=$accountServiceIcons" "$accountServiceUsers"; then
@@ -333,7 +333,7 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  fonts = import ./linux/fonts.nix pkgs;
+  #fonts = import ./fonts.nix pkgs;
 
 
   environment.sessionVariables.TERMINAL = [ "kitty" ];
@@ -358,7 +358,7 @@
     fish = {
       enable = true;
       promptInit = "starship init fish | source";
-      shellInit = builtins.readFile ./config/fish/colours.fish;
+     #shellInit = builtins.readFile ./config/fish/colours.fish;
       shellAbbrs = {
         cat = "bat";
         ls = "exa --icons";
@@ -410,4 +410,5 @@
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.05";
+  
 }
