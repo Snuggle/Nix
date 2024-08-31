@@ -24,7 +24,7 @@ build_cherry_system() {
   #NIX_PATH=/home/$USER/.nix-defexpr/channels:nixpkgs=channel:nixos-unstable nix-build '<nixpkgs/nixos>' \
   #      -I nixos-config=configuration.nix \
   #      -A system --dry-run
-  nix build '.#nixosConfigurations.cherry.config.system.build.toplevel'
+  nix build --experimental-features 'nix-command flakes' '.#nixosConfigurations.cherry.config.system.build.toplevel'
 }
 
 build_ci_system $@
