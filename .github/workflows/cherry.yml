@@ -1,4 +1,4 @@
-name: NixOS (unstable)
+name: "Host: '🍒 cherry'"
 
 on:
   pull_request:
