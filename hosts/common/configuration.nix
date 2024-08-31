@@ -388,6 +388,7 @@
       shell = pkgs.fish;
       openssh.authorizedKeys.keys = [ (builtins.fetchurl { 
         url = "https://github.com/${config.users.users.snuggle.name}.keys"; 
+        sha256 = "1d16baihs6d95zkj0mvm7drmyxjnxybwbrivjf91a0innjlhdz07";
       }) ];
       extraGroups = [ "wheel" "libvirtd" "scanner" "lp" "adbusers" "docker" "networkmanager" ];
     };
