@@ -18,7 +18,6 @@
     # ./users.nix
 
     # Import your generated (nixos-generate-config) hardware configuration
-    ./hardware-configuration.nix
     ./packages.nix
   ];
 
@@ -389,7 +388,7 @@
       shell = pkgs.fish;
       openssh.authorizedKeys.keys = [ (builtins.fetchurl { 
         url = "https://github.com/${config.users.users.snuggle.name}.keys"; 
-        sha256 = "07fc06a9b436021592933be6c597ef56765f733b755720e72fa9190da35a26b4"; 
+        sha256 = "1bvyxgb893q00nfbns7qghc25j7f5dnnnjfd0nbq0cllpjrqqfk6"; 
       }) ];
       extraGroups = [ "wheel" "libvirtd" "scanner" "lp" "adbusers" "docker" "networkmanager" ];
     };
@@ -409,6 +408,6 @@
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  system.stateVersion = "23.05";
+  system.stateVersion = "24.05";
   
 }

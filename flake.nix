@@ -27,6 +27,12 @@
         # > Our main nixos configuration file <
         modules = [./hosts/cherry/configuration.nix];
       };
+
+      pineapple = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        # > Our main nixos configuration file <
+        modules = [./hosts/pineapple/configuration.nix];
+      };
     };
 
     # Standalone home-manager configuration entrypoint
