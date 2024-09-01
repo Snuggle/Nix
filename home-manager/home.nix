@@ -1,19 +1,44 @@
-{ config, pkgs, ... }:
-
+# This is your home-manager configuration file
+# Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 {
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
-  home.username = "snuggle";
-  home.homeDirectory = "/home/snuggle";
+  inputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}: {
+  # You can import other home-manager modules here
+  imports = [
+    ../config/dconf/dconf.nix
+    # If you want to use home-manager modules from other flakes (such as nix-colors):
+    # inputs.nix-colors.homeManagerModule
 
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "24.05"; # Please read the comment before changing.
+    # You can also split up your configuration and import pieces of it here:
+    # ./nvim.nix
+  ];
+
+  nixpkgs = {
+    # You can add overlays here
+    overlays = [
+      # If you want to use overlays exported from other flakes:
+      # neovim-nightly-overlay.overlays.default
+
+      # Or define it inline, for example:
+      # (final: prev: {
+      #   hi = final.hello.overrideAttrs (oldAttrs: {
+      #     patches = [ ./change-hello-to-hi.patch ];
+      #   });
+      # })
+    ];
+    # Configure your nixpkgs instance
+    config = {
+      # Disable if you don't want unfree packages
+      allowUnfree = true;
+      # Workaround for https://github.com/nix-community/home-manager/issues/2942
+      allowUnfreePredicate = _: true;
+    };
+  };
+
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -75,10 +100,9 @@
   home.file.".ssh/authorized_keys" = {
     source = builtins.fetchurl { 
 			url = "https://github.com/${config.home.username}.keys"; 
-			sha256 = "1d16baihs6d95zkj0mvm7drmyxjnxybwbrivjf91a0innjlhdz07"; 
+			sha256 = "1bvyxgb893q00nfbns7qghc25j7f5dnnnjfd0nbq0cllpjrqqfk6"; 
 		};
 	};
-	imports = [ ../config/dconf/dconf.nix ];
 
 	gtk = {
 		enable = true;
@@ -295,6 +319,21 @@
 		};
 	};
 
-  # Let Home Manager install and manage itself.
+  home = {
+    username = "snuggle";
+    homeDirectory = "/home/snuggle";
+  };
+
+  # Add stuff for your user as you see fit:
+  # programs.neovim.enable = true;
+  # home.packages = with pkgs; [ steam ];
+
+  # Enable home-manager
   programs.home-manager.enable = true;
+
+  # Nicely reload system units when changing configs
+  systemd.user.startServices = "sd-switch";
+
+  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+  home.stateVersion = "23.05";
 }

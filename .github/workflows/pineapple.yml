@@ -1,4 +1,4 @@
-name: Nix on macOS
+name: "Host: '🍍 pineapple'"
 
 on:
   pull_request:
@@ -16,14 +16,14 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.4.0
 
       - name: "Install Nix ❄️"
         uses: cachix/install-nix-action@v20
         with:
-          nix_path: nixpkgs=channel:nixpkgs-24.05-darwin
+          nix_path: nixpkgs=channel:nixos-unstable
           extra_nix_config: "experimental-features = nix-command"
 
       - name: "Install Cachix ❄️"
@@ -32,5 +32,5 @@ jobs:
           name: snuggle
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
-      - name: "Build nix-darwin config ❄️"
-        run: ./setup/build.sh darwin-stable
+      - name: "Build NixOS config ❄️"
+        run: chmod +x ./.github/build.sh && ./.github/build.sh pineapple
