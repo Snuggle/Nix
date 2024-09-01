@@ -27,7 +27,7 @@ build_cherry_system() {
   #      -I nixos-config=configuration.nix \
   #      -A system --dry-run
   nix build --dry-run --experimental-features 'nix-command flakes' '.#nixosConfigurations.cherry.config.system.build.toplevel'
-  home-manager build --flake .#snuggle@cherry
+  nix-shell -p home-manager build --flake .#snuggle@cherry
 }
 
 build_pineapple_system() {
@@ -42,7 +42,7 @@ build_pineapple_system() {
   #      -I nixos-config=configuration.nix \
   #      -A system --dry-run
   nix build --dry-run --experimental-features 'nix-command flakes' '.#nixosConfigurations.pineapple.config.system.build.toplevel'
-  home-manager build --flake .#snuggle@pineapple
+  nix-shell -p home-manager build --flake .#snuggle@pineapple
 }
 
 build_ci_system $@
