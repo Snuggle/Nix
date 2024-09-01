@@ -6,10 +6,10 @@ with lib.hm.gvariant;
 {
   dconf.settings = {
 
-    "org/gnome/desktop/input-sources" = {
-      sources = [ (mkTuple [ "xkb" "us" ]) ];
-      xkb-options = [ "ctrl:swap_lwin_lctl" "ctrl:swap_rwin_rctl" "compose:caps" "caps:none" ];
-    };
+    #"org/gnome/desktop/input-sources" = {
+    #  sources = [ (mkTuple [ "xkb" "us" ]) ];
+    #  xkb-options = [ "ctrl:swap_lwin_lctl" "ctrl:swap_rwin_rctl" "compose:caps" "caps:none" ];
+    #};
 
     "org/gnome/desktop/interface" = {
       cursor-theme = "Breeze_Snow";
