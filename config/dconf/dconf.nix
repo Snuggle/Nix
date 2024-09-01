@@ -59,6 +59,11 @@ with lib.hm.gvariant;
       automatic-timezone = true;
     };
 
+    "org/gnome/desktop/peripherals/touchpad" = {
+    	tap-to-click = true;
+    	disable-while-typing = false;
+    };
+
     "org/gnome/desktop/peripherals/mouse" = {
       accel-profile = "flat";
       natural-scroll = true;
