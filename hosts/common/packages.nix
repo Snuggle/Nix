@@ -70,6 +70,7 @@ environment.systemPackages = with pkgs; [
 	
 	# System Utilities
 	brlaser
+	btrfs-progs
 	cachix
 	dconf dconf2nix
 	#etcher
