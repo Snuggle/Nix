@@ -182,7 +182,7 @@
 		enable = true;
 		userName  = "Snuggle";
 		userEmail = "^-^@snugg.ie";
-		signing.signByDefault = true;
+		signing.signByDefault = false;
 		signing.key = "2D3825B49C6BCBE1AC337723877300954D1493E6";
 		extraConfig = {
 			merge.conflictstyle = "diff3";
