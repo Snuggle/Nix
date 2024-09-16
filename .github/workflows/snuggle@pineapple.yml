@@ -1,4 +1,4 @@
-name: "Host: '🍍 pineapple' System"
+name: "Host: '🍍 snuggle@pineapple' Home"
 
 on:
   pull_request:
@@ -33,4 +33,4 @@ jobs:
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
       - name: "Build NixOS config ❄️"
-        run: chmod +x ./.github/build.sh && ./.github/build.sh pineapple
+        run: chmod +x ./.github/build.sh && ./.github/build.sh snuggle@pineapple

@@ -10,6 +10,10 @@ build_ci_system() {
       build_cherry_system
     elif [[ $1 == "pineapple" ]]; then
       build_pineapple_system
+    elif [[ $1 == "snuggle@pineapple" ]]; then
+      build_pineapple_home
+    elif [[ $1 == "snuggle@cherry" ]]; then
+      build_cherry_home
     else
       echo "Unknown option!"
     fi
@@ -27,7 +31,6 @@ build_cherry_system() {
   #      -I nixos-config=configuration.nix \
   #      -A system --dry-run
   nix build --dry-run --experimental-features 'nix-command flakes' '.#nixosConfigurations.cherry.config.system.build.toplevel'
-  nix-shell -p home-manager home-manager build --flake .#snuggle@cherry
 }
 
 build_pineapple_system() {
@@ -42,7 +45,34 @@ build_pineapple_system() {
   #      -I nixos-config=configuration.nix \
   #      -A system --dry-run
   nix build --dry-run --experimental-features 'nix-command flakes' '.#nixosConfigurations.pineapple.config.system.build.toplevel'
-  nix-shell -p home-manager home-manager build --flake .#snuggle@pineapple
+}
+
+build_pineapple_home() {
+  echo "🔨 Building snuggle@pineapple home-manager"
+  echo $NIX_PATH
+  sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+  sudo nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+  sudo nix-channel --update
+
+  echo  "🧪 Testing system configuration…"
+  #NIX_PATH=/home/$USER/.nix-defexpr/channels:nixpkgs=channel:nixos-unstable nix-build '<nixpkgs/nixos>' \
+  #      -I nixos-config=configuration.nix \
+  #      -A system --dry-run
+  nix-shell -p home-manager "home-manager build --flake .#snuggle@pineapple"
+}
+
+build_cherry_home() {
+  echo "🔨 Building snuggle@cherry home-manager"
+  echo $NIX_PATH
+  sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos
+  sudo nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+  sudo nix-channel --update
+
+  echo  "🧪 Testing system configuration…"
+  #NIX_PATH=/home/$USER/.nix-defexpr/channels:nixpkgs=channel:nixos-unstable nix-build '<nixpkgs/nixos>' \
+  #      -I nixos-config=configuration.nix \
+  #      -A system --dry-run
+  nix-shell -p home-manager "home-manager build --flake .#snuggle@cherry"
 }
 
 build_ci_system $@
