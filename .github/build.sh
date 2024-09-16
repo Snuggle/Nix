@@ -58,7 +58,7 @@ build_pineapple_home() {
   #NIX_PATH=/home/$USER/.nix-defexpr/channels:nixpkgs=channel:nixos-unstable nix-build '<nixpkgs/nixos>' \
   #      -I nixos-config=configuration.nix \
   #      -A system --dry-run
-  nix-shell -p home-manager --experimental-features 'nix-command flakes' --command "home-manager build --flake .#snuggle@pineapple"
+  nix-shell -p home-manager --command "home-manager --experimental-features 'nix-command flakes' build --flake .#snuggle@pineapple"
 }
 
 build_cherry_home() {
@@ -72,7 +72,7 @@ build_cherry_home() {
   #NIX_PATH=/home/$USER/.nix-defexpr/channels:nixpkgs=channel:nixos-unstable nix-build '<nixpkgs/nixos>' \
   #      -I nixos-config=configuration.nix \
   #      -A system --dry-run
-  nix-shell -p home-manager --experimental-features 'nix-command flakes' --command "home-manager build --flake .#snuggle@cherry"
+  nix-shell -p home-manager --command "home-manager --experimental-features 'nix-command flakes' build --flake .#snuggle@cherry"
 }
 
 build_ci_system $@
