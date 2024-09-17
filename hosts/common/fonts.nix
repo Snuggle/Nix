@@ -1,8 +1,8 @@
 { pkgs, ... }:
 {
-enableDefaultFonts = false;
+enableDefaultPackages = false;
 
-fonts = with pkgs; [
+packages = with pkgs; [
 	# Serif Fonts
 	roboto-slab
 

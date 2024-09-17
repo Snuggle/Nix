@@ -222,7 +222,7 @@
     permittedInsecurePackages = [
         "electron-13.6.9"
         "electron-12.2.3"
-        "electron-14.2.9"
+        "electron-114.2.9"
         "electron-11.5.0"
         "electron-18.1.0"
         "electron-19.1.9"
@@ -246,7 +246,7 @@
     xserver.displayManager.gdm.enable = true;
     xserver.desktopManager.gnome.enable = true;
 
-    xserver.displayManager.sddm.enable = false;
+    displayManager.sddm.enable = false;
     xserver.desktopManager.plasma5.enable = false;
 
     #services.dbus.packages = with pkgs; [ gnome3.dconf ];
