@@ -24,6 +24,19 @@
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
+  fileSystems."/run/media/snuggle/pineapple" = {
+   device = "/dev/disk/by-uuid/4cb0cd63-5cdb-4c44-a282-cd2fd4a8c9c0";
+   fsType = "btrfs";
+   options = [ # If you don't have this options attribute, it'll default to "defaults" 
+     # boot options for fstab. Search up fstab mount options you can use
+     "users" # Allows any user to mount and unmount
+     "nofail" # Prevents system from failing if this drive doesn't mount
+     "nosuid"
+     "nodev"
+     "x-gvfs-show"
+   ];
+ };
+
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
