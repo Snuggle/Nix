@@ -200,7 +200,6 @@
   # replicates the default behaviour.
 
   networking = {
-    hostName = "cherry"; # Define your hostname.
     networkmanager.enable = true;
     #useDHCP = true;
 

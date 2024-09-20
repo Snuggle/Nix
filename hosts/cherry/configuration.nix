@@ -10,6 +10,8 @@
       ./hardware-configuration.nix
       ../common/configuration.nix
     ];
+
+  hostName = "cherry"; # Define your hostname.
     
   system.stateVersion = "24.05"; # Did you read the comment?
 

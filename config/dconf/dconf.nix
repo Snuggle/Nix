@@ -1,5 +1,5 @@
 # Generated via dconf2nix: https://github.com/gvolpe/dconf2nix
-{ lib, ... }:
+{ lib, osConfig, ... }:
 
 with lib.hm.gvariant;
 
@@ -26,8 +26,8 @@ with lib.hm.gvariant;
 
     "org/gnome/desktop/background" = {
       picture-options = "zoom";
-      picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/blobs-l.svg";
-      picture-uri-dark = "file:///run/current-system/sw/share/backgrounds/gnome/blobs-d.svg";
+      picture-uri = builtins.toString ../../hosts + "/$hostname/$hostname.png";
+      picture-uri-dark = builtins.toString ../../hosts + "/$hostname/$hostname.png";
       primary-color = "#ffffff";
       secondary-color = "#000000";
     };
