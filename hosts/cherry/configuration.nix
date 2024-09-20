@@ -8,7 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../!common/configuration.nix
+      ../-common/configuration.nix
     ];
 
   networking.hostName = "cherry"; # Define your hostname.
