@@ -1,5 +1,5 @@
 # Generated via dconf2nix: https://github.com/gvolpe/dconf2nix
-{ lib, osConfig, ... }:
+{ lib, ... }:
 
 with lib.hm.gvariant;
 
@@ -22,14 +22,6 @@ with lib.hm.gvariant;
 
     "org/gnome/shell/extensions/user-theme" = {
       name = "Yaru-magenta-dark";
-    };
-
-    "org/gnome/desktop/background" = {
-      picture-options = "zoom";
-      picture-uri = builtins.toString ../../hosts + "/$hostname/$hostname.png";
-      picture-uri-dark = builtins.toString ../../hosts + "/$hostname/$hostname.png";
-      primary-color = "#ffffff";
-      secondary-color = "#000000";
     };
 
     "org/gnome/shell" = {
