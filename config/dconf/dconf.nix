@@ -20,9 +20,9 @@ with lib.hm.gvariant;
       monospace-font-name = "Fantasque Sans Mono 10";
     };
 
-    "org/gnome/shell/extensions/user-theme" = {
-      name = "Yaru-magenta-dark";
-    };
+    #"org/gnome/shell/extensions/user-theme" = {
+    #  name = "Yaru-magenta-dark";
+    #};
 
     "org/gnome/shell" = {
       disabled-extensions = [ "window-list@gnome-shell-extensions.gcampax.github.com" "screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com" "drive-menu@gnome-shell-extensions.gcampax.github.com" "places-menu@gnome-shell-extensions.gcampax.github.com" "native-window-placement@gnome-shell-extensions.gcampax.github.com" "apps-menu@gnome-shell-extensions.gcampax.github.com" "workspace-indicator@gnome-shell-extensions.gcampax.github.com" ];

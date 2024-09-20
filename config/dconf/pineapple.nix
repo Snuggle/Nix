@@ -9,8 +9,8 @@ with lib.hm.gvariant;
       picture-options = "zoom";
       picture-uri = builtins.toString ../../hosts + "/pineapple/pineapple.png";
       picture-uri-dark = builtins.toString ../../hosts + "/pineapple/pineapple.png";
-      primary-color = "#ffffff";
-      secondary-color = "#000000";
+      primary-color = "#eedb73";
+      secondary-color = "#eedb73";
     };
   };
 }
