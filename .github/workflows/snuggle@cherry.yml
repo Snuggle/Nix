@@ -1,4 +1,4 @@
-name: "Host: '🍒 snuggle@cherry' Home"
+name: "User Home: '🍒 snuggle@cherry'"
 
 on:
   pull_request:

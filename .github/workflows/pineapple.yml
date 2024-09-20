@@ -1,4 +1,4 @@
-name: "Host: '🍍 pineapple' System"
+name: "System - NixOS: '🍍 pineapple'"
 
 on:
   pull_request:
