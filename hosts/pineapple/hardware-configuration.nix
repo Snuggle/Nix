@@ -7,46 +7,46 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+	imports =
+		[ (modulesPath + "/installer/scan/not-detected.nix")
+		];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usbhid" "uas" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+	boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usbhid" "uas" "sd_mod" ];
+	boot.initrd.kernelModules = [ ];
+	boot.kernelModules = [ "kvm-intel" ];
+	boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/e7e84b3d-410b-423f-900b-f15635809873";
-      fsType = "ext4";
-    };
+	fileSystems."/" =
+		{ device = "/dev/disk/by-uuid/e7e84b3d-410b-423f-900b-f15635809873";
+			fsType = "ext4";
+		};
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/0868-7852";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
-    };
+	fileSystems."/boot" =
+		{ device = "/dev/disk/by-uuid/0868-7852";
+			fsType = "vfat";
+			options = [ "fmask=0077" "dmask=0077" ];
+		};
 
-  fileSystems."/run/media/snuggle/pineapple" = {
-   device = "/dev/disk/by-uuid/4cb0cd63-5cdb-4c44-a282-cd2fd4a8c9c0";
-   fsType = "btrfs";
-   options = [ # If you don't have this options attribute, it'll default to "defaults" 
-     # boot options for fstab. Search up fstab mount options you can use
-     "nofail" # Prevents system from failing if this drive doesn't mount
-     "x-gvfs-show"
-   ];
- };
+	fileSystems."/run/media/snuggle/pineapple" = {
+		device = "/dev/disk/by-uuid/4cb0cd63-5cdb-4c44-a282-cd2fd4a8c9c0";
+		fsType = "btrfs";
+		options = [ # If you don't have this options attribute, it'll default to "defaults" 
+			# boot options for fstab. Search up fstab mount options you can use
+			"nofail" # Prevents system from failing if this drive doesn't mount
+			"x-gvfs-show"
+		];
+	};
 
-  swapDevices = [ ];
+	swapDevices = [ ];
 
-  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
-  # (the default) this is the recommended approach. When using systemd-networkd it's
-  # still possible to use this option, but it's recommended to use it in conjunction
-  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.docker0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlp57s0.useDHCP = lib.mkDefault true;
+	# Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+	# (the default) this is the recommended approach. When using systemd-networkd it's
+	# still possible to use this option, but it's recommended to use it in conjunction
+	# with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+	networking.useDHCP = lib.mkDefault true;
+	# networking.interfaces.docker0.useDHCP = lib.mkDefault true;
+	# networking.interfaces.wlp57s0.useDHCP = lib.mkDefault true;
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+	nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+	hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

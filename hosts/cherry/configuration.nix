@@ -5,15 +5,15 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../-common/configuration.nix
-    ];
+	imports =
+		[ # Include the results of the hardware scan.
+			./hardware-configuration.nix
+			../-common/configuration.nix
+		];
 
-  networking.hostName = "cherry"; # Define your hostname.
-    
-  system.stateVersion = "24.05"; # Did you read the comment?
+	networking.hostName = "cherry"; # Define your hostname.
+		
+	system.stateVersion = "24.05"; # Did you read the comment?
 
 }
 
