@@ -288,7 +288,7 @@
   system = {
     autoUpgrade.enable = true;
 
-    activationScripts.setavatar.text = ''
+    /* activationScripts.setavatar.text = ''
       accountServiceIcons="/var/lib/AccountsService/icons/snuggle"
       accountServiceUsers="/var/lib/AccountsService/users/snuggle"
       cp ${(builtins.fetchurl { 
@@ -299,7 +299,7 @@
       if ! grep -Fxq "Icon=$accountServiceIcons" "$accountServiceUsers"; then
         echo "Icon=$accountServiceIcons" >> "$accountServiceUsers"
       fi
-    '';
+    ''; */
 
     # Setup symlinks for NAS-based home directory
     /* 	userActivationScripts.linktosharedfolder.text = ''

@@ -90,6 +90,11 @@
   home.file."Vault".source = config.lib.file.mkOutOfStoreSymlink "/mnt/homesweet/Vault";
   home.file."Videos".source = config.lib.file.mkOutOfStoreSymlink "/mnt/homesweet/Videos";
 
+  home.file.".face".source = builtins.fetchurl { 
+    url = "https://github.com/snuggle.png"; 
+    sha256 = "1x4ajji4ip6bw9dkwf7bykkw00avzw7wg21cn0w4kwbcv71h052c"; 
+  }
+
   home.file = {
   ".config/home-manager/home.nix" = {
     source = config.lib.file.mkOutOfStoreSymlink ../users/snuggle.nix;
