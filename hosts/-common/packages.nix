@@ -22,6 +22,7 @@ environment.systemPackages = with pkgs; [
 	tdesktop
 	transmission-gtk transmission-remote-gtk
 	vscode
+	vivaldi
     #(vivaldi.override {
     #  proprietaryCodecs = true;
     #  enableWidevine = false;
