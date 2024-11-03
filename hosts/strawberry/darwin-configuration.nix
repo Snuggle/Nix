@@ -74,7 +74,6 @@
 		home.file.".ssh/authorized_keys" = {
 			source = builtins.fetchurl { 
 				url = "https://github.com/${config.users.users.snuggle.name}.keys"; 
-				sha256 = "1bvyxgb893q00nfbns7qghc25j7f5dnnnjfd0nbq0cllpjrqqfk6"; 
 			};
 		};
 
