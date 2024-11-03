@@ -30,7 +30,7 @@ build_cherry_system() {
   #NIX_PATH=/home/$USER/.nix-defexpr/channels:nixpkgs=channel:nixos-unstable nix-build '<nixpkgs/nixos>' \
   #      -I nixos-config=configuration.nix \
   #      -A system --dry-run
-  nix build --dry-run --experimental-features --impure 'nix-command flakes' '.#nixosConfigurations.cherry.config.system.build.toplevel'
+  nix build --dry-run --impure --experimental-features 'nix-command flakes' '.#nixosConfigurations.cherry.config.system.build.toplevel'
 }
 
 build_pineapple_system() {
@@ -44,7 +44,7 @@ build_pineapple_system() {
   #NIX_PATH=/home/$USER/.nix-defexpr/channels:nixpkgs=channel:nixos-unstable nix-build '<nixpkgs/nixos>' \
   #      -I nixos-config=configuration.nix \
   #      -A system --dry-run
-  nix build --dry-run --experimental-features --impure 'nix-command flakes' '.#nixosConfigurations.pineapple.config.system.build.toplevel'
+  nix build --dry-run --impure --experimental-features 'nix-command flakes' '.#nixosConfigurations.pineapple.config.system.build.toplevel'
 }
 
 build_pineapple_home() {
@@ -58,7 +58,7 @@ build_pineapple_home() {
   #NIX_PATH=/home/$USER/.nix-defexpr/channels:nixpkgs=channel:nixos-unstable nix-build '<nixpkgs/nixos>' \
   #      -I nixos-config=configuration.nix \
   #      -A system --dry-run
-  nix-shell -p home-manager --command "home-manager --experimental-features 'nix-command flakes' build --flake --impure .#snuggle@pineapple"
+  nix-shell -p home-manager --command "home-manager --experimental-features 'nix-command flakes' --impure build --flake .#snuggle@pineapple"
 }
 
 build_cherry_home() {
@@ -72,7 +72,7 @@ build_cherry_home() {
   #NIX_PATH=/home/$USER/.nix-defexpr/channels:nixpkgs=channel:nixos-unstable nix-build '<nixpkgs/nixos>' \
   #      -I nixos-config=configuration.nix \
   #      -A system --dry-run
-  nix-shell -p home-manager --command "home-manager --experimental-features 'nix-command flakes' build --flake --impure .#snuggle@cherry"
+  nix-shell -p home-manager --command "home-manager --experimental-features 'nix-command flakes' build --impure --flake .#snuggle@cherry"
 }
 
 build_ci_system $@
