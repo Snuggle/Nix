@@ -8,7 +8,9 @@ environment.systemPackages = with pkgs; [
 	discord-ptb
 	espanso
 	firefox-wayland
+	hugo
 	gparted
+	gimp
 	inkscape
 	kdenlive krita
 	libreoffice
@@ -19,10 +21,12 @@ environment.systemPackages = with pkgs; [
 	thunderbolt bolt
 	slack
 	signal-desktop
+	prismlauncher
 	tdesktop
 	transmission-gtk transmission-remote-gtk
 	vscode
 	vivaldi
+	webcord
     #(vivaldi.override {
     #  proprietaryCodecs = true;
     #  enableWidevine = false;
@@ -49,6 +53,7 @@ environment.systemPackages = with pkgs; [
 	rustup
 	cargo
 	jekyll
+	nodejs
 	ruby
 	#yubikey-personalization
 	tailscale

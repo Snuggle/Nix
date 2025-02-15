@@ -205,6 +205,7 @@
 
 		extraHosts = ''
 			10.0.1.6 hug
+			10.0.1.6 map.snugg.ie
 		'';
 		# Configure network proxy if necessary
 		# networking.proxy.default = "http://user:password@proxy:port/";
